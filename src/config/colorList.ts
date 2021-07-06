@@ -1,8 +1,8 @@
-interface ColorPattern {
+interface ColorListPattern {
   [key: string]: string;
 }
 
-const colorList: ColorPattern = {
+const colorList: ColorListPattern = {
   white: "#FFFFFF",
   textGray: "#C5C5C5",
   backgroundGray: "#EFEFEF",

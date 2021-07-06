@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import colorList from '../../config/colorList';
 
-export const Wrapper = styled.section`
+export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
