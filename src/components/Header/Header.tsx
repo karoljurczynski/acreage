@@ -1,8 +1,14 @@
-import { Heading } from './HeaderStyles';
+import { Wrapper, LogoContainer, LogoImage, Heading } from './HeaderStyles';
+import logo from '../../images/logo.png';
 
 const Header = () => {
   return (
-    <Heading>Header</Heading>
+    <Wrapper>
+      <LogoContainer>
+        <LogoImage src={ logo } />
+      </LogoContainer>
+      <Heading>Acreage</Heading>
+    </Wrapper>
   )
 }
 

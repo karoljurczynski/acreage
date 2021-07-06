@@ -1,8 +1,16 @@
-import { Heading } from './LeftBarStyles';
+import { Wrapper, BottomSection } from './LeftBarStyles';
+import UserDataContainer from '../UserDataContainer/UserDataContainer';
+import Button from '../Button/Button';
 
 const LeftBar = () => {
   return (
-    <Heading>LeftBar</Heading>
+    <Wrapper>
+      <UserDataContainer />
+      <BottomSection>
+        <Button />
+        <Button />
+      </BottomSection>
+    </Wrapper>
   )
 }
 

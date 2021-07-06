@@ -1,8 +1,10 @@
-import { Heading } from './RightBarStyles';
+import { Wrapper } from './RightBarStyles';
 
 const RightBar = () => {
   return (
-    <Heading>RightBar</Heading>
+    <Wrapper>
+
+    </Wrapper>
   )
 }
 

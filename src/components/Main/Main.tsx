@@ -1,8 +1,10 @@
-import { Heading } from './MainStyles';
+import { Wrapper } from './MainStyles';
 
 const Main = () => {
   return (
-    <Heading>Main</Heading>
+    <Wrapper>
+
+    </Wrapper>
   )
 }
 
