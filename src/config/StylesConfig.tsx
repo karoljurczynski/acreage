@@ -15,7 +15,8 @@ const StylesConfig = createGlobalStyle`
     font-family: Amaranth, Arial, sans-serif;
     font-weight: 400;
     font-style: normal;
-    color: ${colorList.black}
+    color: ${colorList.black};
+    user-select: none;
   }
 `;
 

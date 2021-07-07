@@ -5,6 +5,8 @@ import MainBox from '../MainBox/MainBox';
 import LargeButton from '../LargeButton/LargeButton';
 import TopSection from '../TopSection/TopSection';
 import BottomSection from '../BottomSection/BottomSection';
+import UserInfo from '../UserInfo/UserInfo';
+import InfoBox from '../InfoBox/InfoBox';
 
 const App = () => {
   return(
@@ -15,15 +17,19 @@ const App = () => {
       <Container>
 
         <MainBox type="Aside">
+
           <TopSection color={ colorList.mainOrange }>
-            <Header />
-            <Header />
-            <Header />
+            <UserInfo />
+            <InfoBox property="Money" cashAmount={ 100 } />
+            <InfoBox property="Experience" currentXp={ 120 } xpToNextLevel={ 200 }/>
+            <InfoBox property="Next action finished" min={ 12 } sec={ 20 } />
           </TopSection>
+
           <BottomSection color={ colorList.white }>
             <LargeButton secondary>Settings</LargeButton>
             <LargeButton primary>Log out</LargeButton>
           </BottomSection>
+
         </MainBox>
 
         <MainBox type="Main">
@@ -32,6 +38,7 @@ const App = () => {
           <BottomSection color={ colorList.mainOrange }>
           </BottomSection>
         </MainBox>
+        
         <MainBox type="Aside">
           <TopSection color={ colorList.mainOrange }>
           </TopSection>

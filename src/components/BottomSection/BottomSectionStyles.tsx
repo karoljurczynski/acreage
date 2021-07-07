@@ -4,7 +4,7 @@ interface Props {
   color: string;
 }
 
-export const Wrapper = styled.section<Props>`
+export const Wrapper = styled.div<Props>`
   width: 100%;
   padding: 20px;
   border-radius: 0 0 10px 10px;

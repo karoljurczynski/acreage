@@ -15,14 +15,19 @@ export const Button = styled.button<Props>`
   text-align: center;
   font-size: 18px;
   font-weight: bold;
-  box-shadow: 1px 1px 3px ${ colorList.textGray };
+  box-shadow: none;
   cursor: pointer;
   border-radius: 5px;
   padding: 15px 0;
   margin-top: 10px;
+  
+  :hover, :focus {
+    opacity: 0.65;
+  }
 
   ${({ primary }) => primary && `
     background-color: ${ colorList.mainOrange };
+    box-shadow: 1px 1px 3px ${ colorList.textGray };
   `}
 
   ${({ secondary }) => secondary && `
@@ -31,6 +36,6 @@ export const Button = styled.button<Props>`
 
   ${({ tertiary }) => tertiary && `
     color: ${ colorList.mainOrange };
-    border: 1px solid ${ colorList.black };
+    border: 1px solid ${ colorList.textGray };
   `}
 `;
