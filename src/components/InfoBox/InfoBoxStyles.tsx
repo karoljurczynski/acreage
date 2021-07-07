@@ -24,24 +24,3 @@ export const Value = styled.p`
   font-size: 24px;
   color: ${ colorList.black };
 `;
-
-export const InfoIcon = styled.button`
-  display: block;
-  width: 16px;
-  height: 16px;
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  cursor: pointer;
-  background-color: transparent;
-
-  :hover, :focus {
-    opacity: 0.65;
-  }
-
-  svg {
-    fill: ${ colorList.mainOrange };
-    height: 100%;
-    width: 100%;
-  }
-`;

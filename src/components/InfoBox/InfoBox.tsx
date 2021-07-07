@@ -1,5 +1,6 @@
-import { Wrapper, ContentContainer, Property, Value, InfoIcon } from './InfoBoxStyles';
-import { FaInfoCircle } from 'react-icons/fa'
+import { Wrapper, ContentContainer, Property, Value } from './InfoBoxStyles';
+import colorList from '../../config/colorList';
+import InfoIcon from '../InfoIcon/InfoIcon';
 
 interface InfoBoxProps {
   property: "Money" | "Experience" | "Next action finished";
@@ -37,9 +38,10 @@ const InfoBox: React.FC<InfoBoxProps> = ({ property, cashAmount, currentXp, xpTo
         <Property>{ property }</Property>
         <Value>{ selectValuePattern() }</Value>
       </ContentContainer>
-      <InfoIcon onClick={ infoIconOnClickFunction }>
-        <FaInfoCircle />
-      </InfoIcon>
+      <InfoIcon 
+        color={ colorList.mainOrange }
+        pos="top"
+        onClickFunction={ infoIconOnClickFunction } />
     </Wrapper>
   )
 }

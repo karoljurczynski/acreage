@@ -1,12 +1,13 @@
 import { Wrapper } from './BottomSectionStyles';
 
-interface Props {
+interface BottomSectionProps {
   color: string;
+  padding: string;
 }
 
-const BottomSection: React.FC<Props> = ({ color, children }) => {
+const BottomSection: React.FC<BottomSectionProps> = ({ color, padding, children }) => {
   return (
-    <Wrapper color={ color }>
+    <Wrapper color={ color } padding={ padding }>
       { children }
     </Wrapper>
   )
