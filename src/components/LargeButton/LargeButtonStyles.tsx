@@ -13,7 +13,7 @@ export const Button = styled.button<Props>`
   border: none;
   width: 100%;
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   box-shadow: none;
   cursor: pointer;

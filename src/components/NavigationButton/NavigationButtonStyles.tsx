@@ -9,10 +9,10 @@ export const Button = styled.button<Props>`
   background-color: ${ colorList.white };
   color: ${({ active }) => active ? colorList.black : colorList.textGray };
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
   border-radius: 10px;
-  padding: 15px 0;
+  padding: 12px 0;
   width: 130px;
 
   :nth-of-type(2) {

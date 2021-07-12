@@ -14,8 +14,8 @@ export const UserAvatarContainer = styled.picture`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 90px;
-  height: 90px;
+  width: 75px;
+  height: 75px;
   background-color: ${colorList.white};
   border-radius: 50%;
 `;
@@ -28,13 +28,13 @@ export const UserAvatarPhoto = styled.img`
 
 export const UserName = styled.h3`
   color: ${ colorList.white };
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
   margin: 5px 0;
 `;
 
 export const UserLevel = styled.h4`
   color: ${ colorList.black };
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
 `;

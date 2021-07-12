@@ -10,11 +10,11 @@ export const Wrapper = styled.div`
 `;
 
 export const Heading = styled.h2`
-  font-size: 22px;
+  font-size: 18px;
   color: ${ colorList.black };
 `;
 
 export const Subheading = styled.h4`
-  font-size: 18px;
+  font-size: 16px;
   color: ${ colorList.white };
 `;

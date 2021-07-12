@@ -11,6 +11,9 @@ import InfoIcon from '../InfoIcon/InfoIcon';
 import NavigationButton from '../NavigationButton/NavigationButton';
 import StorageContent from '../StorageContent/StorageContent';
 import StorageHeading from '../StorageHeading/StorageHeading';
+import Board from '../Board/Board';
+import { storedCrops } from '../../config/cropList';
+import { fields } from '../../config/fields';
 
 const App = () => {
   return(
@@ -22,8 +25,7 @@ const App = () => {
 
       <Container>
 
-        <MainBox type="Aside">
-
+        <MainBox type="Left">
           <TopSection color={ colorList.mainOrange } padding="30px 15px">
             <UserInfo />
             <InfoBox property="Money" cashAmount={ 100 } />
@@ -35,14 +37,11 @@ const App = () => {
             <LargeButton secondary>Settings</LargeButton>
             <LargeButton primary>Log out</LargeButton>
           </BottomSection>
-
         </MainBox>
 
-        <MainBox type="Main">
-          <TopSection color={ colorList.white } padding="15px 15px">
-
-
-
+        <MainBox type="Center">
+          <TopSection color={ colorList.white } padding="15px 15px" isBoard={ true }>
+            <Board fields={ fields } />
           </TopSection>
 
           <BottomSection color={ colorList.mainOrange } padding="15px 15px">
@@ -51,21 +50,19 @@ const App = () => {
             <NavigationButton>Market</NavigationButton>
             <InfoIcon color={ colorList.white } pos="bottom" />
           </BottomSection>
-
         </MainBox>
         
-        <MainBox type="Aside">
-
+        <MainBox type="Right">
           <TopSection color={ colorList.mainOrange } padding="20px 20px">
-            <StorageHeading />
+            <StorageHeading storedCrops={ storedCrops } />
             <InfoIcon color={ colorList.white } pos="top" />
           </TopSection>
 
           <BottomSection color={ colorList.white } padding="15px 0 0 15px" >
-            <StorageContent />
+            <StorageContent storedCrops={ storedCrops } />
           </BottomSection>
-
         </MainBox>
+
       </Container>
 
     </Wrapper>

@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   width: 100%;
   background-color: ${ colorList.white };
   border-radius: 6px;
-  padding: 20px;
+  padding: 15px;
   margin-top: 12px;
 `;
 
@@ -16,11 +16,11 @@ export const ContentContainer = styled.section`
 `;
 
 export const Property = styled.h5`
-  font-size: 14px;
+  font-size: 12px;
   color: ${ colorList.textGray };
 `;
 
 export const Value = styled.p`
-  font-size: 24px;
+  font-size: 20px;
   color: ${ colorList.black };
 `;

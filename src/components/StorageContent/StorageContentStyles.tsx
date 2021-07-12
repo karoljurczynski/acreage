@@ -11,10 +11,27 @@ export const Wrapper = styled.div`
 `;
 
 export const Block = styled.div`
-  width: calc(100% / 3 - 15px);
-  height: 82px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 80px;
+  height: 80px;
   background-color: ${ colorList.mainOrange };
   border-radius: 8px;
   margin-bottom: 15px;
   margin-right: 15px;
+`;
+
+export const CropIcon = styled.img`
+  width: 40%;
+  height: 40%;
+`;
+
+export const CropAmount = styled.h4`
+  font-size: 20px;
+  color: ${ colorList.white };
+  margin-bottom: 8px;
+
+
 `;

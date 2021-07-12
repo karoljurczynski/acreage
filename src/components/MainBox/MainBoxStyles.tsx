@@ -9,12 +9,16 @@ export const Wrapper = styled.div<WrapperProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  min-height: fit-content;
+  justify-content: ${({ type }) => type === "Right" ? "flex-start" : "space-between" };
   height: calc(100vh - 150px);
   background: ${ colorList.white };
-  width: ${({ type }) => type === "Aside" ? "330px" : "800px" };
-  margin: ${({ type }) => type === "Aside" ? "0 0" : "0 20px" };
+  min-width: ${({ type }) => type === "Right" ? "300px" : "0" };
+  width: ${({ type }) => { 
+    if (type === "Center") return "880px";
+    if (type === "Left") return "300px";
+    if (type === "Right") return "300px";
+  }};
+  margin: ${({ type }) => type === "Center" ? "0 20px" : "0 0" };
   border-radius: 10px;
   box-shadow: 1px 1px 5px ${ colorList.textGray };
 `;
