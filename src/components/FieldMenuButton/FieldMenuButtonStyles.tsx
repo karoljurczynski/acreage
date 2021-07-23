@@ -3,13 +3,18 @@ import colorList from '../../config/colorList';
 
 interface ButtonProps {
   size: "half" | "full";
-  buttonFor?: "time" | "barn";
+  buttonFor?: "Time" | "Barn";
+  margin?: string;
 }
 
 interface TextContentProps {
   size: "half" | "full";
-  buttonFor?: "time" | "barn";
+  buttonFor?: "Time" | "Barn";
   color?: "primary" | "watered" | "fertilized" | "red";
+  primary?: boolean;
+  failed?: boolean;
+  watered?: boolean;
+  fertilized?: boolean;
 }
 
 export const Button = styled.button<ButtonProps>`
@@ -22,22 +27,27 @@ export const Button = styled.button<ButtonProps>`
   width: 86px;
   height: 86px;
   border-radius: 5px;
-
-  ${({ size }) => (size === "half") && `
-    :nth-of-type(2) {
-      margin-right: 12px;
-    }
-  `};
-
+  cursor: pointer;
+  
   ${({ size }) => (size === "full") && `
     width: 184px;
-    margin-bottom: 12px;
   `};
 
   ${({ buttonFor }) => buttonFor && `
     align-items: flex-start;
+    cursor: default;
     padding-left: 15px;
   `};
+
+  ${({ buttonFor }) => !buttonFor && `
+    :hover, :focus {
+      opacity: 0.65;
+    }
+  `};
+
+  ${({ margin }) => margin && `
+    margin: ${ margin };
+  `}
 `;
 
 export const ButtonHeading = styled.h4`
@@ -49,20 +59,20 @@ export const ButtonTextContent = styled.p<TextContentProps>`
   font-size: 16px;
   color: ${ colorList.textGray };
 
-  ${({ color }) => color === "primary" && `
+  ${({ primary }) => primary && `
     color: ${ colorList.mainOrange };
   `};
 
-  ${({ color }) => color === "fertilized" && `
-    color: ${ colorList.darkBrown };
-  `};
-
-  ${({ color }) => color === "watered" && `
-    color: ${ colorList.blue };
-  `};
-
-  ${({ color }) => color === "red" && `
+  ${({ failed }) => failed && `
     color: ${ colorList.warningRed };
+  `};
+
+  ${({ watered }) => watered && `
+  color: ${ colorList.blue };
+  `};
+
+  ${({ fertilized }) => fertilized && `
+    color: ${ colorList.darkBrown };
   `};
 
   ${({ size, buttonFor }) => (size === "full" && buttonFor) && `

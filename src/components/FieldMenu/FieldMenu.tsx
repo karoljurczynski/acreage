@@ -4,33 +4,79 @@ import {
   HeadingContainer, 
   CropImageContainer, 
   CropImage, 
-  CropName, 
+  Name, 
   FieldNumber,
   Main,
   BottomSection 
 } from './FieldMenuStyles';
 
 import FieldMenuButton from '../FieldMenuButton/FieldMenuButton';
-import { useEffect } from 'react';
+import { FieldsPattern } from '../../config/fields';
 import logo from '../../images/logo.png';
 import LargeButton from '../LargeButton/LargeButton';
 
 interface FieldMenuProps {
   closeFieldMenu: () => void;
-  fieldId: number,
-  fieldCrop: string,
-  fieldStatus: string
+  fieldData: FieldsPattern;
 }
 
-const FieldMenu: React.FC<FieldMenuProps> = ({ closeFieldMenu, fieldId, fieldCrop, fieldStatus }) => {
-  const mainRoot = document.querySelector("#root") as HTMLElement;
+const FieldMenu: React.FC<FieldMenuProps> = ({ closeFieldMenu, fieldData }) => {
 
-  useEffect(() => {
-    //mainRoot.style.pointerEvents = "none";
+  const getFieldMenuName = (): string => {
+    if (fieldData.isFieldBought) {
+      if (fieldData.cropProps.cropType && fieldData.cropProps.cropType !== "Building" )
+        return fieldData.cropProps.cropType;
+      if (fieldData.cropProps.cropType && fieldData.cropProps.cropType === "Building" )
+        return fieldData.cropProps.buildingType as string;
+      else
+        return "Empty";
+    }
+    else
+      return "Not owned"
+  }
 
-    return () => { mainRoot.style.pointerEvents = "auto" }
+  const selectButtons = (): JSX.Element[] | undefined => {
 
-  });
+    if (fieldData.isFieldBought) {
+      if (fieldData.cropProps.cropType && fieldData.cropProps.cropType !== "Building") {
+        if (fieldData.cropProps.isReadyToHarvest) {
+          return [
+            <FieldMenuButton size="full" textContent="Harvest" margin="0 0 12px 0" primary />,
+            <FieldMenuButton size="half" textContent={ fieldData.cropProps.isWatered ? "Watered" : "Water" } watered={ fieldData.cropProps.isWatered ? true : false } primary={ !fieldData.cropProps.isWatered ? true : false } margin="0 12px 0 0"  />,
+            <FieldMenuButton size="half" textContent={ fieldData.cropProps.isFertilized ? "Fertilized" : "Fertilize" } fertilized={ fieldData.cropProps.isFertilized ? true : false } primary={ !fieldData.cropProps.isFertilized ? true : false } />
+          ];
+
+        }
+        else {
+          return [
+            <FieldMenuButton size="full" buttonFor="Time" textContent="14:20" margin="0 0 12px 0" />,
+            <FieldMenuButton size="half" textContent={ fieldData.cropProps.isWatered ? "Watered" : "Water" } watered={ fieldData.cropProps.isWatered ? true : false } primary={ !fieldData.cropProps.isWatered ? true : false } margin="0 12px 0 0" />,
+            <FieldMenuButton size="half" textContent={ fieldData.cropProps.isFertilized ? "Fertilized" : "Fertilize" } fertilized={ fieldData.cropProps.isFertilized ? true : false } primary={ !fieldData.cropProps.isFertilized ? true : false } />
+          ];
+        }
+      }
+
+      if (fieldData.cropProps.cropType && fieldData.cropProps.cropType === "Building") {
+        return [
+          <FieldMenuButton size="half" textContent="Upgrade" margin="0 12px 12px 0" primary />,
+          <FieldMenuButton size="half" textContent="Destroy" margin="0 0 12px 0" />,
+          <FieldMenuButton size="full" buttonFor="Barn" textContent="100" />
+        ];
+      }
+
+      else {
+        return [
+          <FieldMenuButton size="half" textContent="Plant" margin="0 12px 12px 0" primary />,
+          <FieldMenuButton size="half" textContent="Build" margin="0 0 12px 0" primary />,
+          <FieldMenuButton size="full" textContent="Sell this field" />
+        ];
+      }
+    }
+
+    else {
+      return [ <FieldMenuButton size="full" textContent="Buy this field" primary /> ];
+    }
+  }
 
   return (
     <Wrapper>
@@ -40,13 +86,11 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ closeFieldMenu, fieldId, fieldCro
           <CropImageContainer>
             <CropImage src={ logo } />
           </CropImageContainer>
-          <CropName>{ fieldCrop }</CropName>
-          <FieldNumber>{ `Field #${ fieldId + 1 }` }</FieldNumber>
+          <Name>{ getFieldMenuName() }</Name>
+          <FieldNumber>{ `Field #${ fieldData.fieldId + 1 }` }</FieldNumber>
         </HeadingContainer>
         <Main>
-          <FieldMenuButton size="full" buttonFor="time" textContent="14:20" />
-          <FieldMenuButton size="half" textContent="Watered" />
-          <FieldMenuButton size="half" textContent="Fertilized" />
+          { selectButtons() }
         </Main>
       </TopSection>
 

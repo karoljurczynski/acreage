@@ -1,14 +1,13 @@
 import { FieldSegment } from './FieldStyles';
+import { FieldsPattern } from '../../config/fields';
 import { useState } from 'react';
 import FieldMenu from '../FieldMenu/FieldMenu';
 
 interface FieldProps {
-  fieldId: number,
-  fieldCrop: string,
-  fieldStatus: string
+  fieldData: FieldsPattern;
 }
 
-const Field: React.FC<FieldProps> = ({ fieldId, fieldCrop, fieldStatus }) => {
+const Field: React.FC<FieldProps> = ({ fieldData }) => {
 
   const [isFieldClicked, setIsFieldClicked] = useState(false);
   const handleFieldOnClick = () => {
@@ -20,15 +19,13 @@ const Field: React.FC<FieldProps> = ({ fieldId, fieldCrop, fieldStatus }) => {
     { isFieldClicked && 
       <FieldMenu
         closeFieldMenu={ handleFieldOnClick }
-        fieldId={ fieldId }
-        fieldCrop={ fieldCrop }
-        fieldStatus={ fieldStatus }
+        fieldData={ fieldData }
       />
     }
     
     <FieldSegment 
-      fieldCrop={ fieldCrop } 
-      fieldStatus={ fieldStatus } 
+      fieldCrop={ fieldData.cropProps.cropType } 
+      fieldStatus={ fieldData.isFieldBought } 
       onClick={ handleFieldOnClick }
     />
 

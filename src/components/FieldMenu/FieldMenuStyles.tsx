@@ -74,7 +74,7 @@ export const CropImage = styled.img`
   height: 50%;
 `;
 
-export const CropName = styled.h3`
+export const Name = styled.h3`
   margin-top: 8px;
   color: ${ colorList.white };
   font-size: 22px;

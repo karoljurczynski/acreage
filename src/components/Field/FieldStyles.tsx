@@ -3,7 +3,7 @@ import colorList from '../../config/colorList';
 
 interface FieldProps {
   fieldCrop: string;
-  fieldStatus: string;
+  fieldStatus: boolean;
 }
 
 const disabledField: string = "rgba(255, 255, 255, 0.4)";
@@ -21,7 +21,7 @@ export const FieldSegment = styled.button<FieldProps>`
   :hover, :focus {
     background: ${ disabledFieldHover };
   }
-  ${({ fieldStatus }) => fieldStatus === "empty" && `
+  ${({ fieldStatus }) => fieldStatus && `
     background: ${ colorList.darkBrown };
     
     :hover, :focus {

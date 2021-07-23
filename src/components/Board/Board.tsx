@@ -23,10 +23,8 @@ const Board: React.FC<BoardProps> = ({ fields }) => {
       { fields.map((field: FieldsPattern) => {
         return (
           <Field
-            fieldId={ field.fieldId }
-            key={ field.fieldId }
-            fieldCrop={ field.fieldCrop }
-            fieldStatus={ field.fieldStatus } 
+            key={ field.fieldId } 
+            fieldData={ field }
           />
         )
       })}
