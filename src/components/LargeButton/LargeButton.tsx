@@ -4,12 +4,13 @@ interface Props {
   primary?: boolean;
   secondary?: boolean;
   tertiary?: boolean;
+  onClick: () => void;
 }
 
 
-const LargeButton: React.FC<Props> = ({ primary, secondary, tertiary, children }) => {
+const LargeButton: React.FC<Props> = ({ primary, secondary, tertiary, onClick, children }) => {
   return (
-    <Button primary={ primary } secondary={ secondary } tertiary={ tertiary }>{ children }</Button>
+    <Button onClick={ onClick } primary={ primary } secondary={ secondary } tertiary={ tertiary }>{ children }</Button>
   )
 }
 

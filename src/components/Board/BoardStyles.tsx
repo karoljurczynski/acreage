@@ -1,15 +1,6 @@
 import styled from 'styled-components';
 import colorList from '../../config/colorList';
 
-interface FieldProps {
-  fieldCrop: string;
-  fieldStatus: string;
-}
-
-const disabledField: string = "rgba(255, 255, 255, 0.4)";
-const disabledFieldHover: string = "rgba(255, 255, 255, 0.6)";
-const emptyFieldHover: string = "rgba(148, 126, 82, 0.6)"
-
 export const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -24,27 +15,6 @@ export const Wrapper = styled.div`
   background: transparent;
 `;
 
-export const Field = styled.button<FieldProps>`
-  width: 100%;
-  height: 100%;
-  background: ${ disabledField };
-  color: ${ colorList.black };
-  cursor: pointer;
-  z-index: 1;
-
-  :hover, :focus {
-    background: ${ disabledFieldHover };
-  }
-  ${({ fieldStatus }) => fieldStatus === "empty" && `
-    background: ${ colorList.darkBrown };
-    
-    :hover, :focus {
-      background: ${ colorList.darkBrown };
-      border: 1px solid black;
-    }
-  `};
-`;
-
 export const Road = styled.span`
   position: absolute;
   height: 8px;
@@ -56,25 +26,25 @@ export const Road = styled.span`
   :nth-of-type(1) {
     width: 750px;
     left: 50%;
-    top: 50%;
+    top: 296px;
   }
 
   :nth-of-type(2) {
     width: 464px;
     left: 50%;
-    top: 72px;
+    top: 71px;
   }
 
   :nth-of-type(3) {
     width: 160px;
     left: calc(50%);
-    top: 148px;
+    top: 146px;
   }
 
   :nth-of-type(4) {
     width: 340px;
     left: calc(50% + 95px);
-    top: 528px;
+    top: 521px;
   }
 
   :nth-of-type(5) {

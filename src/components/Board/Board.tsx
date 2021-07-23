@@ -1,12 +1,14 @@
-import { Wrapper, Field, Road } from './BoardStyles';
+import { Wrapper, Road } from './BoardStyles';
+import Field from '../Field/Field';
 import { FieldsPattern } from '../../config/fields';
+import React from 'react';
 
 interface BoardProps {
   fields: FieldsPattern[];
 }
 
-
 const Board: React.FC<BoardProps> = ({ fields }) => {
+
   return (
     <Wrapper>
       <Road></Road>
@@ -18,9 +20,14 @@ const Board: React.FC<BoardProps> = ({ fields }) => {
       <Road></Road>
       <Road></Road>
 
-      { fields.map(field => {
+      { fields.map((field: FieldsPattern) => {
         return (
-          <Field key={ field.fieldId } fieldCrop={ field.fieldCrop } fieldStatus={ field.fieldStatus } />
+          <Field
+            fieldId={ field.fieldId }
+            key={ field.fieldId }
+            fieldCrop={ field.fieldCrop }
+            fieldStatus={ field.fieldStatus } 
+          />
         )
       })}
 

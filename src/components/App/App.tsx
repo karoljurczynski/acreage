@@ -34,8 +34,8 @@ const App = () => {
           </TopSection>
 
           <BottomSection color={ colorList.white } padding="20px 20px">
-            <LargeButton secondary>Settings</LargeButton>
-            <LargeButton primary>Log out</LargeButton>
+            <LargeButton onClick={ () => {} } secondary>Settings</LargeButton>
+            <LargeButton onClick={ () => {} } primary>Log out</LargeButton>
           </BottomSection>
         </MainBox>
 
