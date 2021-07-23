@@ -20,6 +20,9 @@ const Field: React.FC<FieldProps> = ({ fieldId, fieldCrop, fieldStatus }) => {
     { isFieldClicked && 
       <FieldMenu
         closeFieldMenu={ handleFieldOnClick }
+        fieldId={ fieldId }
+        fieldCrop={ fieldCrop }
+        fieldStatus={ fieldStatus }
       />
     }
     

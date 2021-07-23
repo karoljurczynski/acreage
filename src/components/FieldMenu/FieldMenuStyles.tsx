@@ -84,22 +84,3 @@ export const FieldNumber = styled.p`
   color: ${ colorList.black };
   font-size: 16px;
 `;
-
-export const HalfButton = styled.button<ButtonsProps>`
-  display: block;
-  width: 86px;
-  height: 86px;
-  border-radius: 5px;
-
-  :nth-of-type(2) {
-    margin-right: 12px;
-  }
-`;
-
-export const FullButton = styled.button<ButtonsProps>`
-  display: block;
-  width: 184px;
-  height: 86px;
-  border-radius: 5px;
-  margin-bottom: 12px;
-`;

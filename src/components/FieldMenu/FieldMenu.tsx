@@ -7,21 +7,22 @@ import {
   CropName, 
   FieldNumber,
   Main,
-  HalfButton,
-  FullButton,
   BottomSection 
 } from './FieldMenuStyles';
 
+import FieldMenuButton from '../FieldMenuButton/FieldMenuButton';
 import { useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import logo from '../../images/logo.png';
 import LargeButton from '../LargeButton/LargeButton';
 
 interface FieldMenuProps {
   closeFieldMenu: () => void;
+  fieldId: number,
+  fieldCrop: string,
+  fieldStatus: string
 }
 
-const FieldMenu: React.FC<FieldMenuProps> = ({ closeFieldMenu }) => {
+const FieldMenu: React.FC<FieldMenuProps> = ({ closeFieldMenu, fieldId, fieldCrop, fieldStatus }) => {
   const mainRoot = document.querySelector("#root") as HTMLElement;
 
   useEffect(() => {
@@ -39,13 +40,13 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ closeFieldMenu }) => {
           <CropImageContainer>
             <CropImage src={ logo } />
           </CropImageContainer>
-          <CropName>Potatoes</CropName>
-          <FieldNumber>Field #3</FieldNumber>
+          <CropName>{ fieldCrop }</CropName>
+          <FieldNumber>{ `Field #${ fieldId + 1 }` }</FieldNumber>
         </HeadingContainer>
         <Main>
-          <FullButton buttonType="time">14:20</FullButton>
-          <HalfButton buttonType="water">Watered</HalfButton>
-          <HalfButton buttonType="fertilizer">Fertilized</HalfButton>
+          <FieldMenuButton size="full" buttonFor="time" textContent="14:20" />
+          <FieldMenuButton size="half" textContent="Watered" />
+          <FieldMenuButton size="half" textContent="Fertilized" />
         </Main>
       </TopSection>
 

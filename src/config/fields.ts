@@ -1,6 +1,6 @@
 export interface FieldsPattern {
   fieldId: number,
-  fieldStatus: "disabled" | "empty" | "building" | "grow" | "harvest",
+  fieldStatus: "disabled" | "empty" | "building" | "grow" | "harvest" | "Not owned",
   fieldCrop: string;
 }
 
