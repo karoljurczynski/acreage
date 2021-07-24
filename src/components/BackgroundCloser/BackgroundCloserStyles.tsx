@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import colorList from '../../config/colorList';
 
 export const Wrapper = styled.div`
   position: absolute;
