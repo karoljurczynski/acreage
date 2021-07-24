@@ -1,16 +1,11 @@
 import styled from 'styled-components';
 import colorList from '../../config/colorList';
 
-interface ButtonsProps {
-  buttonType: "time" | "water" | "fertilizer";
-}
-
-export const Heading = styled.h1`
-  color: ${ colorList.black };
-`;
-
 export const Wrapper = styled.div`
-  position: absolute;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,7 +13,7 @@ export const Wrapper = styled.div`
   border-radius: 8px 8px 8px 0;
   width: 224px;
   background-color: ${colorList.white};
-  z-index: 2;
+  z-index: 0;
   box-shadow: 1px 1px 5px #c5c5c5;
 `;
 
@@ -34,12 +29,10 @@ export const TopSection = styled.section`
 `;
 
 export const Main = styled.main`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 12px;
   width: 100%;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-wrap: wrap;
   margin-top: 20px;
 `;
 
@@ -54,7 +47,6 @@ export const HeadingContainer = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-
 `;
 
 export const CropImageContainer = styled.picture`
@@ -77,10 +69,11 @@ export const CropImage = styled.img`
 export const Name = styled.h3`
   margin-top: 8px;
   color: ${ colorList.white };
-  font-size: 22px;
+  font-size: 24px;
 `;
 
 export const FieldNumber = styled.p`
   color: ${ colorList.black };
-  font-size: 16px;
+  font-weight: bold;
+  font-size: 12px;
 `;

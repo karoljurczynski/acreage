@@ -5,14 +5,13 @@ interface FieldMenuButtonProps {
   size: "half" | "full";
   buttonFor?: "Time" | "Barn";
   textContent: string;
-  margin?: string;
   primary?: boolean;
   failed?: boolean;
   watered?: boolean;
   fertilized?: boolean;
 }
 
-const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({ size, buttonFor, textContent, margin, primary, failed, watered, fertilized }) => {
+const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({ size, buttonFor, textContent, primary, failed, watered, fertilized }) => {
   const getButtonHeading = (): string => {
     if (buttonFor === "Time")
       return "To harvest";
@@ -25,8 +24,7 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({ size, buttonFor, text
   return (
     <Button
       size={ size }
-      buttonFor={ buttonFor }
-      margin={ margin }>
+      buttonFor={ buttonFor }>
       { buttonFor && <ButtonHeading>{ getButtonHeading() }</ButtonHeading> }
       { !buttonFor && <ButtonIcon src={ logo }></ButtonIcon> }
       <ButtonTextContent primary={ primary } failed={ failed } watered={ watered } fertilized={ fertilized } size={ size } buttonFor={ buttonFor }>{ textContent }</ButtonTextContent>

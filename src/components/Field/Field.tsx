@@ -1,7 +1,8 @@
 import { FieldSegment } from './FieldStyles';
 import { FieldsPattern } from '../../config/fields';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import FieldMenu from '../FieldMenu/FieldMenu';
+import { portal } from '../../config/StylesConfig';
 
 interface FieldProps {
   fieldData: FieldsPattern;
@@ -13,6 +14,13 @@ const Field: React.FC<FieldProps> = ({ fieldData }) => {
   const handleFieldOnClick = () => {
     isFieldClicked ? setIsFieldClicked(false) : setIsFieldClicked(true);
   }
+
+  useEffect(() => {
+    isFieldClicked ? portal.style.zIndex = "1" : portal.style.zIndex = "-1";
+    
+    return () => { portal.style.zIndex = "-1" };
+
+  }, [ isFieldClicked ]);
 
   return (
     <>

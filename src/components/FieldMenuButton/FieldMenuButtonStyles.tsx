@@ -4,13 +4,11 @@ import colorList from '../../config/colorList';
 interface ButtonProps {
   size: "half" | "full";
   buttonFor?: "Time" | "Barn";
-  margin?: string;
 }
 
 interface TextContentProps {
   size: "half" | "full";
   buttonFor?: "Time" | "Barn";
-  color?: "primary" | "watered" | "fertilized" | "red";
   primary?: boolean;
   failed?: boolean;
   watered?: boolean;
@@ -24,13 +22,14 @@ export const Button = styled.button<ButtonProps>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 86px;
+  width: 1fr;
   height: 86px;
   border-radius: 5px;
   cursor: pointer;
   
   ${({ size }) => (size === "full") && `
-    width: 184px;
+    grid-column: 1 / 3;
+    width: 2fr;
   `};
 
   ${({ buttonFor }) => buttonFor && `
@@ -44,10 +43,6 @@ export const Button = styled.button<ButtonProps>`
       opacity: 0.65;
     }
   `};
-
-  ${({ margin }) => margin && `
-    margin: ${ margin };
-  `}
 `;
 
 export const ButtonHeading = styled.h4`
@@ -68,7 +63,7 @@ export const ButtonTextContent = styled.p<TextContentProps>`
   `};
 
   ${({ watered }) => watered && `
-  color: ${ colorList.blue };
+    color: ${ colorList.blue };
   `};
 
   ${({ fertilized }) => fertilized && `

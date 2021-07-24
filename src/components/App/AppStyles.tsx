@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import colorList from '../../config/colorList';
 
 export const Wrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,6 +10,7 @@ export const Wrapper = styled.div`
   background: ${ colorList.backgroundGray };
   width: 100vw;
   height: 100vh;
+  z-index: 1;
 `;
 
 export const Container = styled.div`
