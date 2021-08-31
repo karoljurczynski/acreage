@@ -4,27 +4,29 @@ import { useState, useEffect } from 'react';
 import FieldMenu from '../FieldMenu/FieldMenu';
 import { portal } from '../../config/StylesConfig';
 
+import { store } from '../../redux/reduxStore';
+import { setFieldMenuOpened } from '../../redux/actions/fieldActions';
+
 interface FieldProps {
   fieldData: FieldsPattern;
 }
 
-const Field: React.FC<FieldProps> = ({ fieldData }) => {
-
-  const [isFieldClicked, setIsFieldClicked] = useState(false);
+const Field: React.FC<FieldProps> = ({ fieldData }) => {  
+  const [isFieldMenuOpened, setIsFieldMenuOpened] = useState(false);
   const handleFieldOnClick = () => {
-    isFieldClicked ? setIsFieldClicked(false) : setIsFieldClicked(true);
+    store.dispatch(setFieldMenuOpened(fieldData.fieldId));
+    setIsFieldMenuOpened(store.getState().fields[fieldData.fieldId].isFieldMenuOpened);
   }
 
   useEffect(() => {
-    isFieldClicked ? portal.style.zIndex = "1" : portal.style.zIndex = "-1";
-    
+    isFieldMenuOpened ? portal.style.zIndex = "1" : portal.style.zIndex = "-1";
     return () => { portal.style.zIndex = "-1" };
 
-  }, [ isFieldClicked ]);
+  }, [ isFieldMenuOpened ]);
 
   return (
     <>
-    { isFieldClicked && 
+    { isFieldMenuOpened && 
       <FieldMenu
         closeFieldMenu={ handleFieldOnClick }
         fieldData={ fieldData }

@@ -43,40 +43,40 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ closeFieldMenu, fieldData }) => {
       if (fieldData.cropProps.cropType && fieldData.cropProps.cropType !== "Building") {
         if (fieldData.cropProps.isReadyToHarvest) {
           return [
-            <FieldMenuButton size="full" textContent="Harvest" primary />,
-            <FieldMenuButton size="half" textContent={ fieldData.cropProps.isWatered ? "Watered" : "Water" } watered={ fieldData.cropProps.isWatered ? true : false } primary={ !fieldData.cropProps.isWatered ? true : false } />,
-            <FieldMenuButton size="half" textContent={ fieldData.cropProps.isFertilized ? "Fertilized" : "Fertilize" } fertilized={ fieldData.cropProps.isFertilized ? true : false } primary={ !fieldData.cropProps.isFertilized ? true : false } />
+            <FieldMenuButton fieldId={ fieldData.fieldId } size="full" textContent="Harvest" primary />,
+            <FieldMenuButton fieldId={ fieldData.fieldId } size="half" textContent={ fieldData.cropProps.isWatered ? "Watered" : "Water" } watered={ fieldData.cropProps.isWatered ? true : false } primary={ !fieldData.cropProps.isWatered ? true : false } />,
+            <FieldMenuButton fieldId={ fieldData.fieldId } size="half" textContent={ fieldData.cropProps.isFertilized ? "Fertilized" : "Fertilize" } fertilized={ fieldData.cropProps.isFertilized ? true : false } primary={ !fieldData.cropProps.isFertilized ? true : false } />
           ];
         }
 
         else {
           return [
-            <FieldMenuButton size="full" buttonFor="Time" textContent="14:20" />,
-            <FieldMenuButton size="half" textContent={ fieldData.cropProps.isWatered ? "Watered" : "Water" } watered={ fieldData.cropProps.isWatered ? true : false } primary={ !fieldData.cropProps.isWatered ? true : false } />,
-            <FieldMenuButton size="half" textContent={ fieldData.cropProps.isFertilized ? "Fertilized" : "Fertilize" } fertilized={ fieldData.cropProps.isFertilized ? true : false } primary={ !fieldData.cropProps.isFertilized ? true : false } />
+            <FieldMenuButton fieldId={ fieldData.fieldId } size="full" buttonFor="Time" textContent="14:20" />,
+            <FieldMenuButton fieldId={ fieldData.fieldId } size="half" textContent={ fieldData.cropProps.isWatered ? "Watered" : "Water" } watered={ fieldData.cropProps.isWatered ? true : false } primary={ !fieldData.cropProps.isWatered ? true : false } />,
+            <FieldMenuButton fieldId={ fieldData.fieldId } size="half" textContent={ fieldData.cropProps.isFertilized ? "Fertilized" : "Fertilize" } fertilized={ fieldData.cropProps.isFertilized ? true : false } primary={ !fieldData.cropProps.isFertilized ? true : false } />
           ];
         }
       }
 
       if (fieldData.cropProps.cropType && fieldData.cropProps.cropType === "Building") {
         return [
-          <FieldMenuButton size="half" textContent="Upgrade" primary />,
-          <FieldMenuButton size="half" textContent="Destroy" />,
-          <FieldMenuButton size="full" buttonFor="Barn" textContent="100" />
+          <FieldMenuButton fieldId={ fieldData.fieldId } size="half" textContent="Upgrade" primary />,
+          <FieldMenuButton fieldId={ fieldData.fieldId } size="half" textContent="Destroy" />,
+          <FieldMenuButton fieldId={ fieldData.fieldId } size="full" buttonFor="Barn" textContent="100" />
         ];
       }
 
       else {
         return [
-          <FieldMenuButton size="half" textContent="Plant" primary />,
-          <FieldMenuButton size="half" textContent="Build" primary />,
-          <FieldMenuButton size="full" textContent="Sell this field" />
+          <FieldMenuButton fieldId={ fieldData.fieldId } size="half" textContent="Plant" primary />,
+          <FieldMenuButton fieldId={ fieldData.fieldId } size="half" textContent="Build" primary />,
+          <FieldMenuButton fieldId={ fieldData.fieldId } size="full" textContent="Sell this field" />
         ];
       }
     }
 
     else {
-      return [ <FieldMenuButton size="full" textContent="Buy this field" primary /> ];
+      return [ <FieldMenuButton fieldId={ fieldData.fieldId } size="full" textContent="Buy this field" primary /> ];
     }
   }
 
