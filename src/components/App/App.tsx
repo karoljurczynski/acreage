@@ -43,7 +43,7 @@ const App = () => {
 
         <MainBox type="Center">
           <TopSection color={ colorList.white } padding="15px 15px" isBoard={ true }>
-            <Board fields={ fields } />
+            <Board />
           </TopSection>
 
           <BottomSection color={ colorList.mainOrange } padding="15px 15px">

@@ -1,13 +1,13 @@
 import { Wrapper, Road } from './BoardStyles';
 import Field from '../Field/Field';
-import { FieldsPattern } from '../../config/fields';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { State } from '../../redux/reduxStore';
+import { _Field } from '../../redux/reducers/fieldReducer';
 
-interface BoardProps {
-  fields: FieldsPattern[];
-}
 
-const Board: React.FC<BoardProps> = ({ fields }) => {
+const Board: React.FC = () => {
+  const state = useSelector(state => state) as State;
 
   return (
     <Wrapper>
@@ -20,10 +20,10 @@ const Board: React.FC<BoardProps> = ({ fields }) => {
       <Road></Road>
       <Road></Road>
 
-      { fields.map((field: FieldsPattern) => {
+      { state.fields.map(( field: _Field ) => {
         return (
           <Field
-            key={ field.fieldId } 
+            key={ field.field.fieldId } 
             fieldData={ field }
           />
         )

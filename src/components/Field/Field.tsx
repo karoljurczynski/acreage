@@ -1,21 +1,20 @@
 import { FieldSegment } from './FieldStyles';
-import { FieldsPattern } from '../../config/fields';
 import { useState, useEffect } from 'react';
 import FieldMenu from '../FieldMenu/FieldMenu';
 import { portal } from '../../config/StylesConfig';
-
+import { _Field } from '../../redux/reducers/fieldReducer';
 import { store } from '../../redux/reduxStore';
 import { setFieldMenuOpened } from '../../redux/actions/fieldActions';
 
 interface FieldProps {
-  fieldData: FieldsPattern;
+  fieldData: _Field;
 }
 
 const Field: React.FC<FieldProps> = ({ fieldData }) => {  
   const [isFieldMenuOpened, setIsFieldMenuOpened] = useState(false);
   const handleFieldOnClick = () => {
-    store.dispatch(setFieldMenuOpened(fieldData.fieldId));
-    setIsFieldMenuOpened(store.getState().fields[fieldData.fieldId].isFieldMenuOpened);
+    store.dispatch(setFieldMenuOpened(fieldData.field.fieldId));
+    setIsFieldMenuOpened(store.getState().fields[fieldData.field.fieldId].isFieldMenuOpened);
   }
 
   useEffect(() => {
@@ -34,8 +33,9 @@ const Field: React.FC<FieldProps> = ({ fieldData }) => {
     }
     
     <FieldSegment 
-      fieldCrop={ fieldData.cropProps.cropType } 
-      fieldStatus={ fieldData.isFieldBought } 
+      fieldCrop={ fieldData.field.cropProps.cropType } 
+      fieldBuilding={ fieldData.field.cropProps.buildingType }
+      fieldStatus={ fieldData.field.isFieldBought } 
       onClick={ handleFieldOnClick }
     />
 

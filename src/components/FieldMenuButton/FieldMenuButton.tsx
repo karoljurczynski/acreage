@@ -1,6 +1,7 @@
 import { Button, ButtonHeading, ButtonTextContent, ButtonIcon } from './FieldMenuButtonStyles';
 import logo from '../../images/logo.png';
 import { store } from '../../redux/reduxStore';
+import { useDispatch } from 'react-redux';
 import { setIsFieldBought } from '../../redux/actions/fieldActions';
 
 interface FieldMenuButtonProps {
@@ -15,6 +16,7 @@ interface FieldMenuButtonProps {
 }
 
 const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, size, buttonFor, textContent, primary, failed, watered, fertilized }) => {
+  const dispatch = useDispatch();
   const getButtonHeading = (): string => {
     if (buttonFor === "Time")
       return "To harvest";
@@ -23,22 +25,47 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, size, buttonF
     else
       return "";
   }
+
+
   const handlePlantButton = () => {
-    store.dispatch(setIsFieldBought(fieldId));
+    console.log(store.getState());
   }
+  const handleWaterButton = () => {
+    console.log(store.getState());
+  }
+  const handleFertilizeButton = () => {
+    console.log(store.getState());
+  }
+  const handleHarvestButton = () => {
+    console.log(store.getState());
+  }
+  const handleBuildButton = () => {
+    console.log(store.getState());
+  }
+  const handleUpgradeButton = () => {
+    console.log(store.getState());
+  }
+  const handleDestroyButton = () => {
+    console.log(store.getState());
+  }
+  const handleBuyOrSellFieldButton = () => {
+    dispatch(setIsFieldBought(fieldId));
+  }
+
+
   const handleButtonOnClick = (): void => {
     switch(textContent) {
-      case "Plant": { handlePlantButton(); break };
-      /*case "Water": { handleWaterButton(); break };
-      case "Fertilize": { handleFertilizeButton(); break };
-      case "Harvest": { handleHarvestButton(); break };
+      case "Plant":           { handlePlantButton(); break }
+      case "Water":           { handleWaterButton(); break }
+      case "Fertilize":       { handleFertilizeButton(); break }
+      case "Harvest":         { handleHarvestButton(); break }
 
-      case "Build": { handleBuildButton(); break };
-      case "Upgrade": { handleUpgradeButton(); break };
-      case "Destroy": { handleDestroyButton(); break }
+      case "Build":           { handleBuildButton(); break }
+      case "Upgrade":         { handleUpgradeButton(); break }
+      case "Destroy":         { handleDestroyButton(); break }
       
-      case "Buy this field": { handleBuyFieldButton(); break };
-      case "Sell this field": { handleSellFieldButton(); break };*/
+      case "Buy this field":  { handleBuyOrSellFieldButton(); break }
+      case "Sell this field": { handleBuyOrSellFieldButton(); break }
     }
   }
   

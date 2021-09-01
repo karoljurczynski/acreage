@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import colorList from '../../config/colorList';
 
 interface FieldProps {
-  fieldCrop: string;
+  fieldCrop?: string;
+  fieldBuilding?: string;
   fieldStatus: boolean;
 }
 
