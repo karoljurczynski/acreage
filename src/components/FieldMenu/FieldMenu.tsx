@@ -27,10 +27,10 @@ interface FieldMenuProps {
 const FieldMenu: React.FC<FieldMenuProps> = ({ closeFieldMenu, fieldData }) => {
   const getFieldMenuName = (): string => {
     if (fieldData.field.isFieldBought) {
-      if (fieldData.field.cropProps.cropType && fieldData.field.cropProps.cropType !== "Building" )
+      if (fieldData.field.cropProps.cropType)
         return fieldData.field.cropProps.cropType;
-      if (fieldData.field.cropProps.cropType && fieldData.field.cropProps.cropType === "Building" )
-        return fieldData.field.cropProps.buildingType as string;
+      if (fieldData.field.cropProps.buildingType)
+        return fieldData.field.cropProps.buildingType;
       else
         return "Empty";
     }
@@ -40,7 +40,7 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ closeFieldMenu, fieldData }) => {
 
   const selectButtons = (): JSX.Element[] => {
     if (fieldData.field.isFieldBought) {
-      if (fieldData.field.cropProps.cropType && fieldData.field.cropProps.cropType !== "Building") {
+      if (fieldData.field.cropProps.cropType) {
         if (fieldData.field.cropProps.isReadyToHarvest) {
           return [
             <FieldMenuButton fieldId={ fieldData.field.fieldId } size="full" textContent="Harvest" primary />,
@@ -58,7 +58,7 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ closeFieldMenu, fieldData }) => {
         }
       }
 
-      if (fieldData.field.cropProps.cropType && fieldData.field.cropProps.cropType === "Building") {
+      if (fieldData.field.cropProps.buildingType) {
         return [
           <FieldMenuButton fieldId={ fieldData.field.fieldId } size="half" textContent="Upgrade" primary />,
           <FieldMenuButton fieldId={ fieldData.field.fieldId } size="half" textContent="Destroy" />,

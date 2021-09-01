@@ -2,7 +2,9 @@ import { Button, ButtonHeading, ButtonTextContent, ButtonIcon } from './FieldMen
 import logo from '../../images/logo.png';
 import { store } from '../../redux/reduxStore';
 import { useDispatch } from 'react-redux';
-import { setIsFieldBought } from '../../redux/actions/fieldActions';
+import { useSelector } from 'react-redux';
+import { State } from '../../redux/reduxStore';
+import { setIsFieldBought, setCropType, setIsCropWatered, setIsCropFertilized, setBuildingType, setIsCropReadyToHarvest } from '../../redux/actions/fieldActions';
 
 interface FieldMenuButtonProps {
   fieldId: number;
@@ -16,7 +18,9 @@ interface FieldMenuButtonProps {
 }
 
 const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, size, buttonFor, textContent, primary, failed, watered, fertilized }) => {
+  const state = useSelector(state => state) as State;
   const dispatch = useDispatch();
+
   const getButtonHeading = (): string => {
     if (buttonFor === "Time")
       return "To harvest";
@@ -28,25 +32,36 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, size, buttonF
 
 
   const handlePlantButton = () => {
-    console.log(store.getState());
+    dispatch(setBuildingType(fieldId, ""));
+    dispatch(setCropType(fieldId, "Wheat"));
   }
   const handleWaterButton = () => {
-    console.log(store.getState());
+    dispatch(setIsCropWatered(fieldId));
+    if (state.fields[fieldId].field.cropProps.isWatered && state.fields[fieldId].field.cropProps.isFertilized) {
+      dispatch(setIsCropReadyToHarvest(fieldId));
+    }
   }
   const handleFertilizeButton = () => {
-    console.log(store.getState());
+    dispatch(setIsCropFertilized(fieldId));
+    if (state.fields[fieldId].field.cropProps.isWatered && state.fields[fieldId].field.cropProps.isFertilized) {
+      dispatch(setIsCropReadyToHarvest(fieldId));
+    }
   }
   const handleHarvestButton = () => {
-    console.log(store.getState());
+    dispatch(setCropType(fieldId, ""));
+    dispatch(setIsCropReadyToHarvest(fieldId));
+    dispatch(setIsCropWatered(fieldId));
+    dispatch(setIsCropFertilized(fieldId));
   }
   const handleBuildButton = () => {
-    console.log(store.getState());
+    dispatch(setCropType(fieldId, ""));
+    dispatch(setBuildingType(fieldId, "Barn"));
   }
   const handleUpgradeButton = () => {
     console.log(store.getState());
   }
   const handleDestroyButton = () => {
-    console.log(store.getState());
+    dispatch(setBuildingType(fieldId, ""));
   }
   const handleBuyOrSellFieldButton = () => {
     dispatch(setIsFieldBought(fieldId));

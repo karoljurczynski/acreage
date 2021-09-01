@@ -22,11 +22,30 @@ export const FieldSegment = styled.button<FieldProps>`
   :hover, :focus {
     background: ${ disabledFieldHover };
   }
+
   ${({ fieldStatus }) => fieldStatus && `
     background: ${ colorList.darkBrown };
     
     :hover, :focus {
       background: ${ colorList.darkBrown };
+      border: 1px solid black;
+    }
+  `};
+
+  ${({ fieldCrop }) => fieldCrop && `
+    background: ${ colorList.green };
+    
+    :hover, :focus {
+      background: ${ colorList.green };
+      border: 1px solid black;
+    }
+  `};
+
+  ${({ fieldBuilding }) => fieldBuilding && `
+    background: ${ colorList.black };
+    
+    :hover, :focus {
+      background: ${ colorList.black };
       border: 1px solid black;
     }
   `};

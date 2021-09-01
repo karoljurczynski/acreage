@@ -13,7 +13,6 @@ import StorageContent from '../StorageContent/StorageContent';
 import StorageHeading from '../StorageHeading/StorageHeading';
 import Board from '../Board/Board';
 import { storedCrops } from '../../config/cropList';
-import { fields } from '../../config/fields';
 // import { db } from '../../config/firebaseConfig';
 
 

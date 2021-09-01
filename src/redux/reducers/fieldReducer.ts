@@ -71,13 +71,11 @@ export const fieldReducer = (state = createFieldsArray(), action: any) => {
     }
     case "SET_CROP_TYPE": {
       const newFields = state;
-      newFields[action.fieldId].field.cropProps.buildingType = "";
       newFields[action.fieldId].field.cropProps.cropType = action.cropType;
       return newFields;
     }
     case "SET_BUILDING_TYPE": {
       const newFields = state;
-      newFields[action.fieldId].field.cropProps.cropType = "";
       newFields[action.fieldId].field.cropProps.buildingType = action.buildingType;
       return newFields;
     }
