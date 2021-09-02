@@ -7,7 +7,8 @@ import { _Field } from '../../redux/reducers/fieldReducer';
 
 
 const Board: React.FC = () => {
-  const state = useSelector(state => state) as State;
+  const state: State = useSelector(state => state) as State;
+  const fields: _Field[] = state.fields;
 
   return (
     <Wrapper>
@@ -20,11 +21,11 @@ const Board: React.FC = () => {
       <Road></Road>
       <Road></Road>
 
-      { state.fields.map(( field: _Field ) => {
+      { fields.map(( fieldData: _Field ) => {
         return (
           <Field
-            key={ field.field.fieldId } 
-            fieldData={ field }
+            key={ fieldData.field.fieldId }
+            fieldId={ fieldData.field.fieldId } 
           />
         )
       })}

@@ -4,7 +4,7 @@ import colorList from '../../config/colorList';
 interface FieldProps {
   fieldCrop?: string;
   fieldBuilding?: string;
-  fieldStatus: boolean;
+  fieldStatus?: boolean;
 }
 
 const disabledField: string = "rgba(255, 255, 255, 0.4)";

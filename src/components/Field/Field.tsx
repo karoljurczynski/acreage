@@ -1,22 +1,56 @@
 import { FieldSegment } from './FieldStyles';
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import FieldMenu from '../FieldMenu/FieldMenu';
 import { portal } from '../../config/StylesConfig';
+import { State } from '../../redux/reduxStore';
 import { _Field } from '../../redux/reducers/fieldReducer';
 import { store } from '../../redux/reduxStore';
 import { setFieldMenuOpened } from '../../redux/actions/fieldActions';
 
 interface FieldProps {
-  fieldData: _Field;
+  fieldId: number;
 }
 
-const Field: React.FC<FieldProps> = ({ fieldData }) => {  
+const Field: React.FC<FieldProps> = ({ fieldId }) => {  
+  const state: State = useSelector(state => state) as State;
+  const fields: _Field[] = state.fields;
+
   const [isFieldMenuOpened, setIsFieldMenuOpened] = useState(false);
-  const handleFieldOnClick = () => {
-    store.dispatch(setFieldMenuOpened(fieldData.field.fieldId));
-    setIsFieldMenuOpened(store.getState().fields[fieldData.field.fieldId].isFieldMenuOpened);
+  const [fieldCrop, setFieldCrop] = useState("");
+  const [fieldBuilding, setFieldBuilding] = useState("");
+  const [fieldName, setFieldName] = useState("Not owned");
+  const [fieldStatus, setFieldStatus] = useState(false);
+  const [isWatered, setIsWatered] = useState(false);
+  const [isFertilized, setIsFertilized] = useState(false);
+
+  const updateFieldProps = (fields: _Field[]) => {
+    setFieldCrop(fields[fieldId].field.cropProps.cropType as string);
+    setFieldBuilding(fields[fieldId].field.cropProps.buildingType as string);
+    setFieldName(updateFieldName());
+    setFieldStatus(fields[fieldId].field.isFieldBought);
+    setIsWatered(fields[fieldId].field.cropProps.isWatered);
+    setIsFertilized(fields[fieldId].field.cropProps.isFertilized);
   }
 
+  const updateFieldName = (): string => {
+    if (fields[fieldId].field.isFieldBought) {
+      if (fields[fieldId].field.cropProps.cropType)
+        return fields[fieldId].field.cropProps.cropType as string;
+      if (fields[fieldId].field.cropProps.buildingType)
+        return fields[fieldId].field.cropProps.buildingType as string;
+      else
+        return "Empty";
+    }
+    else
+      return "Not owned";
+  }
+
+  const handleFieldOnClick = () => {
+    store.dispatch(setFieldMenuOpened(fieldId));
+    setIsFieldMenuOpened(fields[fieldId].isFieldMenuOpened);
+  }
+  
   useEffect(() => {
     isFieldMenuOpened ? portal.style.zIndex = "1" : portal.style.zIndex = "-1";
     return () => { portal.style.zIndex = "-1" };
@@ -27,15 +61,19 @@ const Field: React.FC<FieldProps> = ({ fieldData }) => {
     <>
     { isFieldMenuOpened && 
       <FieldMenu
+        fieldId={ fieldId }
+        updateFieldProps= { updateFieldProps }
+        fieldName={ fieldName }
+        isWatered= { isWatered }
+        isFertilized={ isFertilized}
         closeFieldMenu={ handleFieldOnClick }
-        fieldData={ fieldData }
       />
     }
     
     <FieldSegment 
-      fieldCrop={ fieldData.field.cropProps.cropType } 
-      fieldBuilding={ fieldData.field.cropProps.buildingType }
-      fieldStatus={ fieldData.field.isFieldBought } 
+      fieldCrop={ fieldCrop } 
+      fieldBuilding={ fieldBuilding }
+      fieldStatus={ fieldStatus }
       onClick={ handleFieldOnClick }
     />
 
