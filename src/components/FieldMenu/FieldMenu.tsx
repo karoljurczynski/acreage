@@ -37,7 +37,7 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ fieldId, fieldName, isWatered, is
   const [isPropertiesWindowOpened, setIsPropertiesWindowOpened] = useState(false);
 
   const selectButtons = (): JSX.Element[] => {
-    if (fields[fieldId].field.isFieldBought) {
+    if (fields[fieldId].field.fieldProps.isFieldBought) {
       if (fields[fieldId].field.cropProps.cropType) {
         if (fields[fieldId].field.cropProps.isReadyToHarvest) {
           return [

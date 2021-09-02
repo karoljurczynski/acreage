@@ -19,7 +19,7 @@ const Field: React.FC<FieldProps> = ({ fieldId }) => {
   const [isFieldMenuOpened, setIsFieldMenuOpened] = useState(false);
   const [fieldCrop, setFieldCrop] = useState("");
   const [fieldBuilding, setFieldBuilding] = useState("");
-  const [fieldName, setFieldName] = useState("Not owned");
+  const [fieldName, setFieldName] = useState(`${fields[fieldId].field.fieldProps.fieldPrice} $`);
   const [fieldStatus, setFieldStatus] = useState(false);
   const [isWatered, setIsWatered] = useState(false);
   const [isFertilized, setIsFertilized] = useState(false);
@@ -28,13 +28,13 @@ const Field: React.FC<FieldProps> = ({ fieldId }) => {
     setFieldCrop(fields[fieldId].field.cropProps.cropType as string);
     setFieldBuilding(fields[fieldId].field.cropProps.buildingType as string);
     setFieldName(updateFieldName());
-    setFieldStatus(fields[fieldId].field.isFieldBought);
+    setFieldStatus(fields[fieldId].field.fieldProps.isFieldBought);
     setIsWatered(fields[fieldId].field.cropProps.isWatered);
     setIsFertilized(fields[fieldId].field.cropProps.isFertilized);
   }
 
   const updateFieldName = (): string => {
-    if (fields[fieldId].field.isFieldBought) {
+    if (fields[fieldId].field.fieldProps.isFieldBought) {
       if (fields[fieldId].field.cropProps.cropType)
         return fields[fieldId].field.cropProps.cropType as string;
       if (fields[fieldId].field.cropProps.buildingType)
@@ -43,10 +43,11 @@ const Field: React.FC<FieldProps> = ({ fieldId }) => {
         return "Empty";
     }
     else
-      return "Not owned";
+      return `${fields[fieldId].field.fieldProps.fieldPrice} $`;
   }
 
   const handleFieldOnClick = () => {
+    console.log(state);
     store.dispatch(setFieldMenuOpened(fieldId));
     setIsFieldMenuOpened(fields[fieldId].isFieldMenuOpened);
   }

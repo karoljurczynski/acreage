@@ -33,6 +33,8 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, updateFieldPr
       return "Ground rate";
     if (buttonFor === "WaterRate")
       return "Water rate";
+    if (buttonFor === "FieldPrice")
+      return "Price";
     else
       return "";
   }

@@ -30,6 +30,14 @@ export const setIsCropReadyToHarvest = (fieldId: number) => {
     fieldId: fieldId
   }
 }
+export const updateTimeToGrow = (fieldId: number, newTimeInSeconds: number) => {
+  return {
+    type: "UPDATE_TIME_TO_GROW",
+    fieldId: fieldId,
+    newTimeInSeconds: newTimeInSeconds
+  }
+
+}
 export const setIsCropWatered = (fieldId: number) => {
   return {
     type: "SET_IS_CROP_WATERED",
