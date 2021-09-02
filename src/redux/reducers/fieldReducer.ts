@@ -2,21 +2,21 @@
 
 
 export interface _Field {
-  field: _FieldInfo;
+  field: FieldInfo;
   isFieldMenuOpened: boolean;
 }
-export interface _FieldInfo {
+export interface FieldInfo {
   fieldId: number;
-  fieldProps: _FieldProps;
-  cropProps: _CropProps;
+  fieldProps: FieldProps;
+  cropProps: CropProps;
 }
-export interface _FieldProps {
+export interface FieldProps {
   isFieldBought: boolean;
   fieldPrice: number;
   groundRate: number;
   waterRate: number;
 }
-export interface _CropProps {
+export interface CropProps {
   cropType?: string;
   buildingType?: string;
   timeToGrow: number;
@@ -27,6 +27,7 @@ export interface _CropProps {
 
 
 // FUNCTIONS WHICH CREATE INITIAL STATE
+
 
 const getRandomRate = (): number => {
   const ratesArray = [1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 5];
@@ -70,6 +71,7 @@ const createFieldsArray = () => {
 
 
 // REDUCER
+
 
 export const fieldReducer = (state = createFieldsArray(), action: any) => {
   switch (action.type) {
