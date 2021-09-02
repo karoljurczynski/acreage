@@ -20,6 +20,7 @@ import { root, portal } from '../../config/StylesConfig';
 import { State } from '../../redux/reduxStore';
 import { useSelector } from 'react-redux';
 import { _Field } from '../../redux/reducers/fieldReducer';
+import FieldProperties from '../FieldProperties/FieldProperties';
 
 interface FieldMenuProps {
   fieldId: number;
@@ -33,6 +34,7 @@ interface FieldMenuProps {
 const FieldMenu: React.FC<FieldMenuProps> = ({ fieldId, fieldName, isWatered, isFertilized, closeFieldMenu, updateFieldProps }) => {
   const state: State = useSelector(state => state) as State;
   const fields: _Field[] = state.fields;
+  const [isPropertiesWindowOpened, setIsPropertiesWindowOpened] = useState(false);
 
   const selectButtons = (): JSX.Element[] => {
     if (fields[fieldId].field.isFieldBought) {
@@ -76,11 +78,15 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ fieldId, fieldName, isWatered, is
     }
   }
 
+  const handleFieldPropsWindow = () => {
+    setIsPropertiesWindowOpened(!isPropertiesWindowOpened);
+  }
+
   // DISABLES BUTTONS AFTER MOUNTING FIELD MENU
   useEffect(() => {
     const rootElementButtons: NodeListOf<HTMLButtonElement> = root.querySelectorAll("button");
     rootElementButtons.forEach(( button: HTMLButtonElement ) => button.disabled = true );
-
+    
     return () => {
       rootElementButtons.forEach(( button: HTMLButtonElement ) => button.disabled = false );
     };
@@ -89,8 +95,15 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ fieldId, fieldName, isWatered, is
 
   return ReactDOM.createPortal (
     <>
+    { isPropertiesWindowOpened &&
+      <FieldProperties 
+        fields={ fields }
+        fieldId={ fieldId } 
+        handleFieldPropsWindow={ handleFieldPropsWindow }
+      />
+    }
     <BackgroundCloser onClick={ closeFieldMenu } />
-    <Wrapper>
+    <Wrapper hide={ isPropertiesWindowOpened ? true : false}>
 
       <TopSection>
         <HeadingContainer>
@@ -106,7 +119,7 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ fieldId, fieldName, isWatered, is
       </TopSection>
 
       <BottomSection>
-        <LargeButton onClick={ closeFieldMenu } secondary>Field properties</LargeButton>
+        <LargeButton onClick={ handleFieldPropsWindow } secondary>Field properties</LargeButton>
         <LargeButton onClick={ closeFieldMenu } primary>Close</LargeButton>
       </BottomSection>
 

@@ -26,6 +26,10 @@ export interface _CropProps {
 
 // INITIAL STATE
 
+const getRandomRate = (): number => {
+  const ratesArray = [1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 5];
+  return ratesArray[Math.floor(Math.random() * 15)];
+}
 
 const createFieldsArray = () => {
   const fields: _Field[] = [];
@@ -36,8 +40,8 @@ const createFieldsArray = () => {
           fieldId: i, 
           isFieldBought: false, 
           fieldProps: {
-            groundRate: 0,
-            waterRate: 0
+            groundRate: getRandomRate(),
+            waterRate: getRandomRate()
           },
           cropProps: {
             cropType: "",

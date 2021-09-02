@@ -11,7 +11,7 @@ interface FieldMenuButtonProps {
   fieldId: number;
   updateFieldProps: (fields: _Field[]) => void;
   size: "half" | "full";
-  buttonFor?: "Time" | "Barn";
+  buttonFor?: string;
   textContent: string;
   primary?: boolean;
   failed?: boolean;
@@ -29,6 +29,10 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, updateFieldPr
       return "To harvest";
     if (buttonFor === "Barn")
       return "Maximum capacity";
+    if (buttonFor === "GroundRate")
+      return "Ground rate";
+    if (buttonFor === "WaterRate")
+      return "Water rate";
     else
       return "";
   }

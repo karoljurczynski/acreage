@@ -3,12 +3,12 @@ import colorList from '../../config/colorList';
 
 interface ButtonProps {
   size: "half" | "full";
-  buttonFor?: "Time" | "Barn";
+  buttonFor?: string;
 }
 
 interface TextContentProps {
   size: "half" | "full";
-  buttonFor?: "Time" | "Barn";
+  buttonFor?: string;
   primary?: boolean;
   failed?: boolean;
   watered?: boolean;

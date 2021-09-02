@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 import colorList from '../../config/colorList';
 
-export const Wrapper = styled.div`
+interface WrapperProps {
+  fieldProperties?: boolean;
+  hide?: boolean;
+}
+
+export const Wrapper = styled.div<WrapperProps>`
   position: relative;
   top: 50%;
   left: 50%;
@@ -15,6 +20,15 @@ export const Wrapper = styled.div`
   background-color: ${colorList.white};
   z-index: 0;
   box-shadow: 1px 1px 5px #c5c5c5;
+
+  ${({ fieldProperties }) => fieldProperties && `
+    position: absolute;
+    z-index: 1;
+  `}
+
+  ${({ hide }) => hide && `
+    display: none;
+  `}
 `;
 
 export const TopSection = styled.section`
