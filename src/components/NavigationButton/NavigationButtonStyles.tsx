@@ -21,6 +21,6 @@ export const Button = styled.button<Props>`
 
   :hover, :focus {
     color: ${ colorList.black };
-    opacity: ${({ active }) => active ? "0.8" : "1" };
+    opacity: ${({ active }) => active ? "0.85" : "1" };
   }
 `;

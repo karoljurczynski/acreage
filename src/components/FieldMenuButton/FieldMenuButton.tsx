@@ -3,7 +3,6 @@ import logo from '../../images/logo.png';
 import { store } from '../../redux/reduxStore';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { useContext } from 'react';
 import { State } from '../../redux/reduxStore';
 import { _Field } from '../../redux/reducers/fieldReducer';
 import { User } from '../../redux/reducers/userReducer';
@@ -43,7 +42,6 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, updateFieldPr
     else
       return "";
   }
-
 
   const handlePlantButton = () => {
     dispatch(setBuildingType(fieldId, ""));
@@ -93,6 +91,11 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, updateFieldPr
       else {
         window.alert("Not enough money to buy this field!");
       }
+    }
+    else {
+      window.alert("Selling field retrieves only 50% of field value!");
+      setUserMoney(userData.gameplay.userMoney += (Math.floor(fields[fieldId].field.fieldProps.fieldPrice / 2)));
+      dispatch(setIsFieldBought(fieldId));
     }
     updateUserProps();
     updateFieldProps(fields);

@@ -35,8 +35,8 @@ const initialState: User = {
     avatarUrl: ""
   },
   gameplay: {
-    userMoney: 5000,
-    userExperience: 200,
+    userMoney: 10000,
+    userExperience: 0,
     userLevel: 1
   }
 }

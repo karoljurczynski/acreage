@@ -30,8 +30,8 @@ export const UserPanel: React.FC<_UserPanel> = ({ username, password, email, ava
               <UserLevel>{ userLevel } lvl</UserLevel>
             </UserInfo>
             <InfoBox property="Money" cashAmount={ userMoney } />
-            <InfoBox property="Experience" currentXp={ userExperience } xpToNextLevel={ 200 }/>
-            <InfoBox property="Next action finished" min={ 12 } sec={ 20 } />
+            <InfoBox property="Experience" currentXp={ userExperience } xpToNextLevel={ 20 }/>
+            <InfoBox property="Next action finished" min={ 1 } sec={ 10 } />
           </TopSection>
 
           <BottomSection color={ colorList.white } padding="20px 20px">

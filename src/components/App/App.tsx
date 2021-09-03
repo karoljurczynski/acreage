@@ -12,7 +12,6 @@ import StorageContent from '../StorageContent/StorageContent';
 import StorageHeading from '../StorageHeading/StorageHeading';
 import Board from '../Board/Board';
 import UserPanel from '../UserPanel/UserPanel';
-import { storedCrops } from '../../config/cropList';
 
 import { useSelector } from 'react-redux';
 import { State } from '../../redux/reduxStore';
@@ -76,12 +75,12 @@ const App = () => {
         
         <MainBox type="Right">
           <TopSection color={ colorList.mainOrange } padding="20px 20px">
-            <StorageHeading storedCrops={ storedCrops } />
+            <StorageHeading />
             <InfoIcon color={ colorList.white } pos="top" />
           </TopSection>
 
           <BottomSection color={ colorList.white } padding="15px 0 0 15px" >
-            <StorageContent storedCrops={ storedCrops } />
+            <StorageContent />
           </BottomSection>
         </MainBox>
 

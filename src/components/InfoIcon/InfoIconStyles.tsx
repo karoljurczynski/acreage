@@ -17,7 +17,7 @@ export const Icon = styled.button<IconProps>`
   background-color: transparent;
 
   :hover, :focus {
-    opacity: 0.65;
+    opacity: 0.6;
   }
 
   svg {

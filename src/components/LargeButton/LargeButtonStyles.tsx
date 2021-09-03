@@ -21,17 +21,19 @@ export const Button = styled.button<Props>`
   padding: 15px 0;
   margin-top: 10px;
   
-  :hover, :focus {
-    opacity: 0.65;
-  }
-
   ${({ primary }) => primary && `
     background-color: ${ colorList.mainOrange };
     box-shadow: 1px 1px 3px ${ colorList.textGray };
+    :hover, :focus {
+      opacity: 0.85;
+    }
   `}
 
   ${({ secondary }) => secondary && `
     border: 1px solid ${ colorList.mainOrange };
+    :hover, :focus {
+      color: ${ colorList.mainOrange };
+    }
   `}
 
   ${({ tertiary }) => tertiary && `
