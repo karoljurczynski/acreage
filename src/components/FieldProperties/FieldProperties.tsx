@@ -35,9 +35,9 @@ const FieldProperties: React.FC<_FieldProperties> = ({ fieldId, fields, handleFi
         <FieldNumber>Properties</FieldNumber>
       </HeadingContainer>
       <Main>
-        <FieldMenuButton updateFieldProps={ () => {} } fieldId={ fieldId } size="full" buttonFor="GroundRate" textContent={ `${fields[fieldId].field.fieldProps.groundRate} \\ 5`} />
-        <FieldMenuButton updateFieldProps={ () => {} } fieldId={ fieldId } size="full" buttonFor="WaterRate" textContent={ `${fields[fieldId].field.fieldProps.waterRate} \\ 5`} />
-        <FieldMenuButton updateFieldProps={ () => {} } fieldId={ fieldId } size="full" buttonFor="FieldPrice" textContent={ `${fields[fieldId].field.fieldProps.fieldPrice} $` } />
+        <FieldMenuButton updateFieldProps={ () => {} } updateUserProps={ () => {} } fieldId={ fieldId } size="full" buttonFor="GroundRate" textContent={ `${fields[fieldId].field.fieldProps.groundRate} \\ 5`} />
+        <FieldMenuButton updateFieldProps={ () => {} } updateUserProps={ () => {} } fieldId={ fieldId } size="full" buttonFor="WaterRate" textContent={ `${fields[fieldId].field.fieldProps.waterRate} \\ 5`} />
+        <FieldMenuButton updateFieldProps={ () => {} } updateUserProps={ () => {} } fieldId={ fieldId } size="full" buttonFor="FieldPrice" textContent={ `${fields[fieldId].field.fieldProps.fieldPrice} $` } />
       </Main>
     </TopSection> 
 

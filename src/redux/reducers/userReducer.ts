@@ -28,15 +28,15 @@ export interface StorageItem {
 
 const initialState: User = {
   settings: {
-    isLogged: false,
-    username: "",
-    password: "",
-    email: "",
+    isLogged: true,
+    username: "Default",
+    password: "123",
+    email: "default@email.com",
     avatarUrl: ""
   },
   gameplay: {
-    userMoney: 0,
-    userExperience: 0,
+    userMoney: 5000,
+    userExperience: 200,
     userLevel: 1
   }
 }

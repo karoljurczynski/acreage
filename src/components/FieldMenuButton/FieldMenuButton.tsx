@@ -3,13 +3,17 @@ import logo from '../../images/logo.png';
 import { store } from '../../redux/reduxStore';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { useContext } from 'react';
 import { State } from '../../redux/reduxStore';
 import { _Field } from '../../redux/reducers/fieldReducer';
+import { User } from '../../redux/reducers/userReducer';
 import { setIsFieldBought, setCropType, setIsCropWatered, setIsCropFertilized, setBuildingType, setIsCropReadyToHarvest } from '../../redux/actions/fieldActions';
+import { setUserMoney } from '../../redux/actions/userActions';
 
 interface FieldMenuButtonProps {
   fieldId: number;
   updateFieldProps: (fields: _Field[]) => void;
+  updateUserProps: () => void;
   size: "half" | "full";
   buttonFor?: string;
   textContent: string;
@@ -19,9 +23,10 @@ interface FieldMenuButtonProps {
   fertilized?: boolean;
 }
 
-const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, updateFieldProps, size, buttonFor, textContent, primary, failed, watered, fertilized }) => {
+const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, updateFieldProps, updateUserProps, size, buttonFor, textContent, primary, failed, watered, fertilized }) => {
   const state = useSelector(state => state) as State;
   const fields: _Field[] = state.fields;
+  const userData: User = state.userData;
   const dispatch = useDispatch();
 
   const getButtonHeading = (): string => {
@@ -80,7 +85,16 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, updateFieldPr
     updateFieldProps(fields);
   }
   const handleBuyOrSellFieldButton = () => {
-    dispatch(setIsFieldBought(fieldId));
+    if (!fields[fieldId].field.fieldProps.isFieldBought) {
+      if (userData.gameplay.userMoney >= fields[fieldId].field.fieldProps.fieldPrice) {
+        setUserMoney(userData.gameplay.userMoney -= fields[fieldId].field.fieldProps.fieldPrice);
+        dispatch(setIsFieldBought(fieldId));
+      }
+      else {
+        window.alert("Not enough money to buy this field!");
+      }
+    }
+    updateUserProps();
     updateFieldProps(fields);
   }
 

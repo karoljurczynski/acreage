@@ -10,9 +10,10 @@ import { setFieldMenuOpened } from '../../redux/actions/fieldActions';
 
 interface FieldProps {
   fieldId: number;
+  updateUserProps: () => void;
 }
 
-const Field: React.FC<FieldProps> = ({ fieldId }) => {  
+const Field: React.FC<FieldProps> = ({ fieldId, updateUserProps }) => {  
   const state: State = useSelector(state => state) as State;
   const fields: _Field[] = state.fields;
 
@@ -64,6 +65,7 @@ const Field: React.FC<FieldProps> = ({ fieldId }) => {
       <FieldMenu
         fieldId={ fieldId }
         updateFieldProps= { updateFieldProps }
+        updateUserProps={ updateUserProps }
         fieldName={ fieldName }
         isWatered= { isWatered }
         isFertilized={ isFertilized}

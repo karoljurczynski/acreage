@@ -5,8 +5,11 @@ import { useSelector } from 'react-redux';
 import { State } from '../../redux/reduxStore';
 import { _Field } from '../../redux/reducers/fieldReducer';
 
+interface _Board {
+  updateUserProps: () => void;
+}
 
-const Board: React.FC = () => {
+const Board: React.FC<_Board> = ({ updateUserProps }) => {
   const state: State = useSelector(state => state) as State;
   const fields: _Field[] = state.fields;
 
@@ -25,7 +28,8 @@ const Board: React.FC = () => {
         return (
           <Field
             key={ fieldData.field.fieldId }
-            fieldId={ fieldData.field.fieldId } 
+            fieldId={ fieldData.field.fieldId }
+            updateUserProps={ updateUserProps } 
           />
         )
       })}

@@ -26,25 +26,25 @@ export const Road = styled.span`
   :nth-of-type(1) {
     width: 750px;
     left: 50%;
-    top: 296px;
+    top: 300px;
   }
 
   :nth-of-type(2) {
     width: 464px;
     left: 50%;
-    top: 71px;
+    top: 72px;
   }
 
   :nth-of-type(3) {
     width: 160px;
     left: calc(50%);
-    top: 146px;
+    top: 148px;
   }
 
   :nth-of-type(4) {
     width: 340px;
     left: calc(50% + 95px);
-    top: 521px;
+    top: 528px;
   }
 
   :nth-of-type(5) {
