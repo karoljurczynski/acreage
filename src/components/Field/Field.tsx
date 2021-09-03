@@ -1,4 +1,4 @@
-import { FieldSegment } from './FieldStyles';
+import { FieldSegment, FieldIcon } from './FieldStyles';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import FieldMenu from '../FieldMenu/FieldMenu';
@@ -7,6 +7,7 @@ import { State } from '../../redux/reduxStore';
 import { _Field } from '../../redux/reducers/fieldReducer';
 import { store } from '../../redux/reduxStore';
 import { setFieldMenuOpened } from '../../redux/actions/fieldActions';
+import logo from '../../images/logo.png';
 
 interface FieldProps {
   fieldId: number;
@@ -16,23 +17,6 @@ interface FieldProps {
 const Field: React.FC<FieldProps> = ({ fieldId, updateUserProps }) => {  
   const state: State = useSelector(state => state) as State;
   const fields: _Field[] = state.fields;
-
-  const [isFieldMenuOpened, setIsFieldMenuOpened] = useState(false);
-  const [fieldCrop, setFieldCrop] = useState("");
-  const [fieldBuilding, setFieldBuilding] = useState("");
-  const [fieldName, setFieldName] = useState(`${fields[fieldId].field.fieldProps.fieldPrice} $`);
-  const [fieldStatus, setFieldStatus] = useState(false);
-  const [isWatered, setIsWatered] = useState(false);
-  const [isFertilized, setIsFertilized] = useState(false);
-
-  const updateFieldProps = (fields: _Field[]) => {
-    setFieldCrop(fields[fieldId].field.cropProps.cropType as string);
-    setFieldBuilding(fields[fieldId].field.cropProps.buildingType as string);
-    setFieldName(updateFieldName());
-    setFieldStatus(fields[fieldId].field.fieldProps.isFieldBought);
-    setIsWatered(fields[fieldId].field.cropProps.isWatered);
-    setIsFertilized(fields[fieldId].field.cropProps.isFertilized);
-  }
 
   const updateFieldName = (): string => {
     if (fields[fieldId].field.fieldProps.isFieldBought) {
@@ -47,12 +31,29 @@ const Field: React.FC<FieldProps> = ({ fieldId, updateUserProps }) => {
       return `${fields[fieldId].field.fieldProps.fieldPrice} $`;
   }
 
+  const [isFieldMenuOpened, setIsFieldMenuOpened] = useState(false);
+  const [fieldCrop, setFieldCrop] = useState(fields[fieldId].field.cropProps.cropType as string);
+  const [fieldBuilding, setFieldBuilding] = useState(fields[fieldId].field.cropProps.buildingType as string);
+  const [fieldName, setFieldName] = useState(updateFieldName());
+  const [fieldStatus, setFieldStatus] = useState(fields[fieldId].field.fieldProps.isFieldBought);
+  const [isWatered, setIsWatered] = useState(fields[fieldId].field.cropProps.isWatered);
+  const [isFertilized, setIsFertilized] = useState(fields[fieldId].field.cropProps.isFertilized);
+
+  const updateFieldProps = (fields: _Field[]) => {
+    setFieldCrop(fields[fieldId].field.cropProps.cropType as string);
+    setFieldBuilding(fields[fieldId].field.cropProps.buildingType as string);
+    setFieldName(updateFieldName());
+    setFieldStatus(fields[fieldId].field.fieldProps.isFieldBought);
+    setIsWatered(fields[fieldId].field.cropProps.isWatered);
+    setIsFertilized(fields[fieldId].field.cropProps.isFertilized);
+  }
+
   const handleFieldOnClick = () => {
     console.log(state);
     store.dispatch(setFieldMenuOpened(fieldId));
     setIsFieldMenuOpened(fields[fieldId].isFieldMenuOpened);
   }
-  
+
   useEffect(() => {
     isFieldMenuOpened ? portal.style.zIndex = "1" : portal.style.zIndex = "-1";
     return () => { portal.style.zIndex = "-1" };
@@ -77,9 +78,9 @@ const Field: React.FC<FieldProps> = ({ fieldId, updateUserProps }) => {
       fieldCrop={ fieldCrop } 
       fieldBuilding={ fieldBuilding }
       fieldStatus={ fieldStatus }
-      onClick={ handleFieldOnClick }
-    />
-
+      onClick={ handleFieldOnClick }>
+        <FieldIcon src={ logo } />
+    </FieldSegment>
     </> 
   )
 }

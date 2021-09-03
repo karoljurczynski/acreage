@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import colorList from '../../config/colorList';
+import { crops } from '../../config/crops';
+import { buildings } from '../../config/buildings';
 
 interface FieldProps {
   fieldCrop?: string;
@@ -24,8 +26,7 @@ export const FieldSegment = styled.button<FieldProps>`
   }
 
   ${({ fieldStatus }) => fieldStatus && `
-    background: ${ colorList.darkBrown };
-    
+
     :hover, :focus {
       background: ${ colorList.darkBrown };
       border: 1px solid black;
@@ -49,4 +50,9 @@ export const FieldSegment = styled.button<FieldProps>`
       border: 1px solid black;
     }
   `};
+`;
+
+export const FieldIcon = styled.img`
+  width: 45%;
+  height: auto;
 `;

@@ -66,6 +66,25 @@ const createFieldsArray = () => {
     fields[i].field.fieldProps.fieldPrice = countFieldPrice(fields[i].field.fieldProps.groundRate, fields[i].field.fieldProps.waterRate);
   }
 
+  // DEFAULT FIELDS
+  fields[19].field.fieldProps.isFieldBought = true;
+  fields[19].field.fieldProps.groundRate = 1;
+  fields[19].field.fieldProps.waterRate = 1;
+
+  fields[20].field.fieldProps.isFieldBought = true;
+  fields[20].field.fieldProps.groundRate = 2;
+  fields[20].field.fieldProps.waterRate = 2;
+
+  fields[27].field.fieldProps.isFieldBought = true;
+  fields[27].field.cropProps.buildingType = "Farmhouse";
+  fields[27].field.fieldProps.groundRate = 1;
+  fields[27].field.fieldProps.waterRate = 1;
+
+  fields[28].field.fieldProps.isFieldBought = true;
+  fields[28].field.cropProps.buildingType = "Barn";
+  fields[28].field.fieldProps.groundRate = 1;
+  fields[28].field.fieldProps.waterRate = 1;
+
   return fields;
 }
 

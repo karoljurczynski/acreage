@@ -1,6 +1,6 @@
 import { Wrapper, Block, CropIcon, CropAmount } from './StorageContentStyles';
-import { State } from '../../redux/reduxStore';
 import { useState } from 'react';
+import { State } from '../../redux/reduxStore';
 import { StorageItem } from '../../redux/reducers/storageReducer'; 
 import { useSelector } from 'react-redux';
 import { crops } from '../../config/crops';
