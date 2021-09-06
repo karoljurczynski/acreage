@@ -56,17 +56,6 @@ export const crops: Crop[] = [
     expPerUnit: 0.5 
   },
   {
-    cropName: "Wheat",
-    cropIcon: wheat,
-    levelNeeded: 1,
-    timeToGrowInSeconds: 1,
-    groundRateNeeded: 1,
-    waterRateMin: 1,
-    waterRateMax: 3,
-    defaultYield: 1,
-    expPerUnit: 0.5
-  },
-  {
     cropName: "Grass",
     cropIcon: grass,
     levelNeeded: 0,

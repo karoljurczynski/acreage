@@ -3,7 +3,16 @@ import colorList from '../../config/colorList';
 
 interface WrapperProps {
   fieldProperties?: boolean;
+  width?: number;
   hide?: boolean;
+}
+
+interface SelectListItemProps {
+  heading?: boolean;
+}
+
+interface MainProps {
+  fullSize?: boolean;
 }
 
 export const Wrapper = styled.div<WrapperProps>`
@@ -29,6 +38,9 @@ export const Wrapper = styled.div<WrapperProps>`
   ${({ hide }) => hide && `
     display: none;
   `}
+  ${({ width }) => width && `
+    width: ${ width }px;
+  `}
 `;
 
 export const TopSection = styled.section`
@@ -42,12 +54,16 @@ export const TopSection = styled.section`
   padding: 20px;
 `;
 
-export const Main = styled.main`
+export const Main = styled.main<MainProps>`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 12px;
   width: 100%;
   margin-top: 20px;
+
+  ${({ fullSize }) => fullSize && `
+    grid-template-columns: 1fr;
+  `}
 `;
 
 export const BottomSection = styled.section`
@@ -90,4 +106,24 @@ export const FieldNumber = styled.p`
   color: ${ colorList.black };
   font-weight: bold;
   font-size: 12px;
+`;
+
+export const SelectListContainer = styled.ul`
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+`;
+
+export const SelectListItem = styled.li<SelectListItemProps>`
+  width: 100%;
+  height: 50px;
+  padding: 5px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  ${({ heading }) => heading && `
+
+  `}
 `;

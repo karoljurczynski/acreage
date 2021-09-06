@@ -15,13 +15,13 @@ import logo from '../../images/logo.png';
 import LargeButton from '../LargeButton/LargeButton';
 import { _Field } from '../../redux/reducers/fieldReducer';
 
-interface _FieldProperties {
+interface _FieldBuildWindow {
   fieldId: number;
   fields: _Field[];
-  handleFieldPropsWindow: () => void;
+  handleBuildWindow: () => void;
 }
 
-const FieldProperties: React.FC<_FieldProperties> = ({ fieldId, fields, handleFieldPropsWindow }) => {
+const FieldBuildWindow: React.FC<_FieldBuildWindow> = ({ fieldId, fields, handleBuildWindow }) => {
   return (
     <>
     <Wrapper fieldProperties={ true }>
@@ -42,7 +42,7 @@ const FieldProperties: React.FC<_FieldProperties> = ({ fieldId, fields, handleFi
     </TopSection> 
 
     <BottomSection>
-      <LargeButton onClick={ handleFieldPropsWindow } primary>Close</LargeButton>
+      <LargeButton onClick={ handleBuildWindow } primary>Close</LargeButton>
     </BottomSection>
 
     </Wrapper>
@@ -50,4 +50,4 @@ const FieldProperties: React.FC<_FieldProperties> = ({ fieldId, fields, handleFi
   )
 }
 
-export default FieldProperties;
+export default FieldBuildWindow;

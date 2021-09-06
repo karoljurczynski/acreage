@@ -13,6 +13,8 @@ interface FieldMenuButtonProps {
   fieldId: number;
   updateFieldProps: (fields: _Field[]) => void;
   updateUserProps: () => void;
+  handlePlantWindow: () => void;
+  handleBuildWindow: () => void;
   size: "half" | "full";
   buttonFor?: string;
   textContent: string;
@@ -22,7 +24,7 @@ interface FieldMenuButtonProps {
   fertilized?: boolean;
 }
 
-const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, updateFieldProps, updateUserProps, size, buttonFor, textContent, primary, failed, watered, fertilized }) => {
+const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, handleBuildWindow, handlePlantWindow, updateFieldProps, updateUserProps, size, buttonFor, textContent, primary, failed, watered, fertilized }) => {
   const state = useSelector(state => state) as State;
   const fields: _Field[] = state.fields;
   const userData: User = state.userData;
@@ -44,6 +46,7 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, updateFieldPr
   }
 
   const handlePlantButton = () => {
+    handlePlantWindow();
     dispatch(setBuildingType(fieldId, ""));
     dispatch(setCropType(fieldId, "Wheat"));
     updateFieldProps(fields);
@@ -70,6 +73,7 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, updateFieldPr
     updateFieldProps(fields);
   }
   const handleBuildButton = () => {
+    handleBuildWindow();
     dispatch(setCropType(fieldId, ""));
     dispatch(setBuildingType(fieldId, "Barn"));
     updateFieldProps(fields);
