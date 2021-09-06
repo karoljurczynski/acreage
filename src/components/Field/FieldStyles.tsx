@@ -7,6 +7,7 @@ interface FieldProps {
   fieldCrop?: string;
   fieldBuilding?: string;
   fieldStatus?: boolean;
+  isReadyToHarvest?: boolean;
 }
 
 const disabledField: string = "rgba(255, 255, 255, 0.4)";
@@ -19,40 +20,44 @@ export const FieldSegment = styled.button<FieldProps>`
   background: ${ disabledField };
   color: ${ colorList.black };
   cursor: pointer;
+  position: relative;
   z-index: 1;
 
   :hover, :focus {
-    background: ${ disabledFieldHover };
+    ::before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: white;
+      opacity: 0.45;
+    }
   }
 
   ${({ fieldStatus }) => fieldStatus && `
-
-    :hover, :focus {
-      background: ${ colorList.darkBrown };
-      border: 1px solid black;
-    }
+    background: ${ colorList.darkBrown };
   `};
 
   ${({ fieldCrop }) => fieldCrop && `
-    background: ${ colorList.green };
-    
-    :hover, :focus {
-      background: ${ colorList.green };
-      border: 1px solid black;
+    background: ${ colorList.lightGreen };
+    img {
+      width: 45%;
     }
   `};
 
   ${({ fieldBuilding }) => fieldBuilding && `
-    background: ${ colorList.black };
-    
-    :hover, :focus {
-      background: ${ colorList.black };
-      border: 1px solid black;
-    }
+    background: ${ colorList.darkBrown };
+  `};
+
+  ${({ isReadyToHarvest }) => isReadyToHarvest && `
+    background: ${ colorList.yellow };
   `};
 `;
 
 export const FieldIcon = styled.img`
-  width: 45%;
+  width: 65%;
   height: auto;
 `;

@@ -36,6 +36,8 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ fieldId, fieldName, isWatered, is
   const state: State = useSelector(state => state) as State;
   const fields: _Field[] = state.fields;
   const [isPropertiesWindowOpened, setIsPropertiesWindowOpened] = useState(false);
+  const [isPlantWindowOpened, setIsPlantWindowOpened] = useState(false);
+  const [isBuildWindowOpened, setIsBuildWindowOpened] = useState(false);
 
   const selectButtons = (): JSX.Element[] => {
     if (fields[fieldId].field.fieldProps.isFieldBought) {
@@ -82,6 +84,12 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ fieldId, fieldName, isWatered, is
   const handleFieldPropsWindow = () => {
     setIsPropertiesWindowOpened(!isPropertiesWindowOpened);
   }
+  const handlePlantWindow = () => {
+    setIsPlantWindowOpened(!isPlantWindowOpened);
+  }
+  const handleBuildWindow = () => {
+    setIsBuildWindowOpened(!isBuildWindowOpened);
+  }
 
   // DISABLES BUTTONS AFTER MOUNTING FIELD MENU
   useEffect(() => {
@@ -97,6 +105,20 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ fieldId, fieldName, isWatered, is
   return ReactDOM.createPortal (
     <>
     { isPropertiesWindowOpened &&
+      <FieldProperties 
+        fields={ fields }
+        fieldId={ fieldId } 
+        handleFieldPropsWindow={ handleFieldPropsWindow }
+      />
+    }
+    { isPlantWindowOpened &&
+      <FieldProperties 
+        fields={ fields }
+        fieldId={ fieldId } 
+        handleFieldPropsWindow={ handleFieldPropsWindow }
+      />
+    }
+    { isBuildWindowOpened &&
       <FieldProperties 
         fields={ fields }
         fieldId={ fieldId } 

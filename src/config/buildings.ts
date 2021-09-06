@@ -1,6 +1,8 @@
-import wheat from '../images/crops/wheat.png';
-import potato from '../images/crops/potato.png';
-import tomato from '../images/crops/tomato.png';
+import farmhouse from '../images/buildings/farmhouse.png';
+import barn from '../images/buildings/barn.png';
+import chicken from '../images/buildings/chicken.png';
+import cow from '../images/buildings/cow.png';
+
 
 export interface Building {
   buildingName: string;
@@ -16,13 +18,25 @@ export interface BuildingPart {
 export const buildings: Building[] = [
   {
     buildingName: "Farmhouse",
-    buildingIcon: wheat,
+    buildingIcon: farmhouse,
     buildingLevel: 1,
     buildingComponents: [{ brick: 3, concrete: 1 }]
   },
   {
     buildingName: "Barn",
-    buildingIcon: potato,
+    buildingIcon: barn,
+    buildingLevel: 1,
+    buildingComponents: [{ brick: 3, concrete: 1 }]
+  },
+  {
+    buildingName: "Chickens",
+    buildingIcon: chicken,
+    buildingLevel: 1,
+    buildingComponents: [{ brick: 3, concrete: 1 }]
+  },
+  {
+    buildingName: "Cows",
+    buildingIcon: cow,
     buildingLevel: 1,
     buildingComponents: [{ brick: 3, concrete: 1 }]
   }

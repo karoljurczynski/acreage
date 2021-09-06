@@ -12,7 +12,9 @@ const colorList: ColorListPattern = {
   black: "#000000",
   blue: "#00B2CE",
   warningRed: "#E60000",
-  green: "#009105"
+  lightGreen: "#00CE07",
+  green: "#009105",
+  yellow: "#FFCC00"
 }
 
 export default colorList;

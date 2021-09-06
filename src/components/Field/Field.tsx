@@ -8,6 +8,8 @@ import { _Field } from '../../redux/reducers/fieldReducer';
 import { store } from '../../redux/reduxStore';
 import { setFieldMenuOpened } from '../../redux/actions/fieldActions';
 import logo from '../../images/logo.png';
+import { crops } from '../../config/crops';
+import { buildings } from '../../config/buildings';
 
 interface FieldProps {
   fieldId: number;
@@ -37,6 +39,7 @@ const Field: React.FC<FieldProps> = ({ fieldId, updateUserProps }) => {
   const [fieldName, setFieldName] = useState(updateFieldName());
   const [fieldStatus, setFieldStatus] = useState(fields[fieldId].field.fieldProps.isFieldBought);
   const [isWatered, setIsWatered] = useState(fields[fieldId].field.cropProps.isWatered);
+  const [isReadyToHarvest, setIsReadyToHarvest] = useState(fields[fieldId].field.cropProps.isReadyToHarvest);
   const [isFertilized, setIsFertilized] = useState(fields[fieldId].field.cropProps.isFertilized);
 
   const updateFieldProps = (fields: _Field[]) => {
@@ -46,12 +49,30 @@ const Field: React.FC<FieldProps> = ({ fieldId, updateUserProps }) => {
     setFieldStatus(fields[fieldId].field.fieldProps.isFieldBought);
     setIsWatered(fields[fieldId].field.cropProps.isWatered);
     setIsFertilized(fields[fieldId].field.cropProps.isFertilized);
+    setIsReadyToHarvest(fields[fieldId].field.cropProps.isReadyToHarvest);
   }
 
   const handleFieldOnClick = () => {
     console.log(state);
     store.dispatch(setFieldMenuOpened(fieldId));
     setIsFieldMenuOpened(fields[fieldId].isFieldMenuOpened);
+  }
+
+  const getIcon = () => {
+    let icon: string = "";
+    if (fieldCrop) {
+      crops.forEach(crop => {
+        if (crop.cropName === fieldCrop)
+          icon = crop.cropIcon;
+      });
+    }
+    else {
+      buildings.forEach(building => {
+        if (building.buildingName === fieldBuilding)
+          icon = building.buildingIcon;
+      });
+    }
+    return icon;
   }
 
   useEffect(() => {
@@ -78,8 +99,14 @@ const Field: React.FC<FieldProps> = ({ fieldId, updateUserProps }) => {
       fieldCrop={ fieldCrop } 
       fieldBuilding={ fieldBuilding }
       fieldStatus={ fieldStatus }
-      onClick={ handleFieldOnClick }>
-        <FieldIcon src={ logo } />
+      isReadyToHarvest={ isReadyToHarvest }
+      onClick={ handleFieldOnClick }
+      title={ fieldCrop ? fieldCrop : fieldBuilding }>
+
+        { (fieldCrop || fieldBuilding) && 
+          <FieldIcon src={ getIcon() } />
+        }
+
     </FieldSegment>
     </> 
   )
