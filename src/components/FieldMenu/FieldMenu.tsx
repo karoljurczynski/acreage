@@ -27,14 +27,15 @@ import FieldBuildWindow from '../FieldBuildWindow/FieldBuildWindow';
 interface FieldMenuProps {
   fieldId: number;
   fieldName: string;
+  fieldIcon: string;
   isWatered: boolean;
   isFertilized: boolean;
   closeFieldMenu: () => void;
-  updateFieldProps: (fields: _Field[]) => void;
+  updateFieldProps: () => void;
   updateUserProps: () => void;
 }
 
-const FieldMenu: React.FC<FieldMenuProps> = ({ fieldId, fieldName, isWatered, isFertilized, closeFieldMenu, updateFieldProps, updateUserProps }) => {
+const FieldMenu: React.FC<FieldMenuProps> = ({ fieldId, fieldName, isWatered, isFertilized, closeFieldMenu, fieldIcon, updateFieldProps, updateUserProps }) => {
   const state: State = useSelector(state => state) as State;
   const fields: _Field[] = state.fields;
   const [isPropertiesWindowOpened, setIsPropertiesWindowOpened] = useState(false);
@@ -115,7 +116,7 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ fieldId, fieldName, isWatered, is
     }
     { isPlantWindowOpened &&
       <FieldPlantWindow 
-        fields={ fields }
+        updateFieldProps={ updateFieldProps }
         fieldId={ fieldId } 
         handlePlantWindow={ handlePlantWindow }
       />
@@ -133,7 +134,7 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ fieldId, fieldName, isWatered, is
       <TopSection>
         <HeadingContainer>
           <CropImageContainer>
-            <CropImage src={ logo } />
+            <CropImage src={ fieldName !== "Empty" ? fieldIcon : logo } />
           </CropImageContainer>
           <Name>{ fieldName }</Name>
           <FieldNumber>{ `Field #${ fields[fieldId].field.fieldId + 1 }` }</FieldNumber>

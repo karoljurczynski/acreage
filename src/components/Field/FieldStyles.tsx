@@ -44,7 +44,7 @@ export const FieldSegment = styled.button<FieldProps>`
   ${({ fieldCrop }) => fieldCrop && `
     background: ${ colorList.lightGreen };
     img {
-      width: 45%;
+      width: 50%;
     }
   `};
 

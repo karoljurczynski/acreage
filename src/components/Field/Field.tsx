@@ -42,7 +42,7 @@ const Field: React.FC<FieldProps> = ({ fieldId, updateUserProps }) => {
   const [isReadyToHarvest, setIsReadyToHarvest] = useState(fields[fieldId].field.cropProps.isReadyToHarvest);
   const [isFertilized, setIsFertilized] = useState(fields[fieldId].field.cropProps.isFertilized);
 
-  const updateFieldProps = (fields: _Field[]) => {
+  const updateFieldProps = () => {
     setFieldCrop(fields[fieldId].field.cropProps.cropType as string);
     setFieldBuilding(fields[fieldId].field.cropProps.buildingType as string);
     setFieldName(updateFieldName());
@@ -89,6 +89,7 @@ const Field: React.FC<FieldProps> = ({ fieldId, updateUserProps }) => {
         updateFieldProps= { updateFieldProps }
         updateUserProps={ updateUserProps }
         fieldName={ fieldName }
+        fieldIcon={ getIcon()}
         isWatered= { isWatered }
         isFertilized={ isFertilized}
         closeFieldMenu={ handleFieldOnClick }

@@ -14,11 +14,11 @@ export interface StorageItem {
 const initialState: StorageItem[] = [
   { name: "Wheat", amount: 6, type: "Crop" },
   { name: "Potato", amount: 12, type: "Crop" },
-  { name: "Wheat", amount: 5, type: "Part" },
+  { name: "Strawberry", amount: 5, type: "Crop" },
   { name: "Tomato", amount: 2, type: "Crop" },
-  { name: "Potato", amount: 1, type: "Seed" },
-  { name: "Wheat", amount: 1, type: "Seed" },
-  { name: "Tomato", amount: 3, type: "Part" }
+  { name: "Onion", amount: 1, type: "Seed" },
+  { name: "Grass", amount: 1, type: "Seed" },
+  { name: "Bolt", amount: 3, type: "Part" }
 ]
 
 

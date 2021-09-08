@@ -47,9 +47,6 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, handleBuildWi
 
   const handlePlantButton = () => {
     handlePlantWindow();
-    dispatch(setBuildingType(fieldId, ""));
-    dispatch(setCropType(fieldId, "Wheat"));
-    updateFieldProps(fields);
   }
   const handleWaterButton = () => {
     dispatch(setIsCropWatered(fieldId));

@@ -40,4 +40,10 @@ export const Button = styled.button<Props>`
     color: ${ colorList.mainOrange };
     border: 1px solid ${ colorList.textGray };
   `}
+  ${({ disabled }) => disabled && `
+    :hover, :focus {
+      opacity: 0.5; 
+    }
+    opacity: 0.5;
+  `}
 `;

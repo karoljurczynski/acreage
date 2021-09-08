@@ -9,10 +9,10 @@ import corn from '../images/crops/corn.png';
 import strawberry from '../images/crops/strawberry.png';
 import onion from '../images/crops/onion.png';
 
+
 export interface Crop {
   cropName: string;
   cropIcon: string;
-  levelNeeded: number;
   timeToGrowInSeconds: number;
   groundRateNeeded: number;
   waterRateMin: number;
@@ -21,11 +21,11 @@ export interface Crop {
   expPerUnit: number;
 }
 
+
 export const crops: Crop[] = [
   {
     cropName: "Wheat",
     cropIcon: wheat,
-    levelNeeded: 1,
     timeToGrowInSeconds: 1,
     groundRateNeeded: 1,
     waterRateMin: 1,
@@ -36,7 +36,6 @@ export const crops: Crop[] = [
   {
     cropName: "Potato",
     cropIcon: potato,
-    levelNeeded: 2,
     timeToGrowInSeconds: 3,
     groundRateNeeded: 2,
     waterRateMin: 1,
@@ -47,7 +46,6 @@ export const crops: Crop[] = [
   {
     cropName: "Tomato",
     cropIcon: tomato,
-    levelNeeded: 3,
     timeToGrowInSeconds: 2,
     groundRateNeeded: 2,
     waterRateMin: 2,
@@ -58,7 +56,6 @@ export const crops: Crop[] = [
   {
     cropName: "Grass",
     cropIcon: grass,
-    levelNeeded: 0,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateMin: 0,
@@ -69,7 +66,6 @@ export const crops: Crop[] = [
   {
     cropName: "Cabbage",
     cropIcon: cabbage,
-    levelNeeded: 0,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateMin: 0,
@@ -80,7 +76,6 @@ export const crops: Crop[] = [
   {
     cropName: "Beet",
     cropIcon: beet,
-    levelNeeded: 0,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateMin: 0,
@@ -91,7 +86,6 @@ export const crops: Crop[] = [
   {
     cropName: "Carrot",
     cropIcon: carrot,
-    levelNeeded: 0,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateMin: 0,
@@ -102,7 +96,6 @@ export const crops: Crop[] = [
   {
     cropName: "Corn",
     cropIcon: corn,
-    levelNeeded: 0,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateMin: 0,
@@ -113,7 +106,6 @@ export const crops: Crop[] = [
   {
     cropName: "Strawberry",
     cropIcon: strawberry,
-    levelNeeded: 0,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateMin: 0,
@@ -124,7 +116,6 @@ export const crops: Crop[] = [
   {
     cropName: "Onion",
     cropIcon: onion,
-    levelNeeded: 0,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateMin: 0,

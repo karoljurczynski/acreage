@@ -112,6 +112,7 @@ export const SelectListContainer = styled.ul`
   width: 100%;
   max-height: 300px;
   overflow-y: auto;
+  
 `;
 
 export const SelectListItem = styled.li<SelectListItemProps>`
@@ -123,6 +124,18 @@ export const SelectListItem = styled.li<SelectListItemProps>`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  cursor: pointer;
+
+  ::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
   ${({ heading }) => heading && `
 
   `}

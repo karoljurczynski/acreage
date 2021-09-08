@@ -1,5 +1,6 @@
 import farmhouse from '../images/buildings/farmhouse.png';
 import barn from '../images/buildings/barn.png';
+import well from '../images/buildings/well.png';
 import chicken from '../images/buildings/chicken.png';
 import cow from '../images/buildings/cow.png';
 
@@ -15,6 +16,7 @@ export interface BuildingPart {
   [key: string]: number;
 }
 
+
 export const buildings: Building[] = [
   {
     buildingName: "Farmhouse",
@@ -25,6 +27,12 @@ export const buildings: Building[] = [
   {
     buildingName: "Barn",
     buildingIcon: barn,
+    buildingLevel: 1,
+    buildingComponents: [{ brick: 3, concrete: 1 }]
+  },
+  {
+    buildingName: "Well",
+    buildingIcon: well,
     buildingLevel: 1,
     buildingComponents: [{ brick: 3, concrete: 1 }]
   },

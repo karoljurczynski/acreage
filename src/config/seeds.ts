@@ -14,6 +14,7 @@ export interface Seed {
   seedName: string;
   seedIcon: string;
   seedPrice: number;
+  levelNeeded: number
 }
 
 
@@ -21,51 +22,61 @@ export const seeds: Seed[] = [
   {
     seedName: "Wheat",
     seedIcon: wheat,
-    seedPrice: 1
+    seedPrice: 1,
+    levelNeeded: 1
   },
   {
     seedName: "Potato",
     seedIcon: potato,
-    seedPrice: 1
+    seedPrice: 1,
+    levelNeeded: 1
   },
   {
     seedName: "Tomato",
     seedIcon: tomato,
-    seedPrice: 1
+    seedPrice: 1,
+    levelNeeded: 1
   },
   {
     seedName: "Grass",
     seedIcon: grass,
-    seedPrice: 1
+    seedPrice: 1,
+    levelNeeded: 1
   },
   {
     seedName: "Cabbage",
     seedIcon: cabbage,
-    seedPrice: 1
+    seedPrice: 1,
+    levelNeeded: 1
   },
   {
     seedName: "Beet",
     seedIcon: beet,
-    seedPrice: 1
+    seedPrice: 1,
+    levelNeeded: 1
   },
   {
     seedName: "Carrot",
     seedIcon: carrot,
-    seedPrice: 1
+    seedPrice: 1,
+    levelNeeded: 1
   },
   {
     seedName: "Corn",
     seedIcon: corn,
-    seedPrice: 1
+    seedPrice: 1,
+    levelNeeded: 1
   },
   {
     seedName: "Strawberry",
     seedIcon: strawberry,
-    seedPrice: 1
+    seedPrice: 1,
+    levelNeeded: 1
   },
   {
     seedName: "Onion",
     seedIcon: onion,
-    seedPrice: 1
+    seedPrice: 1,
+    levelNeeded: 1
   }
 ]
