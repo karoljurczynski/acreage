@@ -105,6 +105,13 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ fieldId, fieldName, isWatered, is
     
   }, []);
 
+  const getIcon = () => {
+    if (fieldName === "Empty" || Number(fieldName[0]))
+      return logo;
+    else
+      return fieldIcon;
+  }
+
   return ReactDOM.createPortal (
     <>
     { isPropertiesWindowOpened &&
@@ -116,15 +123,15 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ fieldId, fieldName, isWatered, is
     }
     { isPlantWindowOpened &&
       <FieldPlantWindow 
-        updateFieldProps={ updateFieldProps }
-        fieldId={ fieldId } 
+        fieldId={ fieldId }
+        updateFieldProps={ updateFieldProps }  
         handlePlantWindow={ handlePlantWindow }
       />
     }
     { isBuildWindowOpened &&
       <FieldBuildWindow
-        fields={ fields }
-        fieldId={ fieldId } 
+        fieldId={ fieldId }
+        updateFieldProps={ updateFieldProps }
         handleBuildWindow={ handleBuildWindow }
       />
     }
@@ -134,7 +141,7 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ fieldId, fieldName, isWatered, is
       <TopSection>
         <HeadingContainer>
           <CropImageContainer>
-            <CropImage src={ fieldName !== "Empty" ? fieldIcon : logo } />
+            <CropImage src={ getIcon() } />
           </CropImageContainer>
           <Name>{ fieldName }</Name>
           <FieldNumber>{ `Field #${ fields[fieldId].field.fieldId + 1 }` }</FieldNumber>

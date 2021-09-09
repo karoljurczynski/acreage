@@ -14,10 +14,11 @@ import {
 
 import FieldMenuButton from '../FieldMenuButton/FieldMenuButton';
 import React, { useState, useEffect } from 'react';
-import logo from '../../images/logo.png';
 import LargeButton from '../LargeButton/LargeButton';
 import { crops } from '../../config/crops';
 import { _Field } from '../../redux/reducers/fieldReducer';
+import { StorageItem } from '../../redux/reducers/userReducer';
+import plant from '../../images/icons/plant.png';
 import { store } from '../../redux/reduxStore';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -34,6 +35,7 @@ interface _FieldPlantWindow {
 const FieldPlantWindow: React.FC<_FieldPlantWindow> = ({ fieldId, updateFieldProps, handlePlantWindow }) => {
   const state = useSelector(state => state) as State;
   const fields: _Field[] = state.fields;
+  const storage: StorageItem[] = state.storage;
   const dispatch = useDispatch();
   const [selectedItem, setSelectedItem] = useState<HTMLLIElement>();
   
@@ -66,7 +68,7 @@ const FieldPlantWindow: React.FC<_FieldPlantWindow> = ({ fieldId, updateFieldPro
     <TopSection>
       <HeadingContainer>
         <CropImageContainer>
-          <CropImage src={ logo } />
+          <CropImage src={ plant } />
         </CropImageContainer>
         <Name>Select a seed</Name>
         <FieldNumber>{ `Field #${ fields[fieldId].field.fieldId + 1 } ` }</FieldNumber>

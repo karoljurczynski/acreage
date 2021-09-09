@@ -12,7 +12,7 @@ const colorList: ColorListPattern = {
   black: "#000000",
   blue: "#00B2CE",
   warningRed: "#E60000",
-  lightGreen: "#00CE07",
+  lightGreen: "#08cc0f",
   green: "#009105",
   yellow: "#FFCC00"
 }

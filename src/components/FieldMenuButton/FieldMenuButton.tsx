@@ -1,5 +1,4 @@
 import { Button, ButtonHeading, ButtonTextContent, ButtonIcon } from './FieldMenuButtonStyles';
-import logo from '../../images/logo.png';
 import { store } from '../../redux/reduxStore';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -8,6 +7,16 @@ import { _Field } from '../../redux/reducers/fieldReducer';
 import { User } from '../../redux/reducers/userReducer';
 import { setIsFieldBought, setCropType, setIsCropWatered, setIsCropFertilized, setBuildingType, setIsCropReadyToHarvest } from '../../redux/actions/fieldActions';
 import { setUserMoney } from '../../redux/actions/userActions';
+
+import plant from '../../images/icons/plant.png';
+import water from '../../images/parts/water.png';
+import fertilizer from '../../images/parts/fertilizer.png';
+import harvest from '../../images/icons/harvest.png';
+import build from '../../images/icons/build.png';
+import upgrade from '../../images/icons/upgrade.png';
+import destroy from '../../images/icons/destroy.png';
+import buyField from '../../images/icons/buy.png';
+import sellField from '../../images/icons/sell.png';
 
 interface FieldMenuButtonProps {
   fieldId: number;
@@ -71,9 +80,6 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, handleBuildWi
   }
   const handleBuildButton = () => {
     handleBuildWindow();
-    dispatch(setCropType(fieldId, ""));
-    dispatch(setBuildingType(fieldId, "Barn"));
-    updateFieldProps(fields);
   }
   const handleUpgradeButton = () => {
     console.log(store.getState());
@@ -102,6 +108,24 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, handleBuildWi
     updateFieldProps(fields);
   }
 
+  const getIcon = () => {
+    switch(textContent) {
+      case "Plant":           { return plant }
+      case "Water":           { return water }
+      case "Watered":         { return water }
+      case "Fertilize":       { return fertilizer }
+      case "Fertilized":      { return fertilizer }
+      case "Harvest":         { return harvest }
+      
+      case "Build":           { return build }
+      case "Upgrade":         { return upgrade }
+      case "Destroy":         { return destroy }
+      
+      case "Buy this field":  { return buyField }
+      case "Sell this field": { return sellField }
+    }
+  }
+
 
   const handleButtonOnClick = (): void => {
     switch(textContent) {
@@ -125,7 +149,7 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, handleBuildWi
       buttonFor={ buttonFor }
       onClick={ handleButtonOnClick }>
       { buttonFor && <ButtonHeading>{ getButtonHeading() }</ButtonHeading> }
-      { !buttonFor && <ButtonIcon src={ logo }></ButtonIcon> }
+      { !buttonFor && <ButtonIcon src={ getIcon() }></ButtonIcon> }
       <ButtonTextContent primary={ primary } failed={ failed } watered={ watered } fertilized={ fertilized } size={ size } buttonFor={ buttonFor }>{ textContent }</ButtonTextContent>
     </Button>
   )
