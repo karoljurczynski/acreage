@@ -8,7 +8,7 @@ import { _Field } from '../../redux/reducers/fieldReducer';
 import { store } from '../../redux/reduxStore';
 import { setFieldMenuOpened } from '../../redux/actions/fieldActions';
 import logo from '../../images/logo.png';
-import { crops } from '../../config/crops';
+import { cropsArray } from '../../config/crops';
 import { buildings } from '../../config/buildings';
 
 interface FieldProps {
@@ -59,9 +59,10 @@ const Field: React.FC<FieldProps> = ({ fieldId, updateUserProps }) => {
   }
 
   const getIcon = () => {
+    
     let icon: string = "";
     if (fieldCrop) {
-      crops.forEach(crop => {
+      cropsArray.forEach(crop => {
         if (crop.cropName === fieldCrop)
           icon = crop.cropIcon;
       });

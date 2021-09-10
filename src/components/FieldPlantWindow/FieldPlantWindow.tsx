@@ -9,15 +9,28 @@ import {
   Main,
   BottomSection,
   SelectListContainer,
-  SelectListItem
+  SelectListItem,
+  SelectListItemWrapper,
+  SelectListItemText,
+  SelectListItemImage
+
 } from '../FieldMenu/FieldMenuStyles';
+
+import storagedSeeds from '../../images/stats/storaged_seeds.png';
+import storagedCrops from '../../images/stats/storaged_crops.png';
+import ground from '../../images/stats/ground.png';
+import hydration from '../../images/stats/hydration.png';
+import time from '../../images/stats/time.png';
+import filledStar from '../../images/stats/filled_star.png';
 
 import FieldMenuButton from '../FieldMenuButton/FieldMenuButton';
 import React, { useState, useEffect } from 'react';
 import LargeButton from '../LargeButton/LargeButton';
-import { crops } from '../../config/crops';
+import { crops, cropsArray } from '../../config/crops';
 import { _Field } from '../../redux/reducers/fieldReducer';
-import { StorageItem } from '../../redux/reducers/userReducer';
+import { Seed } from '../../config/seeds';
+import { seeds } from '../../config/seeds';
+import { StorageItem } from '../../redux/reducers/storageReducer';
 import plant from '../../images/icons/plant.png';
 import { store } from '../../redux/reduxStore';
 import { useDispatch } from 'react-redux';
@@ -38,19 +51,29 @@ const FieldPlantWindow: React.FC<_FieldPlantWindow> = ({ fieldId, updateFieldPro
   const storage: StorageItem[] = state.storage;
   const dispatch = useDispatch();
   const [selectedItem, setSelectedItem] = useState<HTMLLIElement>();
+  const [seedsInStorage, setSeedsInStorage] = useState<StorageItem[]>([]);
   
   useEffect(() => {
     if (selectedItem) selectedItem.style.backgroundColor = "red";
     return () => { if (selectedItem) selectedItem.style.backgroundColor = "white" }
 
   }, [ selectedItem ]);
+
+  useEffect(() => {
+    const filterForSeeds = (item: StorageItem) => {
+      if (item.type === "Seed" && item.amount)
+        return item;
+    }
+    setSeedsInStorage(storage.filter(filterForSeeds));
+  }, []);
+
   
   const handleItemSelect: React.MouseEventHandler = (e: React.MouseEvent) => {
     setSelectedItem(e.target as HTMLLIElement);
   }
 
   const handlePlantSelectedSeed = () => {
-    crops.forEach(crop => {
+    cropsArray.forEach(crop => {
       if (selectedItem) {
         if (crop.cropName === selectedItem.children[0].textContent) {
           dispatch(setBuildingType(fieldId, ""));
@@ -63,7 +86,7 @@ const FieldPlantWindow: React.FC<_FieldPlantWindow> = ({ fieldId, updateFieldPro
   }
   return (
     <>
-    <Wrapper fieldProperties={ true } width={ 400 }>
+    <Wrapper fieldProperties={ true } width={ 480 }>
 
     <TopSection>
       <HeadingContainer>
@@ -76,18 +99,40 @@ const FieldPlantWindow: React.FC<_FieldPlantWindow> = ({ fieldId, updateFieldPro
       <Main fullSize>
         <SelectListContainer>
           <SelectListItem heading>
-            <p>Crop</p>
-            <p>Storaged<br/>seeds</p>
-            <p>Storaged<br/>crops</p>
-            <p>Growing time</p>
+            <SelectListItemWrapper>
+              <SelectListItemText>Crop name</SelectListItemText>
+            </SelectListItemWrapper>
+            <SelectListItemWrapper>
+              <SelectListItemText><SelectListItemImage src={ storagedSeeds } title="Seeds in storage" /></SelectListItemText>
+              <SelectListItemText><SelectListItemImage src={ storagedCrops } title="Crops in storage" /></SelectListItemText>
+            </SelectListItemWrapper>
+            <SelectListItemWrapper>
+              <SelectListItemText><SelectListItemImage src={ ground } title="Required ground rate" /></SelectListItemText>
+              <SelectListItemText><SelectListItemImage src={ hydration } title="Required water rate" /></SelectListItemText>
+            </SelectListItemWrapper>
+            <SelectListItemWrapper>
+              <SelectListItemText><SelectListItemImage src={ time } title="Growing time" /></SelectListItemText>
+            </SelectListItemWrapper>
           </SelectListItem>
         </SelectListContainer>
         <SelectListContainer>
-          { crops.map((crop, index) => {
+          { seedsInStorage.map((seed, index) => {
             return (
               <SelectListItem onClick={ handleItemSelect } key={ index }>
-                <p>{ crop.cropName }</p>
-                <p>{ crop.timeToGrowInSeconds }</p>
+                <SelectListItemWrapper>
+                  <SelectListItemText>{ seed.name }</SelectListItemText>
+                </SelectListItemWrapper>
+                <SelectListItemWrapper>
+                  <SelectListItemText>{ seed.amount }</SelectListItemText>
+                  <SelectListItemText>{ seed.amount }</SelectListItemText>
+                </SelectListItemWrapper>
+                <SelectListItemWrapper>
+                  <SelectListItemText>{ crops[seed.name].groundRateNeeded }<SelectListItemImage src={ filledStar }/></SelectListItemText>
+                  <SelectListItemText>{ crops[seed.name].waterRateNeeded }<SelectListItemImage src={ filledStar }/></SelectListItemText>
+                </SelectListItemWrapper>
+                  <SelectListItemWrapper>
+                  <SelectListItemText>{ crops[seed.name].timeToGrowInSeconds }</SelectListItemText>
+                </SelectListItemWrapper>   
               </SelectListItem>
             )
           }) }

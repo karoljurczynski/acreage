@@ -127,16 +127,31 @@ export const SelectListItem = styled.li<SelectListItemProps>`
   position: relative;
   cursor: pointer;
 
-  ::before {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  ${({ heading }) => heading && `
-
+  ${({ heading }) => !heading && `
+    ::before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
   `}
+`;
+export const SelectListItemText = styled.p`
+  height: 70%;
+  width: auto;
+
+`;
+export const SelectListItemImage = styled.img`
+  height: 90%;
+  width: auto;
+`;
+export const SelectListItemWrapper = styled.span`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
 `;

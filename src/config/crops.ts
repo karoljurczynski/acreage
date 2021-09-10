@@ -11,116 +11,138 @@ import onion from '../images/crops/onion.png';
 
 
 export interface Crop {
+  [key: string]: CropData 
+}
+
+export interface CropData {
+  cropIcon: string;
+  timeToGrowInSeconds: number;
+  groundRateNeeded: number;
+  waterRateNeeded: number;
+  defaultYield: number;
+  expPerUnit: number;
+}
+
+export interface OldCrop {
   cropName: string;
   cropIcon: string;
   timeToGrowInSeconds: number;
   groundRateNeeded: number;
-  waterRateMin: number;
-  waterRateMax: number;
+  waterRateNeeded: number;
   defaultYield: number;
   expPerUnit: number;
 }
 
 
-export const crops: Crop[] = [
-  {
-    cropName: "Wheat",
+const makeArrayFromCrops = () => {
+  const newArray = [];
+  const objectKeys = Object.keys(crops);
+  for (let i = 0; i < objectKeys.length; i++) {
+    let newArrayItem: OldCrop = { 
+      cropName: objectKeys[i], 
+      cropIcon: crops[objectKeys[i]].cropIcon,
+      timeToGrowInSeconds: crops[objectKeys[i]].timeToGrowInSeconds,
+      groundRateNeeded: crops[objectKeys[i]].groundRateNeeded,
+      waterRateNeeded: crops[objectKeys[i]].waterRateNeeded,
+      defaultYield: crops[objectKeys[i]].defaultYield,
+      expPerUnit: crops[objectKeys[i]].expPerUnit
+    }
+    newArray.push(newArrayItem);
+  }
+  return newArray;
+}
+
+
+export const crops: Crop = {
+  Wheat: {
     cropIcon: wheat,
     timeToGrowInSeconds: 1,
     groundRateNeeded: 1,
-    waterRateMin: 1,
-    waterRateMax: 3,
+    waterRateNeeded: 3,
     defaultYield: 1,
     expPerUnit: 0.5
   },
-  {
-    cropName: "Potato",
+
+  Potato: {
     cropIcon: potato,
-    timeToGrowInSeconds: 3,
-    groundRateNeeded: 2,
-    waterRateMin: 1,
-    waterRateMax: 4,
+    timeToGrowInSeconds: 1,
+    groundRateNeeded: 1,
+    waterRateNeeded: 3,
     defaultYield: 1,
-    expPerUnit: 1 
+    expPerUnit: 1
   },
-  {
-    cropName: "Tomato",
+
+  Tomato: {
     cropIcon: tomato,
     timeToGrowInSeconds: 2,
     groundRateNeeded: 2,
-    waterRateMin: 2,
-    waterRateMax: 5,
+    waterRateNeeded: 5,
     defaultYield: 3,
     expPerUnit: 0.5 
   },
-  {
-    cropName: "Grass",
+
+  Grass: {
     cropIcon: grass,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
-    waterRateMin: 0,
-    waterRateMax: 0,
+    waterRateNeeded: 0,
     defaultYield: 0,
-    expPerUnit: 0 
+    expPerUnit: 0
   },
-  {
-    cropName: "Cabbage",
+
+  Cabbage: {
     cropIcon: cabbage,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
-    waterRateMin: 0,
-    waterRateMax: 0,
+    waterRateNeeded: 0,
     defaultYield: 0,
-    expPerUnit: 0  
+    expPerUnit: 0
   },
-  {
-    cropName: "Beet",
+
+  Beet: {
     cropIcon: beet,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
-    waterRateMin: 0,
-    waterRateMax: 0,
+    waterRateNeeded: 0,
     defaultYield: 0,
-    expPerUnit: 0 
+    expPerUnit: 0
   },
-  {
-    cropName: "Carrot",
+
+  Carrot: {
     cropIcon: carrot,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
-    waterRateMin: 0,
-    waterRateMax: 0,
+    waterRateNeeded: 0,
     defaultYield: 0,
-    expPerUnit: 0 
+    expPerUnit: 0
   },
-  {
-    cropName: "Corn",
+
+  Corn: {
     cropIcon: corn,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
-    waterRateMin: 0,
-    waterRateMax: 0,
+    waterRateNeeded: 0,
     defaultYield: 0,
-    expPerUnit: 0 
+    expPerUnit: 0
   },
-  {
-    cropName: "Strawberry",
+
+  Strawberry: {
     cropIcon: strawberry,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
-    waterRateMin: 0,
-    waterRateMax: 0,
+    waterRateNeeded: 0,
     defaultYield: 0,
-    expPerUnit: 0 
+    expPerUnit: 0
   },
-  {
-    cropName: "Onion",
+
+  Onion: {
     cropIcon: onion,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
-    waterRateMin: 0,
-    waterRateMax: 0,
+    waterRateNeeded: 0,
     defaultYield: 0,
-    expPerUnit: 0 
+    expPerUnit: 0
   }
-]
+}
+
+export const cropsArray = makeArrayFromCrops();
