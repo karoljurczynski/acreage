@@ -5,6 +5,10 @@ export interface _Field {
   field: FieldInfo;
   isFieldMenuOpened: boolean;
 }
+export interface FieldInterface {
+  data: FieldInfo;
+  isFieldMenuOpened: boolean;
+}
 export interface FieldInfo {
   fieldId: number;
   fieldProps: FieldProps;

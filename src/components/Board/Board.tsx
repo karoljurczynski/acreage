@@ -2,16 +2,13 @@ import { Wrapper, Road } from './BoardStyles';
 import Field from '../Field/Field';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { State } from '../../redux/reduxStore';
-import { _Field } from '../../redux/reducers/fieldReducer';
+import { StateInterface } from '../../redux/reduxStore';
+import { FieldInterface } from '../../redux/reducers/fieldReducer';
 
-interface _Board {
-  updateUserProps: () => void;
-}
 
-const Board: React.FC<_Board> = ({ updateUserProps }) => {
-  const state: State = useSelector(state => state) as State;
-  const fields: _Field[] = state.fields;
+const Board: React.FC = () => {
+  const state: StateInterface = useSelector(state => state) as StateInterface;
+  const fields: FieldInterface[] = state.fields;
 
   return (
     <Wrapper>
@@ -24,13 +21,9 @@ const Board: React.FC<_Board> = ({ updateUserProps }) => {
       <Road></Road>
       <Road></Road>
 
-      { fields.map(( fieldData: _Field ) => {
+      { fields.map(( field: FieldInterface ) => {
         return (
-          <Field
-            key={ fieldData.field.fieldId }
-            fieldId={ fieldData.field.fieldId }
-            updateUserProps={ updateUserProps } 
-          />
+          <Field key={ field.data.fieldId } fieldId={ field.data.fieldId } />
         )
       })}
 

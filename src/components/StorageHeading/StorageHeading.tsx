@@ -1,12 +1,12 @@
 import { Wrapper, Heading, Subheading } from './StorageHeadingStyles';
 import { useState } from 'react';
 
-import { State } from '../../redux/reduxStore';
+import { StateInterface } from '../../redux/reduxStore';
 import { StorageItem } from '../../redux/reducers/storageReducer'; 
 import { useSelector } from 'react-redux';
 
 const StorageHeading: React.FC = () => {
-  const state: State = useSelector(state => state) as State;
+  const state: StateInterface = useSelector(state => state) as StateInterface;
   const storage: StorageItem[] = state.storage;
 
 

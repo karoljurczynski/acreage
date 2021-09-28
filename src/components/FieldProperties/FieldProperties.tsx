@@ -13,15 +13,19 @@ import {
 import FieldMenuButton from '../FieldMenuButton/FieldMenuButton';
 import logo from '../../images/logo.png';
 import LargeButton from '../LargeButton/LargeButton';
-import { _Field } from '../../redux/reducers/fieldReducer';
+import { FieldInterface } from '../../redux/reducers/fieldReducer';
+import { useSelector } from 'react-redux';
+import { StateInterface } from '../../redux/reduxStore';
 
 interface _FieldProperties {
   fieldId: number;
-  fields: _Field[];
   handleFieldPropsWindow: () => void;
 }
 
-const FieldProperties: React.FC<_FieldProperties> = ({ fieldId, fields, handleFieldPropsWindow }) => {
+const FieldProperties: React.FC<_FieldProperties> = ({ fieldId, handleFieldPropsWindow }) => {
+  const state = useSelector(state => state) as StateInterface;
+  const field: FieldInterface = state.fields[fieldId];
+  
   return (
     <>
     <Wrapper fieldProperties={ true }>
@@ -31,13 +35,13 @@ const FieldProperties: React.FC<_FieldProperties> = ({ fieldId, fields, handleFi
         <CropImageContainer>
           <CropImage src={ logo } />
         </CropImageContainer>
-        <Name>{ `Field #${ fields[fieldId].field.fieldId + 1 }` }</Name>
+        <Name>{ `Field #${ field.data.fieldId + 1 }` }</Name>
         <FieldNumber>Properties</FieldNumber>
       </HeadingContainer>
       <Main>
-        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} } updateFieldProps={ () => {} } updateUserProps={ () => {} } fieldId={ fieldId } size="full" buttonFor="GroundRate" textContent={ `${fields[fieldId].field.fieldProps.groundRate} \\ 5`} />
-        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} } updateFieldProps={ () => {} } updateUserProps={ () => {} } fieldId={ fieldId } size="full" buttonFor="WaterRate" textContent={ `${fields[fieldId].field.fieldProps.waterRate} \\ 5`} />
-        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} } updateFieldProps={ () => {} } updateUserProps={ () => {} } fieldId={ fieldId } size="full" buttonFor="FieldPrice" textContent={ `${fields[fieldId].field.fieldProps.fieldPrice} $` } />
+        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} }  updateUserProps={ () => {} } fieldId={ fieldId } size="full" buttonFor="GroundRate" textContent={ `${field.data.fieldProps.groundRate} \\ 5`} />
+        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} }  updateUserProps={ () => {} } fieldId={ fieldId } size="full" buttonFor="WaterRate" textContent={ `${field.data.fieldProps.waterRate} \\ 5`} />
+        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} }  updateUserProps={ () => {} } fieldId={ fieldId } size="full" buttonFor="FieldPrice" textContent={ `${field.data.fieldProps.fieldPrice} $` } />
       </Main>
     </TopSection> 
 

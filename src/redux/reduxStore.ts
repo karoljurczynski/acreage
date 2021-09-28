@@ -1,8 +1,7 @@
 import { createStore, combineReducers } from 'redux';
 
-
 import { fieldReducer } from './reducers/fieldReducer';
-import { _Field } from './reducers/fieldReducer';
+import { FieldInterface } from './reducers/fieldReducer';
 
 import { userReducer } from './reducers/userReducer';
 import { User } from './reducers/userReducer';
@@ -11,8 +10,8 @@ import { storageReducer } from './reducers/storageReducer';
 import { StorageItem } from './reducers/storageReducer';
 
 
-export interface State {
-  fields: _Field[];
+export interface StateInterface {
+  fields: FieldInterface[];
   userData: User;
   storage: StorageItem[];
 }

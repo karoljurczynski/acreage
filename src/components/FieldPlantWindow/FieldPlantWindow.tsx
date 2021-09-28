@@ -27,7 +27,7 @@ import FieldMenuButton from '../FieldMenuButton/FieldMenuButton';
 import React, { useState, useEffect } from 'react';
 import LargeButton from '../LargeButton/LargeButton';
 import { crops, cropsArray } from '../../config/crops';
-import { _Field } from '../../redux/reducers/fieldReducer';
+import { FieldInterface, _Field } from '../../redux/reducers/fieldReducer';
 import { Seed } from '../../config/seeds';
 import { seeds } from '../../config/seeds';
 import { StorageItem } from '../../redux/reducers/storageReducer';
@@ -35,19 +35,18 @@ import plant from '../../images/icons/plant.png';
 import { store } from '../../redux/reduxStore';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { State } from '../../redux/reduxStore';
+import { StateInterface } from '../../redux/reduxStore';
 import { setBuildingType, setCropType } from '../../redux/actions/fieldActions';
 
 
 interface _FieldPlantWindow {
   fieldId: number;
-  updateFieldProps: () => void;
   handlePlantWindow: () => void;
 }
 
-const FieldPlantWindow: React.FC<_FieldPlantWindow> = ({ fieldId, updateFieldProps, handlePlantWindow }) => {
-  const state = useSelector(state => state) as State;
-  const fields: _Field[] = state.fields;
+const FieldPlantWindow: React.FC<_FieldPlantWindow> = ({ fieldId, handlePlantWindow }) => {
+  const state = useSelector(state => state) as StateInterface;
+  const field: FieldInterface = state.fields[fieldId];
   const storage: StorageItem[] = state.storage;
   const dispatch = useDispatch();
   const [selectedItem, setSelectedItem] = useState<HTMLLIElement>();
@@ -78,7 +77,6 @@ const FieldPlantWindow: React.FC<_FieldPlantWindow> = ({ fieldId, updateFieldPro
         if (crop.cropName === selectedItem.children[0].textContent) {
           dispatch(setBuildingType(fieldId, ""));
           dispatch(setCropType(fieldId, crop.cropName));
-          updateFieldProps();
         }
       }
     });
@@ -94,7 +92,7 @@ const FieldPlantWindow: React.FC<_FieldPlantWindow> = ({ fieldId, updateFieldPro
           <CropImage src={ plant } />
         </CropImageContainer>
         <Name>Select a seed</Name>
-        <FieldNumber>{ `Field #${ fields[fieldId].field.fieldId + 1 } ` }</FieldNumber>
+        <FieldNumber>{ `Field #${ field.data.fieldId + 1 } ` }</FieldNumber>
       </HeadingContainer>
       <Main fullSize>
         <SelectListContainer>

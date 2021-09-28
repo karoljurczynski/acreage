@@ -1,6 +1,6 @@
 import { Wrapper, Block, CropIcon, CropAmount } from './StorageContentStyles';
 import { useState } from 'react';
-import { State } from '../../redux/reduxStore';
+import { StateInterface } from '../../redux/reduxStore';
 import { StorageItem } from '../../redux/reducers/storageReducer'; 
 import { useSelector } from 'react-redux';
 import { cropsArray } from '../../config/crops';
@@ -8,7 +8,7 @@ import { seeds } from '../../config/seeds';
 import { parts } from '../../config/parts';
 
 const StorageContent: React.FC = () => {
-  const state: State = useSelector(state => state) as State;
+  const state: StateInterface = useSelector(state => state) as StateInterface;
   const storage: StorageItem[] = state.storage;
 
   const [storageArray, setStorageArray] = useState(storage);

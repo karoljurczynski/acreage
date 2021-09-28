@@ -17,9 +17,9 @@ import BackgroundCloser from '../BackgroundCloser/BackgroundCloser';
 import logo from '../../images/logo.png';
 import LargeButton from '../LargeButton/LargeButton';
 import { root, portal } from '../../config/StylesConfig';
-import { State } from '../../redux/reduxStore';
+import { StateInterface } from '../../redux/reduxStore';
 import { useSelector } from 'react-redux';
-import { _Field } from '../../redux/reducers/fieldReducer';
+import { FieldInterface } from '../../redux/reducers/fieldReducer';
 import FieldProperties from '../FieldProperties/FieldProperties';
 import FieldPlantWindow from '../FieldPlantWindow/FieldPlantWindow';
 import FieldBuildWindow from '../FieldBuildWindow/FieldBuildWindow';
@@ -36,51 +36,51 @@ interface FieldMenuProps {
 }
 
 const FieldMenu: React.FC<FieldMenuProps> = ({ fieldId, fieldName, isWatered, isFertilized, closeFieldMenu, fieldIcon, updateFieldProps, updateUserProps }) => {
-  const state: State = useSelector(state => state) as State;
-  const fields: _Field[] = state.fields;
+  const state: StateInterface = useSelector(state => state) as StateInterface;
+  const field: FieldInterface = state.fields[fieldId];
   const [isPropertiesWindowOpened, setIsPropertiesWindowOpened] = useState(false);
   const [isPlantWindowOpened, setIsPlantWindowOpened] = useState(false);
   const [isBuildWindowOpened, setIsBuildWindowOpened] = useState(false);
 
   const selectButtons = (): JSX.Element[] => {
-    if (fields[fieldId].field.fieldProps.isFieldBought) {
-      if (fields[fieldId].field.cropProps.cropType) {
-        if (fields[fieldId].field.cropProps.isReadyToHarvest) {
+    if (field.data.fieldProps.isFieldBought) {
+      if (field.data.cropProps.cropType) {
+        if (field.data.cropProps.isReadyToHarvest) {
           return [
-            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps } updateFieldProps={ updateFieldProps } size="full" textContent="Harvest" primary />,
-            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps } updateFieldProps={ updateFieldProps } size="half" textContent={ isWatered ? "Watered" : "Water" } watered={ isWatered ? true : false } primary={ !isWatered ? true : false } />,
-            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps } updateFieldProps={ updateFieldProps } size="half" textContent={ isFertilized ? "Fertilized" : "Fertilize" } fertilized={ isFertilized ? true : false } primary={ !isFertilized ? true : false } />
+            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps }  size="full" textContent="Harvest" primary />,
+            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps }  size="half" textContent={ isWatered ? "Watered" : "Water" } watered={ isWatered ? true : false } primary={ !isWatered ? true : false } />,
+            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps }  size="half" textContent={ isFertilized ? "Fertilized" : "Fertilize" } fertilized={ isFertilized ? true : false } primary={ !isFertilized ? true : false } />
           ];
         }
 
         else {
           return [
-            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps } updateFieldProps={ updateFieldProps } size="full" buttonFor="Time" textContent="14:20" />,
-            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps } updateFieldProps={ updateFieldProps } size="half" textContent={ isWatered ? "Watered" : "Water" } watered={ isWatered ? true : false } primary={ !isWatered ? true : false } />,
-            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps } updateFieldProps={ updateFieldProps } size="half" textContent={ isFertilized ? "Fertilized" : "Fertilize" } fertilized={ isFertilized ? true : false } primary={ !isFertilized ? true : false } />
+            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps }  size="full" buttonFor="Time" textContent="14:20" />,
+            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps }  size="half" textContent={ isWatered ? "Watered" : "Water" } watered={ isWatered ? true : false } primary={ !isWatered ? true : false } />,
+            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps }  size="half" textContent={ isFertilized ? "Fertilized" : "Fertilize" } fertilized={ isFertilized ? true : false } primary={ !isFertilized ? true : false } />
           ];
         }
       }
 
-      if (fields[fieldId].field.cropProps.buildingType) {
+      if (field.data.cropProps.buildingType) {
         return [
-          <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps } updateFieldProps={ updateFieldProps } size="half" textContent="Upgrade" primary />,
-          <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps } updateFieldProps={ updateFieldProps } size="half" textContent="Destroy" />,
-          <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps } updateFieldProps={ updateFieldProps } size="full" buttonFor="Barn" textContent="100" />
+          <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps }  size="half" textContent="Upgrade" primary />,
+          <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps }  size="half" textContent="Destroy" />,
+          <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps }  size="full" buttonFor="Barn" textContent="100" />
         ];
       }
 
       else {
         return [
-          <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps } updateFieldProps={ updateFieldProps } size="half" textContent="Plant" primary />,
-          <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps } updateFieldProps={ updateFieldProps } size="half" textContent="Build" primary />,
-          <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps } updateFieldProps={ updateFieldProps } size="full" textContent="Sell this field" />
+          <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps }  size="half" textContent="Plant" primary />,
+          <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps }  size="half" textContent="Build" primary />,
+          <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps }  size="full" textContent="Sell this field" />
         ];
       }
     }
 
     else {
-      return [ <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps } updateFieldProps={ updateFieldProps } size="full" textContent="Buy this field" primary /> ];
+      return [ <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow } updateUserProps={ updateUserProps }  size="full" textContent="Buy this field" primary /> ];
     }
   }
 
@@ -116,7 +116,6 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ fieldId, fieldName, isWatered, is
     <>
     { isPropertiesWindowOpened &&
       <FieldProperties 
-        fields={ fields }
         fieldId={ fieldId } 
         handleFieldPropsWindow={ handleFieldPropsWindow }
       />
@@ -124,14 +123,12 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ fieldId, fieldName, isWatered, is
     { isPlantWindowOpened &&
       <FieldPlantWindow 
         fieldId={ fieldId }
-        updateFieldProps={ updateFieldProps }  
         handlePlantWindow={ handlePlantWindow }
       />
     }
     { isBuildWindowOpened &&
       <FieldBuildWindow
         fieldId={ fieldId }
-        updateFieldProps={ updateFieldProps }
         handleBuildWindow={ handleBuildWindow }
       />
     }
@@ -143,8 +140,8 @@ const FieldMenu: React.FC<FieldMenuProps> = ({ fieldId, fieldName, isWatered, is
           <CropImageContainer>
             <CropImage src={ getIcon() } />
           </CropImageContainer>
-          <Name>{ fieldName }</Name>
-          <FieldNumber>{ `Field #${ fields[fieldId].field.fieldId + 1 }` }</FieldNumber>
+          <Name>{ field.data.fieldProps.isFieldBought }</Name>
+          <FieldNumber>{ `Field #${ field.data.fieldId + 1 }` }</FieldNumber>
         </HeadingContainer>
         <Main>
           { selectButtons() }

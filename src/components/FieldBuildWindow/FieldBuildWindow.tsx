@@ -16,24 +16,22 @@ import FieldMenuButton from '../FieldMenuButton/FieldMenuButton';
 import React, { useState, useEffect } from 'react';
 import LargeButton from '../LargeButton/LargeButton';
 import { buildings } from '../../config/buildings';
-import { _Field } from '../../redux/reducers/fieldReducer';
-import { store } from '../../redux/reduxStore';
+import { FieldInterface } from '../../redux/reducers/fieldReducer';
 import build from '../../images/icons/build.png';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { State } from '../../redux/reduxStore';
+import { StateInterface } from '../../redux/reduxStore';
 import { setBuildingType, setCropType } from '../../redux/actions/fieldActions';
 
 
 interface _FieldBuildWindow {
   fieldId: number;
-  updateFieldProps: () => void;
   handleBuildWindow: () => void;
 }
 
-const FieldBuildWindow: React.FC<_FieldBuildWindow> = ({ fieldId, updateFieldProps, handleBuildWindow }) => {
-  const state = useSelector(state => state) as State;
-  const fields: _Field[] = state.fields;
+const FieldBuildWindow: React.FC<_FieldBuildWindow> = ({ fieldId, handleBuildWindow }) => {
+  const state = useSelector(state => state) as StateInterface;
+  const field: FieldInterface = state.fields[fieldId];
   const dispatch = useDispatch();
   const [selectedItem, setSelectedItem] = useState<HTMLLIElement>();
   
@@ -53,7 +51,6 @@ const FieldBuildWindow: React.FC<_FieldBuildWindow> = ({ fieldId, updateFieldPro
         if (building.buildingName === selectedItem.children[0].textContent) {
           dispatch(setCropType(fieldId, ""));
           dispatch(setBuildingType(fieldId, building.buildingName));
-          updateFieldProps();
         }
       }
     });
@@ -69,7 +66,7 @@ const FieldBuildWindow: React.FC<_FieldBuildWindow> = ({ fieldId, updateFieldPro
           <CropImage src={ build } />
         </CropImageContainer>
         <Name>Select a building</Name>
-        <FieldNumber>{ `Field #${ fields[fieldId].field.fieldId + 1 } ` }</FieldNumber>
+        <FieldNumber>{ `Field #${ field.data.fieldId + 1 } ` }</FieldNumber>
       </HeadingContainer>
       <Main fullSize>
         <SelectListContainer>

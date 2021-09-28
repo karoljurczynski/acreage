@@ -2,8 +2,8 @@ import { Button, ButtonHeading, ButtonTextContent, ButtonIcon } from './FieldMen
 import { store } from '../../redux/reduxStore';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { State } from '../../redux/reduxStore';
-import { _Field } from '../../redux/reducers/fieldReducer';
+import { StateInterface } from '../../redux/reduxStore';
+import { FieldInterface } from '../../redux/reducers/fieldReducer';
 import { User } from '../../redux/reducers/userReducer';
 import { setIsFieldBought, setCropType, setIsCropWatered, setIsCropFertilized, setBuildingType, setIsCropReadyToHarvest } from '../../redux/actions/fieldActions';
 import { setUserMoney } from '../../redux/actions/userActions';
@@ -20,7 +20,6 @@ import sellField from '../../images/icons/sell.png';
 
 interface FieldMenuButtonProps {
   fieldId: number;
-  updateFieldProps: (fields: _Field[]) => void;
   updateUserProps: () => void;
   handlePlantWindow: () => void;
   handleBuildWindow: () => void;
@@ -33,9 +32,9 @@ interface FieldMenuButtonProps {
   fertilized?: boolean;
 }
 
-const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, handleBuildWindow, handlePlantWindow, updateFieldProps, updateUserProps, size, buttonFor, textContent, primary, failed, watered, fertilized }) => {
-  const state = useSelector(state => state) as State;
-  const fields: _Field[] = state.fields;
+const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, handleBuildWindow, handlePlantWindow, updateUserProps, size, buttonFor, textContent, primary, failed, watered, fertilized }) => {
+  const state = useSelector(state => state) as StateInterface;
+  const field: FieldInterface = state.fields[fieldId];
   const userData: User = state.userData;
   const dispatch = useDispatch();
 
@@ -59,40 +58,34 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, handleBuildWi
   }
   const handleWaterButton = () => {
     dispatch(setIsCropWatered(fieldId));
-    if (state.fields[fieldId].field.cropProps.isWatered && state.fields[fieldId].field.cropProps.isFertilized) {
+    if (field.data.cropProps.isWatered && field.data.cropProps.isFertilized) {
       dispatch(setIsCropReadyToHarvest(fieldId));
     }
-    updateFieldProps(fields);
   }
   const handleFertilizeButton = () => {
     dispatch(setIsCropFertilized(fieldId));
-    if (state.fields[fieldId].field.cropProps.isWatered && state.fields[fieldId].field.cropProps.isFertilized) {
+    if (field.data.cropProps.isWatered && field.data.cropProps.isFertilized) {
       dispatch(setIsCropReadyToHarvest(fieldId));
     }
-    updateFieldProps(fields);
   }
   const handleHarvestButton = () => {
     dispatch(setCropType(fieldId, ""));
     dispatch(setIsCropReadyToHarvest(fieldId));
     dispatch(setIsCropWatered(fieldId));
     dispatch(setIsCropFertilized(fieldId));
-    updateFieldProps(fields);
   }
   const handleBuildButton = () => {
     handleBuildWindow();
   }
   const handleUpgradeButton = () => {
-    console.log(store.getState());
-    updateFieldProps(fields);
   }
   const handleDestroyButton = () => {
     dispatch(setBuildingType(fieldId, ""));
-    updateFieldProps(fields);
   }
   const handleBuyOrSellFieldButton = () => {
-    if (!fields[fieldId].field.fieldProps.isFieldBought) {
-      if (userData.gameplay.userMoney >= fields[fieldId].field.fieldProps.fieldPrice) {
-        setUserMoney(userData.gameplay.userMoney -= fields[fieldId].field.fieldProps.fieldPrice);
+    if (!field.data.fieldProps.isFieldBought) {
+      if (userData.gameplay.userMoney >= field.data.fieldProps.fieldPrice) {
+        setUserMoney(userData.gameplay.userMoney -= field.data.fieldProps.fieldPrice);
         dispatch(setIsFieldBought(fieldId));
       }
       else {
@@ -101,11 +94,10 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, handleBuildWi
     }
     else {
       window.alert("Selling field retrieves only 50% of field value!");
-      setUserMoney(userData.gameplay.userMoney += (Math.floor(fields[fieldId].field.fieldProps.fieldPrice / 2)));
+      setUserMoney(userData.gameplay.userMoney += (Math.floor(field.data.fieldProps.fieldPrice / 2)));
       dispatch(setIsFieldBought(fieldId));
     }
     updateUserProps();
-    updateFieldProps(fields);
   }
 
   const getIcon = () => {
