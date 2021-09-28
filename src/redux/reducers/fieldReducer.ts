@@ -1,10 +1,6 @@
 // INTERFACES
 
 
-export interface _Field {
-  field: FieldInfo;
-  isFieldMenuOpened: boolean;
-}
 export interface FieldInterface {
   data: FieldInfo;
   isFieldMenuOpened: boolean;
@@ -30,7 +26,7 @@ export interface CropProps {
 }
 
 
-// FUNCTIONS WHICH CREATE INITIAL STATE
+// FUNCTIONS TO CREATE INITIAL STATE
 
 
 const getRandomRate = (): number => {
@@ -41,11 +37,11 @@ const countFieldPrice = (groundRate: number, waterRate: number): number => {
   return 500 + (1000 * groundRate) + (1000 * waterRate);
 }
 const createFieldsArray = () => {
-  const fields: _Field[] = [];
+  const fields: FieldInterface[] = [];
   for (let i = 0; i < 64; i++) {
     fields.push(
       {
-        field: {
+        data: {
           fieldId: i, 
           fieldProps: {
             isFieldBought: false,
@@ -67,27 +63,27 @@ const createFieldsArray = () => {
     );
   }
   for (let i = 0; i < 64; i++) {
-    fields[i].field.fieldProps.fieldPrice = countFieldPrice(fields[i].field.fieldProps.groundRate, fields[i].field.fieldProps.waterRate);
+    fields[i].data.fieldProps.fieldPrice = countFieldPrice(fields[i].data.fieldProps.groundRate, fields[i].data.fieldProps.waterRate);
   }
 
   // DEFAULT FIELDS
-  fields[19].field.fieldProps.isFieldBought = true;
-  fields[19].field.fieldProps.groundRate = 1;
-  fields[19].field.fieldProps.waterRate = 1;
+  fields[19].data.fieldProps.isFieldBought = true;
+  fields[19].data.fieldProps.groundRate = 1;
+  fields[19].data.fieldProps.waterRate = 1;
 
-  fields[20].field.fieldProps.isFieldBought = true;
-  fields[20].field.fieldProps.groundRate = 2;
-  fields[20].field.fieldProps.waterRate = 2;
+  fields[20].data.fieldProps.isFieldBought = true;
+  fields[20].data.fieldProps.groundRate = 2;
+  fields[20].data.fieldProps.waterRate = 2;
 
-  fields[27].field.fieldProps.isFieldBought = true;
-  fields[27].field.cropProps.buildingType = "Farmhouse";
-  fields[27].field.fieldProps.groundRate = 1;
-  fields[27].field.fieldProps.waterRate = 1;
+  fields[27].data.fieldProps.isFieldBought = true;
+  fields[27].data.cropProps.buildingType = "Farmhouse";
+  fields[27].data.fieldProps.groundRate = 1;
+  fields[27].data.fieldProps.waterRate = 1;
 
-  fields[28].field.fieldProps.isFieldBought = true;
-  fields[28].field.cropProps.buildingType = "Barn";
-  fields[28].field.fieldProps.groundRate = 1;
-  fields[28].field.fieldProps.waterRate = 1;
+  fields[28].data.fieldProps.isFieldBought = true;
+  fields[28].data.cropProps.buildingType = "Barn";
+  fields[28].data.fieldProps.groundRate = 1;
+  fields[28].data.fieldProps.waterRate = 1;
 
   return fields;
 }
@@ -105,37 +101,37 @@ export const fieldReducer = (state = createFieldsArray(), action: any) => {
     }
     case "SET_IS_FIELD_BOUGHT": {
       const newFields = state;
-      newFields[action.fieldId].field.fieldProps.isFieldBought = !state[action.fieldId].field.fieldProps.isFieldBought;
+      newFields[action.fieldId].data.fieldProps.isFieldBought = !state[action.fieldId].data.fieldProps.isFieldBought;
       return newFields;
     }
     case "SET_CROP_TYPE": {
       const newFields = state;
-      newFields[action.fieldId].field.cropProps.cropType = action.cropType;
+      newFields[action.fieldId].data.cropProps.cropType = action.cropType;
       return newFields;
     }
     case "SET_BUILDING_TYPE": {
       const newFields = state;
-      newFields[action.fieldId].field.cropProps.buildingType = action.buildingType;
+      newFields[action.fieldId].data.cropProps.buildingType = action.buildingType;
       return newFields;
     }
     case "SET_IS_CROP_READY_TO_HARVEST": {
       const newFields = state;
-      newFields[action.fieldId].field.cropProps.isReadyToHarvest = !state[action.fieldId].field.cropProps.isReadyToHarvest;
+      newFields[action.fieldId].data.cropProps.isReadyToHarvest = !state[action.fieldId].data.cropProps.isReadyToHarvest;
       return newFields;
     }
     case "UPDATE_TIME_TO_GROW": {
       const newFields = state;
-      newFields[action.fieldId].field.cropProps.timeToGrow = action.newTimeInSeconds;
+      newFields[action.fieldId].data.cropProps.timeToGrow = action.newTimeInSeconds;
       return newFields;
     }
     case "SET_IS_CROP_WATERED": {
       const newFields = state;
-      newFields[action.fieldId].field.cropProps.isWatered = !state[action.fieldId].field.cropProps.isWatered;
+      newFields[action.fieldId].data.cropProps.isWatered = !state[action.fieldId].data.cropProps.isWatered;
       return newFields;
     }
     case "SET_IS_CROP_FERTILIZED": {
       const newFields = state;
-      newFields[action.fieldId].field.cropProps.isFertilized = !state[action.fieldId].field.cropProps.isFertilized;
+      newFields[action.fieldId].data.cropProps.isFertilized = !state[action.fieldId].data.cropProps.isFertilized;
       return newFields;
     }
     default: return state;

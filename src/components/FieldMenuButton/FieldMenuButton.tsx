@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
-import { User } from '../../redux/reducers/userReducer';
+import { UserInterface } from '../../redux/reducers/userReducer';
 import { setIsFieldBought, setCropType, setIsCropWatered, setIsCropFertilized, setBuildingType, setIsCropReadyToHarvest } from '../../redux/actions/fieldActions';
 import { setUserMoney } from '../../redux/actions/userActions';
 
@@ -20,7 +20,6 @@ import sellField from '../../images/icons/sell.png';
 
 interface FieldMenuButtonProps {
   fieldId: number;
-  updateUserProps: () => void;
   handlePlantWindow: () => void;
   handleBuildWindow: () => void;
   size: "half" | "full";
@@ -32,11 +31,12 @@ interface FieldMenuButtonProps {
   fertilized?: boolean;
 }
 
-const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, handleBuildWindow, handlePlantWindow, updateUserProps, size, buttonFor, textContent, primary, failed, watered, fertilized }) => {
-  const state = useSelector(state => state) as StateInterface;
-  const field: FieldInterface = state.fields[fieldId];
-  const userData: User = state.userData;
+const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, handleBuildWindow, handlePlantWindow, size, buttonFor, textContent, primary, failed, watered, fertilized }) => {
+  const state: StateInterface = useSelector((state: StateInterface): StateInterface => state);
   const dispatch = useDispatch();
+  const field: FieldInterface = state.fields[fieldId];
+  const userData: UserInterface = state.userData;
+  
 
   const getButtonHeading = (): string => {
     if (buttonFor === "Time")
@@ -97,7 +97,6 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, handleBuildWi
       setUserMoney(userData.gameplay.userMoney += (Math.floor(field.data.fieldProps.fieldPrice / 2)));
       dispatch(setIsFieldBought(fieldId));
     }
-    updateUserProps();
   }
 
   const getIcon = () => {

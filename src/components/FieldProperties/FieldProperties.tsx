@@ -17,13 +17,13 @@ import { FieldInterface } from '../../redux/reducers/fieldReducer';
 import { useSelector } from 'react-redux';
 import { StateInterface } from '../../redux/reduxStore';
 
-interface _FieldProperties {
+interface FieldPropertiesInterface {
   fieldId: number;
   handleFieldPropsWindow: () => void;
 }
 
-const FieldProperties: React.FC<_FieldProperties> = ({ fieldId, handleFieldPropsWindow }) => {
-  const state = useSelector(state => state) as StateInterface;
+const FieldProperties: React.FC<FieldPropertiesInterface> = ({ fieldId, handleFieldPropsWindow }) => {
+  const state: StateInterface = useSelector((state: StateInterface): StateInterface => state);
   const field: FieldInterface = state.fields[fieldId];
   
   return (
@@ -39,9 +39,9 @@ const FieldProperties: React.FC<_FieldProperties> = ({ fieldId, handleFieldProps
         <FieldNumber>Properties</FieldNumber>
       </HeadingContainer>
       <Main>
-        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} }  updateUserProps={ () => {} } fieldId={ fieldId } size="full" buttonFor="GroundRate" textContent={ `${field.data.fieldProps.groundRate} \\ 5`} />
-        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} }  updateUserProps={ () => {} } fieldId={ fieldId } size="full" buttonFor="WaterRate" textContent={ `${field.data.fieldProps.waterRate} \\ 5`} />
-        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} }  updateUserProps={ () => {} } fieldId={ fieldId } size="full" buttonFor="FieldPrice" textContent={ `${field.data.fieldProps.fieldPrice} $` } />
+        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} }  fieldId={ fieldId } size="full" buttonFor="GroundRate" textContent={ `${field.data.fieldProps.groundRate} \\ 5`} />
+        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} }  fieldId={ fieldId } size="full" buttonFor="WaterRate" textContent={ `${field.data.fieldProps.waterRate} \\ 5`} />
+        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} }  fieldId={ fieldId } size="full" buttonFor="FieldPrice" textContent={ `${field.data.fieldProps.fieldPrice} $` } />
       </Main>
     </TopSection> 
 

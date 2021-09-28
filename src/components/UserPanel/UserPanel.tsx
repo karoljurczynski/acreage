@@ -6,18 +6,16 @@ import BottomSection from '../BottomSection/BottomSection';
 import InfoBox from '../InfoBox/InfoBox';
 import { UserInfo, UserAvatarContainer, UserAvatarPhoto, UserName, UserLevel } from './UserPanelStyles';
 import logo from '../../images/logo.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { StateInterface } from '../../redux/reduxStore';
+import { UserInterface } from '../../redux/reducers/userReducer';
 
-interface _UserPanel {
-  username: string;
-  password: string;
-  email: string;
-  avatarUrl: string;
-  userLevel: number;
-  userExperience: number;
-  userMoney: number;
-}
 
-export const UserPanel: React.FC<_UserPanel> = ({ username, password, email, avatarUrl, userLevel, userExperience, userMoney }) => {
+
+export const UserPanel: React.FC = () => {
+  const state: StateInterface = useSelector((state: StateInterface): StateInterface => state);  
+  const userData: UserInterface = state.userData;
+
   return (
     <MainBox type="Left">
 
@@ -26,11 +24,11 @@ export const UserPanel: React.FC<_UserPanel> = ({ username, password, email, ava
               <UserAvatarContainer>
                 <UserAvatarPhoto src={ logo }/>
               </UserAvatarContainer>
-              <UserName>{ username }</UserName>
-              <UserLevel>{ userLevel } lvl</UserLevel>
+              <UserName>{ userData.settings.username }</UserName>
+              <UserLevel>{ userData.gameplay.userLevel } lvl</UserLevel>
             </UserInfo>
-            <InfoBox property="Money" cashAmount={ userMoney } />
-            <InfoBox property="Experience" currentXp={ userExperience } xpToNextLevel={ 20 }/>
+            <InfoBox property="Money" cashAmount={ userData.gameplay.userMoney } />
+            <InfoBox property="Experience" currentXp={ userData.gameplay.userExperience } xpToNextLevel={ 20 }/>
             <InfoBox property="Next action finished" min={ 1 } sec={ 10 } />
           </TopSection>
 

@@ -1,7 +1,7 @@
 // INTERFACES
 
 
-export interface User {
+export interface UserInterface {
   settings: Settings;
   gameplay: Gameplay;
 }
@@ -17,16 +17,12 @@ export interface Settings {
   email: string;
   avatarUrl: string;
 }
-export interface StorageItem {
-  name: string;
-  amount: number;
-}
 
 
 // INITIAL STATE
 
 
-const initialState: User = {
+const initialState: UserInterface = {
   settings: {
     isLogged: true,
     username: "Default",

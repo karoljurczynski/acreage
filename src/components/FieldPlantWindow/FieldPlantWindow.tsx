@@ -27,7 +27,7 @@ import FieldMenuButton from '../FieldMenuButton/FieldMenuButton';
 import React, { useState, useEffect } from 'react';
 import LargeButton from '../LargeButton/LargeButton';
 import { crops, cropsArray } from '../../config/crops';
-import { FieldInterface, _Field } from '../../redux/reducers/fieldReducer';
+import { FieldInterface}  from '../../redux/reducers/fieldReducer';
 import { Seed } from '../../config/seeds';
 import { seeds } from '../../config/seeds';
 import { StorageItem } from '../../redux/reducers/storageReducer';

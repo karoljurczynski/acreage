@@ -4,7 +4,7 @@ import { fieldReducer } from './reducers/fieldReducer';
 import { FieldInterface } from './reducers/fieldReducer';
 
 import { userReducer } from './reducers/userReducer';
-import { User } from './reducers/userReducer';
+import { UserInterface } from './reducers/userReducer';
 
 import { storageReducer } from './reducers/storageReducer';
 import { StorageItem } from './reducers/storageReducer';
@@ -12,7 +12,7 @@ import { StorageItem } from './reducers/storageReducer';
 
 export interface StateInterface {
   fields: FieldInterface[];
-  userData: User;
+  userData: UserInterface;
   storage: StorageItem[];
 }
 
