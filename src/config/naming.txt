@@ -1,0 +1,51 @@
+------------------------------------------------------
+1. Components
+------------------------------------------------------
+
+
+// IMPORTS
+
+
+    // REACT AND COMPONENTS IMPORTS
+
+    // STYLES AND CONFIG IMPORTS
+
+    // REDUX IMPORTS
+
+    // ROUTER IMPORTS
+
+
+// COMPONENT
+
+
+    // STATE
+
+
+    // EFFECTS
+
+
+    // HANDLERS
+
+
+    // TOOL FUNCTIONS
+
+    
+    // JSX
+
+
+// EXPORT
+
+
+------------------------------------------------------
+2. Styles
+------------------------------------------------------
+
+
+// IMPORTS
+
+
+    // STYLED-COMPONENTS IMPORTS
+    // CONFIG IMPORTS
+
+
+// STYLES

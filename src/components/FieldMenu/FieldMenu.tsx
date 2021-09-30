@@ -139,7 +139,7 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
       <Switch>
 
         <Route path={`/farm/field${fieldId + 1}/properties`}>
-          <FieldProperties fieldId={ fieldId } handleFieldPropsWindow={ closeWindow } />
+          <FieldProperties fieldId={ fieldId } closeWindow={ closeWindow } />
         </Route>
 
         <Route path={`/farm/field${fieldId + 1}/plant`}>
@@ -179,5 +179,9 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
     portal
   )
 }
+
+
+// EXPORT
+
 
 export default FieldMenu;

@@ -1,15 +1,30 @@
-import { Wrapper, Road } from './BoardStyles';
+// IMPORTS
+
+
 import Field from '../Field/Field';
+
+import { Wrapper, Road } from './BoardStyles';
+import { BoardPropsInterface } from '../interfaces';
 
 import { useSelector } from 'react-redux';
 import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
 
-interface BoardPropsInterface {}
+
+// COMPONENT
 
 
 const Board: React.FC<BoardPropsInterface> = (): JSX.Element => {
+
+
+  // STATE
+
+
   const fields: FieldInterface[] = useSelector((state: StateInterface): FieldInterface[] => state.fields);
+
+
+  // JSX
+
 
   return (
     <Wrapper>
@@ -28,5 +43,9 @@ const Board: React.FC<BoardPropsInterface> = (): JSX.Element => {
     </Wrapper>
   )
 }
+
+
+// EXPORT
+
 
 export default Board;

@@ -28,7 +28,6 @@ const Field: React.FC<FieldPropsInterface> = ({ fieldId }): JSX.Element => {
 
   const fields: FieldInterface[] = useSelector((state: StateInterface): FieldInterface[] => state.fields);  
   const [redirectPath, setRedirectPath]: [string, Dispatch<React.SetStateAction<string>>] = useState<string>(`/farm`);
-
   const field: FieldInterface = fields[fieldId];
 
 
@@ -38,8 +37,7 @@ const Field: React.FC<FieldPropsInterface> = ({ fieldId }): JSX.Element => {
   useEffect(() => {
     window.addEventListener("popstate", closeField);
     return () => window.removeEventListener("popstate", closeField);
-
-  }, [])
+  }, []);
 
 
   // HANDLERS
@@ -47,12 +45,9 @@ const Field: React.FC<FieldPropsInterface> = ({ fieldId }): JSX.Element => {
 
   const handleFieldOnClick: React.MouseEventHandler = (e: React.MouseEvent) => {
     document.querySelectorAll("button").forEach(button => button.blur());
-    if (window.location.pathname === "/farm") {
-      setRedirectPath(`/farm/field${fieldId + 1}`);
-    }
-    else {
-      setRedirectPath("/farm");
-    }
+    window.location.pathname === "/farm" 
+    ? setRedirectPath(`/farm/field${fieldId + 1}`)
+    : setRedirectPath("/farm");
   }
   const closeField = () => {
     setRedirectPath("/farm");
@@ -115,5 +110,9 @@ const Field: React.FC<FieldPropsInterface> = ({ fieldId }): JSX.Element => {
     </Router> 
   )
 }
+
+
+// EXPORT
+
 
 export default Field;

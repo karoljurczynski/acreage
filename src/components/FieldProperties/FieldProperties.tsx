@@ -1,56 +1,57 @@
-import { 
-  Wrapper, 
-  TopSection, 
-  HeadingContainer, 
-  CropImageContainer, 
-  CropImage, 
-  Name, 
-  FieldNumber,
-  Main,
-  BottomSection 
-} from '../FieldMenu/FieldMenuStyles';
+// IMPORTS
 
-import FieldMenuButton from '../FieldMenuButton/FieldMenuButton';
-import logo from '../../images/logo.png';
+
 import LargeButton from '../LargeButton/LargeButton';
-import { FieldInterface } from '../../redux/reducers/fieldReducer';
+import FieldMenuInfoBox from '../FieldMenuInfoBox/FieldMenuInfoBox';
+import { Wrapper, TopSection, HeadingContainer, CropImageContainer, CropImage, Name, FieldNumber, Main, BottomSection } from '../FieldMenu/FieldMenuStyles';
+
+import logo from '../../images/logo.png';
+import { FieldPropertiesInterface } from '../interfaces';
+
 import { useSelector } from 'react-redux';
 import { StateInterface } from '../../redux/reduxStore';
+import { FieldInterface } from '../../redux/reducers/fieldReducer';
 
-interface FieldPropertiesInterface {
-  fieldId: number;
-  handleFieldPropsWindow: () => void;
-}
 
-const FieldProperties: React.FC<FieldPropertiesInterface> = ({ fieldId, handleFieldPropsWindow }) => {
+// COMPONENT
+
+
+const FieldProperties: React.FC<FieldPropertiesInterface> = ({ fieldId, closeWindow }) => {
+  
+
+  // STATE
+  
+
   const state: StateInterface = useSelector((state: StateInterface): StateInterface => state);
   const field: FieldInterface = state.fields[fieldId];
   
+
+  // JSX
+
+  
   return (
-    <>
     <Wrapper fieldProperties={ true }>
 
-    <TopSection>
-      <HeadingContainer>
-        <CropImageContainer>
-          <CropImage src={ logo } />
-        </CropImageContainer>
-        <Name>{ `Field #${ field.fieldId + 1 }` }</Name>
-        <FieldNumber>Properties</FieldNumber>
-      </HeadingContainer>
-      <Main>
-        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} }  fieldId={ fieldId } size="full" buttonFor="GroundRate" textContent={ `${field.fieldProps.groundRate} \\ 5`} />
-        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} }  fieldId={ fieldId } size="full" buttonFor="WaterRate" textContent={ `${field.fieldProps.waterRate} \\ 5`} />
-        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} }  fieldId={ fieldId } size="full" buttonFor="FieldPrice" textContent={ `${field.fieldProps.fieldPrice} $` } />
-      </Main>
-    </TopSection> 
+      <TopSection>
+        <HeadingContainer>
+          <CropImageContainer>
+            <CropImage src={ logo } />
+          </CropImageContainer>
+          <Name>{ `Field #${ field.fieldId + 1 }` }</Name>
+          <FieldNumber>Properties</FieldNumber>
+        </HeadingContainer>
+        <Main>
+          <FieldMenuInfoBox rateInfoBox title="Ground rate" content={field.fieldProps.groundRate} />
+          <FieldMenuInfoBox rateInfoBox title="Water rate" content={field.fieldProps.waterRate} />
+          <FieldMenuInfoBox title="Price" content={`${field.fieldProps.fieldPrice} $`} />
+        </Main>
+      </TopSection> 
 
-    <BottomSection>
-      <LargeButton onClick={ handleFieldPropsWindow } primary>Close</LargeButton>
-    </BottomSection>
+      <BottomSection>
+        <LargeButton onClick={ closeWindow } primary>Close</LargeButton>
+      </BottomSection>
 
     </Wrapper>
-    </>
   )
 }
 
