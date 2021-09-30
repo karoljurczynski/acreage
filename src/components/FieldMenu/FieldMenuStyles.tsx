@@ -17,9 +17,6 @@ interface MainProps {
 
 export const Wrapper = styled.div<WrapperProps>`
   position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,13 +24,8 @@ export const Wrapper = styled.div<WrapperProps>`
   border-radius: 8px 8px 8px 0;
   width: 224px;
   background-color: ${colorList.white};
-  z-index: 0;
+  z-index: 2;
   box-shadow: 1px 1px 5px #c5c5c5;
-
-  ${({ fieldProperties }) => fieldProperties && `
-    position: absolute;
-    z-index: 1;
-  `}
 
   ${({ hide }) => hide && `
     display: none;

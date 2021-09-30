@@ -23,7 +23,7 @@ const Board: React.FC<BoardPropsInterface> = (): JSX.Element => {
       <Road></Road>
       <Road></Road>
 
-      { fields.map((field: FieldInterface) => <Field key={ field.data.fieldId } fieldId={ field.data.fieldId } /> ) }
+      { fields.map((field: FieldInterface) => <Field key={ field.fieldId } fieldId={ field.fieldId } /> ) }
     
     </Wrapper>
   )

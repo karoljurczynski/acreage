@@ -5,7 +5,7 @@ interface Props {
   secondary?: boolean;
   tertiary?: boolean;
   disabled?: boolean;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent) => void;
 }
 
 

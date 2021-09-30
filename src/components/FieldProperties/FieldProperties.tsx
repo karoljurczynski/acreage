@@ -35,13 +35,13 @@ const FieldProperties: React.FC<FieldPropertiesInterface> = ({ fieldId, handleFi
         <CropImageContainer>
           <CropImage src={ logo } />
         </CropImageContainer>
-        <Name>{ `Field #${ field.data.fieldId + 1 }` }</Name>
+        <Name>{ `Field #${ field.fieldId + 1 }` }</Name>
         <FieldNumber>Properties</FieldNumber>
       </HeadingContainer>
       <Main>
-        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} }  fieldId={ fieldId } size="full" buttonFor="GroundRate" textContent={ `${field.data.fieldProps.groundRate} \\ 5`} />
-        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} }  fieldId={ fieldId } size="full" buttonFor="WaterRate" textContent={ `${field.data.fieldProps.waterRate} \\ 5`} />
-        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} }  fieldId={ fieldId } size="full" buttonFor="FieldPrice" textContent={ `${field.data.fieldProps.fieldPrice} $` } />
+        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} }  fieldId={ fieldId } size="full" buttonFor="GroundRate" textContent={ `${field.fieldProps.groundRate} \\ 5`} />
+        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} }  fieldId={ fieldId } size="full" buttonFor="WaterRate" textContent={ `${field.fieldProps.waterRate} \\ 5`} />
+        <FieldMenuButton handleBuildWindow={ () => {} } handlePlantWindow={ () => {} }  fieldId={ fieldId } size="full" buttonFor="FieldPrice" textContent={ `${field.fieldProps.fieldPrice} $` } />
       </Main>
     </TopSection> 
 

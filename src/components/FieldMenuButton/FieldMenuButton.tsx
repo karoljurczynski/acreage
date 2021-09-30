@@ -58,13 +58,13 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, handleBuildWi
   }
   const handleWaterButton = () => {
     dispatch(setIsCropWatered(fieldId));
-    if (field.data.cropProps.isWatered && field.data.cropProps.isFertilized) {
+    if (field.cropProps.isWatered && field.cropProps.isFertilized) {
       dispatch(setIsCropReadyToHarvest(fieldId));
     }
   }
   const handleFertilizeButton = () => {
     dispatch(setIsCropFertilized(fieldId));
-    if (field.data.cropProps.isWatered && field.data.cropProps.isFertilized) {
+    if (field.cropProps.isWatered && field.cropProps.isFertilized) {
       dispatch(setIsCropReadyToHarvest(fieldId));
     }
   }
@@ -83,9 +83,9 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, handleBuildWi
     dispatch(setBuildingType(fieldId, ""));
   }
   const handleBuyOrSellFieldButton = () => {
-    if (!field.data.fieldProps.isFieldBought) {
-      if (userData.gameplay.userMoney >= field.data.fieldProps.fieldPrice) {
-        setUserMoney(userData.gameplay.userMoney -= field.data.fieldProps.fieldPrice);
+    if (!field.fieldProps.isFieldBought) {
+      if (userData.gameplay.userMoney >= field.fieldProps.fieldPrice) {
+        setUserMoney(userData.gameplay.userMoney -= field.fieldProps.fieldPrice);
         dispatch(setIsFieldBought(fieldId));
       }
       else {
@@ -94,7 +94,7 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, handleBuildWi
     }
     else {
       window.alert("Selling field retrieves only 50% of field value!");
-      setUserMoney(userData.gameplay.userMoney += (Math.floor(field.data.fieldProps.fieldPrice / 2)));
+      setUserMoney(userData.gameplay.userMoney += (Math.floor(field.fieldProps.fieldPrice / 2)));
       dispatch(setIsFieldBought(fieldId));
     }
   }

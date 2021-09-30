@@ -92,7 +92,7 @@ const FieldPlantWindow: React.FC<_FieldPlantWindow> = ({ fieldId, handlePlantWin
           <CropImage src={ plant } />
         </CropImageContainer>
         <Name>Select a seed</Name>
-        <FieldNumber>{ `Field #${ field.data.fieldId + 1 } ` }</FieldNumber>
+        <FieldNumber>{ `Field #${ field.fieldId + 1 } ` }</FieldNumber>
       </HeadingContainer>
       <Main fullSize>
         <SelectListContainer>

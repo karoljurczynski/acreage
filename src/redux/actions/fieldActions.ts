@@ -1,9 +1,3 @@
-export const setFieldMenuOpened = (fieldId: number) => {
-  return {
-    type: "SET_IS_FIELD_MENU_OPENED",
-    fieldId: fieldId
-  }
-}
 export const setIsFieldBought = (fieldId: number) => {
   return {
     type: "SET_IS_FIELD_BOUGHT",

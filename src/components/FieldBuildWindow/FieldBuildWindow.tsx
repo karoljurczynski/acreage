@@ -66,7 +66,7 @@ const FieldBuildWindow: React.FC<_FieldBuildWindow> = ({ fieldId, handleBuildWin
           <CropImage src={ build } />
         </CropImageContainer>
         <Name>Select a building</Name>
-        <FieldNumber>{ `Field #${ field.data.fieldId + 1 } ` }</FieldNumber>
+        <FieldNumber>{ `Field #${ field.fieldId + 1 } ` }</FieldNumber>
       </HeadingContainer>
       <Main fullSize>
         <SelectListContainer>

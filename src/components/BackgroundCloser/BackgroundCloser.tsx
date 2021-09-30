@@ -1,15 +1,15 @@
 import ReactDOM from 'react-dom';
 import { Wrapper } from './BackgroundCloserStyles';
-import { portal } from '../../config/StylesConfig';
+import { backgroundCloser } from '../../config/StylesConfig';
 
-interface BackgroundCloserProps {
+interface BackgroundCloserPropsInterface {
   onClick: () => void;
 }
 
-const BackgroundCloser: React.FC<BackgroundCloserProps> = ({ onClick }) => {
+const BackgroundCloser: React.FC<BackgroundCloserPropsInterface> = ({ onClick }) => {
   return ReactDOM.createPortal (
-    <Wrapper onClick={ onClick }></Wrapper>
-    , portal
+    <Wrapper onClick={ onClick }></Wrapper>,
+    backgroundCloser
   )
 }
 

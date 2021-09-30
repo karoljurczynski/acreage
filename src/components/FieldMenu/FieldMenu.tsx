@@ -1,75 +1,96 @@
-import { 
-  Wrapper, 
-  TopSection, 
-  HeadingContainer, 
-  CropImageContainer, 
-  CropImage, 
-  Name, 
-  FieldNumber,
-  Main,
-  BottomSection 
-} from './FieldMenuStyles';
+// IMPORTS
 
-import { useState, useEffect } from 'react';
+
+import { useState, Dispatch } from 'react';
 import ReactDOM from 'react-dom';
-import FieldMenuButton from '../FieldMenuButton/FieldMenuButton';
-import BackgroundCloser from '../BackgroundCloser/BackgroundCloser';
-import logo from '../../images/logo.png';
-import LargeButton from '../LargeButton/LargeButton';
-import { root, portal } from '../../config/StylesConfig';
-import { StateInterface } from '../../redux/reduxStore';
-import { useSelector } from 'react-redux';
-import { FieldInterface } from '../../redux/reducers/fieldReducer';
 import FieldProperties from '../FieldProperties/FieldProperties';
 import FieldPlantWindow from '../FieldPlantWindow/FieldPlantWindow';
 import FieldBuildWindow from '../FieldBuildWindow/FieldBuildWindow';
+import FieldMenuButton from '../FieldMenuButton/FieldMenuButton';
+import LargeButton from '../LargeButton/LargeButton';
 
-interface FieldMenuPropsInterface {
-  fieldId: number;
-  closeFieldMenu: () => void;
-}
+import { Wrapper, TopSection, HeadingContainer, CropImageContainer, CropImage, Name, FieldNumber, Main, BottomSection } from './FieldMenuStyles';
+import logo from '../../images/logo.png';
+import { portal } from '../../config/StylesConfig';
+import { FieldMenuPropsInterface } from '../interfaces';
+
+import { StateInterface } from '../../redux/reduxStore';
+import { useSelector } from 'react-redux';
+import { FieldInterface } from '../../redux/reducers/fieldReducer';
+
+import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
+
+
+// COMPONENT
+
 
 const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu }): JSX.Element => {
-  const state: StateInterface = useSelector(state => state) as StateInterface;
-  const field: FieldInterface = state.fields[fieldId];
-  const [isPropertiesWindowOpened, setIsPropertiesWindowOpened] = useState(false);
-  const [isPlantWindowOpened, setIsPlantWindowOpened] = useState(false);
-  const [isBuildWindowOpened, setIsBuildWindowOpened] = useState(false);
+  
 
-  const setFieldName = (): string => {
-    if (field.data.fieldProps.isFieldBought) {
-      if (field.data.cropProps.cropType)
-        return field.data.cropProps.cropType as string;
-      if (field.data.cropProps.buildingType)
-        return field.data.cropProps.buildingType as string;
-      else
-        return "Empty";
+  // STATE
+
+
+  const fields: FieldInterface[] = useSelector((state: StateInterface): FieldInterface[] => state.fields);
+  const field: FieldInterface = fields[fieldId];
+  const [redirectPath, setRedirectPath]: [string, Dispatch<React.SetStateAction<string>>] = useState<string>(`/farm/field${fieldId + 1}`);
+
+
+  // HANDLERS
+
+
+  const handleFieldPropsWindow = (): void => {
+    if (window.location.pathname === `/farm/field${fieldId + 1}`) {
+      setRedirectPath(`/farm/field${fieldId + 1}/properties`);
     }
-    else
-      return `${field.data.fieldProps.fieldPrice} $`;
+    else {
+      setRedirectPath(`/farm/field${fieldId + 1}`);
+    }
+  }
+  const handlePlantWindow = (): void => {
+    if (window.location.pathname === `/farm/field${fieldId + 1}`) {
+      setRedirectPath(`/farm/field${fieldId + 1}/plant`);
+    }
+    else {
+      setRedirectPath(`/farm/field${fieldId + 1}`);
+    }
+  }
+  const handleBuildWindow = (): void => {
+    if (window.location.pathname === `/farm/field${fieldId + 1}`) {
+      setRedirectPath(`/farm/field${fieldId + 1}/build`);
+    }
+    else {
+      setRedirectPath(`/farm/field${fieldId + 1}`);
+    }
+  }
+  const closeWindow = (): void => {
+    setRedirectPath(`/farm/field${fieldId + 1}`);
   }
 
-  const selectButtons = (): JSX.Element[] => {
-    if (field.data.fieldProps.isFieldBought) {
-      if (field.data.cropProps.cropType) {
-        if (field.data.cropProps.isReadyToHarvest) {
+
+  // TOOL FUNCTIONS
+
+
+  const selectButtons = (): JSX.Element[] => {      
+    if (field.fieldProps.isFieldBought) {
+      if (field.cropProps.cropType) {
+        if (field.cropProps.isReadyToHarvest) {
           return [
             <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="full" textContent="Harvest" primary />,
-            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="half" textContent={ field.data.cropProps.isWatered ? "Watered" : "Water" } watered={ field.data.cropProps.isWatered ? true : false } primary={ !field.data.cropProps.isWatered ? true : false } />,
-            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="half" textContent={ field.data.cropProps.isFertilized ? "Fertilized" : "Fertilize" } fertilized={ field.data.cropProps.isFertilized ? true : false } primary={ !field.data.cropProps.isFertilized ? true : false } />
+            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="half" textContent={ field.cropProps.isWatered ? "Watered" : "Water" } watered={ field.cropProps.isWatered ? true : false } primary={ !field.cropProps.isWatered ? true : false } />,
+            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="half" textContent={ field.cropProps.isFertilized ? "Fertilized" : "Fertilize" } fertilized={ field.cropProps.isFertilized ? true : false } primary={ !field.cropProps.isFertilized ? true : false } />
           ];
         }
 
         else {
           return [
             <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="full" buttonFor="Time" textContent="14:20" />,
-            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="half" textContent={ field.data.cropProps.isWatered ? "Watered" : "Water" } watered={ field.data.cropProps.isWatered ? true : false } primary={ !field.data.cropProps.isWatered ? true : false } />,
-            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="half" textContent={ field.data.cropProps.isFertilized ? "Fertilized" : "Fertilize" } fertilized={ field.data.cropProps.isFertilized ? true : false } primary={ !field.data.cropProps.isFertilized ? true : false } />
+            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="half" textContent={ field.cropProps.isWatered ? "Watered" : "Water" } watered={ field.cropProps.isWatered ? true : false } primary={ !field.cropProps.isWatered ? true : false } />,
+            <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="half" textContent={ field.cropProps.isFertilized ? "Fertilized" : "Fertilize" } fertilized={ field.cropProps.isFertilized ? true : false } primary={ !field.cropProps.isFertilized ? true : false } />
           ];
         }
       }
 
-      if (field.data.cropProps.buildingType) {
+      if (field.cropProps.buildingType) {
         return [
           <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="half" textContent="Upgrade" primary />,
           <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="half" textContent="Destroy" />,
@@ -90,78 +111,71 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
       return [ <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="full" textContent="Buy this field" primary /> ];
     }
   }
-
-  const handleFieldPropsWindow = () => {
-    setIsPropertiesWindowOpened(!isPropertiesWindowOpened);
+  const setFieldName = (): string => {
+    if (field.fieldProps.isFieldBought) {
+      if (field.cropProps.cropType)
+        return field.cropProps.cropType as string;
+      if (field.cropProps.buildingType)
+        return field.cropProps.buildingType as string;
+      else
+        return "Empty";
+    }
+    else
+      return `${field.fieldProps.fieldPrice} $`;
   }
-  const handlePlantWindow = () => {
-    setIsPlantWindowOpened(!isPlantWindowOpened);
-  }
-  const handleBuildWindow = () => {
-    setIsBuildWindowOpened(!isBuildWindowOpened);
-  }
-
-  // DISABLES BUTTONS AFTER MOUNTING FIELD MENU
-  useEffect(() => {
-    const rootElementButtons: NodeListOf<HTMLButtonElement> = root.querySelectorAll("button");
-    rootElementButtons.forEach(( button: HTMLButtonElement ) => button.disabled = true );
-    
-    return () => {
-      rootElementButtons.forEach(( button: HTMLButtonElement ) => button.disabled = false );
-    };
-    
-  }, []);
-
-  const getIcon = () => {
+  const getIcon = (): string => {
     if (setFieldName() === "Empty" || Number(setFieldName()[0]))
       return logo;
     else
       return logo;
   }
+  
+
+  // JSX
+
 
   return ReactDOM.createPortal (
-    <>
-    { isPropertiesWindowOpened &&
-      <FieldProperties 
-        fieldId={ fieldId } 
-        handleFieldPropsWindow={ handleFieldPropsWindow }
-      />
-    }
-    { isPlantWindowOpened &&
-      <FieldPlantWindow 
-        fieldId={ fieldId }
-        handlePlantWindow={ handlePlantWindow }
-      />
-    }
-    { isBuildWindowOpened &&
-      <FieldBuildWindow
-        fieldId={ fieldId }
-        handleBuildWindow={ handleBuildWindow }
-      />
-    }
-    <BackgroundCloser onClick={ closeFieldMenu } />
-    <Wrapper hide={ (isPropertiesWindowOpened || isPlantWindowOpened || isBuildWindowOpened) ? true : false}>
+    <Router>
+      <Switch>
 
-      <TopSection>
-        <HeadingContainer>
-          <CropImageContainer>
-            <CropImage src={ getIcon() } />
-          </CropImageContainer>
-          <Name>{ field.data.fieldProps.isFieldBought }</Name>
-          <FieldNumber>{ `Field #${ field.data.fieldId + 1 }` }</FieldNumber>
-        </HeadingContainer>
-        <Main>
-          { selectButtons() }
-        </Main>
-      </TopSection>
+        <Route path={`/farm/field${fieldId + 1}/properties`}>
+          <FieldProperties fieldId={ fieldId } handleFieldPropsWindow={ closeWindow } />
+        </Route>
 
-      <BottomSection>
-        <LargeButton onClick={ handleFieldPropsWindow } secondary>Field properties</LargeButton>
-        <LargeButton onClick={ closeFieldMenu } primary>Close</LargeButton>
-      </BottomSection>
+        <Route path={`/farm/field${fieldId + 1}/plant`}>
+          <FieldPlantWindow fieldId={ fieldId } handlePlantWindow={ closeWindow } />
+        </Route>
 
-    </Wrapper>
-    </>,
+        <Route path={`/farm/field${fieldId + 1}/build`}>
+          <FieldBuildWindow fieldId={ fieldId } handleBuildWindow={ closeWindow } />
+        </Route>
+        
+      </Switch>
+
+      { redirectPath && <Redirect to={redirectPath} /> }
+    
+      <Wrapper hide={ redirectPath !== `/farm/field${fieldId + 1}` ? true : false}>
+
+        <TopSection>
+          <HeadingContainer>
+            <CropImageContainer>
+              <CropImage src={ getIcon() } />
+            </CropImageContainer>
+            <Name>{ setFieldName() }</Name>
+            <FieldNumber>{ `Field #${ field.fieldId + 1 }` }</FieldNumber>
+          </HeadingContainer>
+          <Main>
+            { selectButtons() }
+          </Main>
+        </TopSection>
+
+        <BottomSection>
+          <LargeButton onClick={ handleFieldPropsWindow } secondary>Field properties</LargeButton>
+          <LargeButton onClick={ closeFieldMenu } primary>Close</LargeButton>
+        </BottomSection>
+
+      </Wrapper>
+    </Router>,
     portal
   )
 }

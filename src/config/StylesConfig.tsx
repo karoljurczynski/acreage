@@ -3,6 +3,7 @@ import colorList from './colorList';
 
 export const root = document.querySelector("#root") as HTMLElement;
 export const portal = document.querySelector("#portal") as HTMLElement;
+export const backgroundCloser = document.querySelector("#backgroundCloser") as HTMLElement;
 const StylesConfig = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
@@ -23,11 +24,16 @@ const StylesConfig = createGlobalStyle`
 
   #portal {
     position: absolute;
-    width: 100vw;
-    height: 100vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+
+  .backgroundCloser {
+    position: absolute;
     top: 0;
     left: 0;
-    z-index: -1;
   }
 `;
 
