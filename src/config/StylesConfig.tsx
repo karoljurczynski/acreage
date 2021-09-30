@@ -28,6 +28,22 @@ const StylesConfig = createGlobalStyle`
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
+    overflow-y: hidden;
+    overflow-x: hidden;
+
+    .grabbed {
+      cursor: move;
+      cursor: grabbing;
+      cursor: -moz-grabbing;
+      cursor: -webkit-grabbing;
+    }
+
+    :hover {
+      cursor: move;
+      cursor: grab;
+      cursor: -moz-grab;
+      cursor: -webkit-grab;
+    }
   }
 
   .backgroundCloser {

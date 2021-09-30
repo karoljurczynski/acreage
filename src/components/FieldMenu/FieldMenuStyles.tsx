@@ -21,11 +21,11 @@ export const Wrapper = styled.div<WrapperProps>`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  border-radius: 8px 8px 8px 0;
+  border-radius: 8px;
   width: 224px;
   background-color: ${colorList.white};
   z-index: 2;
-  box-shadow: 1px 1px 5px #c5c5c5;
+  box-shadow: 1px 1px 5px ${colorList.textGray}, -1px -1px 5px ${colorList.textGray};
 
   ${({ hide }) => hide && `
     display: none;

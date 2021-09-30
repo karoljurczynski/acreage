@@ -1,5 +1,6 @@
-import { Wrapper, Container } from './AppStyles';
-import colorList from '../../config/colorList';
+// IMPORTS
+
+
 import Header from '../Header/Header';
 import MainBox from '../MainBox/MainBox';
 import TopSection from '../TopSection/TopSection';
@@ -11,23 +12,21 @@ import StorageHeading from '../StorageHeading/StorageHeading';
 import Board from '../Board/Board';
 import UserPanel from '../UserPanel/UserPanel';
 
-import { useSelector } from 'react-redux';
-import { StateInterface } from '../../redux/reduxStore';
-import { UserInterface } from '../../redux/reducers/userReducer';
+import { Wrapper, Container } from './AppStyles';
+import { AppPropsInterface } from '../interfaces';
+import colorList from '../../config/colorList';
 
-import { 
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from 'react-router-dom';
-
-// import { db } from '../../config/firebaseConfig';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 
-const App = () => {
-  const userData: UserInterface = useSelector((state: StateInterface): UserInterface => state.userData);
+// COMPONENT
+
+
+const App: React.FC<AppPropsInterface> = (): JSX.Element => {
     
+
+  // JSX
+
 
   return(
     <Router>

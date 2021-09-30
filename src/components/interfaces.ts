@@ -1,5 +1,9 @@
 // INTERFACES
 
+
+export interface AppPropsInterface {
+
+}
 export interface BoardPropsInterface {
   
 }

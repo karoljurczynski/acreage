@@ -1,7 +1,7 @@
 // IMPORTS
 
 
-import { useState, Dispatch } from 'react';
+import { useState, Dispatch, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import FieldProperties from '../FieldProperties/FieldProperties';
 import FieldPlantWindow from '../FieldPlantWindow/FieldPlantWindow';
@@ -34,6 +34,29 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
   const field: FieldInterface = fields[fieldId];
   const [redirectPath, setRedirectPath]: [string, Dispatch<React.SetStateAction<string>>] = useState<string>(`/farm/field${fieldId + 1}`);
 
+  // EFFECTS
+
+  const startDragWindow = (e: DragEvent) => {
+    const img = new Image();
+    e.dataTransfer?.setDragImage(img, 0, 0);
+  }
+
+  const dragWindow = (e: MouseEvent) => {
+    portal.style.top = `${String(e.clientY)}px`;
+    portal.style.left =  `${String(e.clientX)}px`;
+  }
+
+
+  useEffect(() => {
+    portal.draggable = true;
+    portal.addEventListener("dragstart", startDragWindow);
+    portal.addEventListener("dragover", dragWindow);
+
+    return () => {
+      portal.removeEventListener("dragstart", startDragWindow);
+      portal.removeEventListener("dragover", dragWindow);
+    }
+  }, []);
 
   // HANDLERS
 
