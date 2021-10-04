@@ -4,7 +4,7 @@
 export interface StorageItem {
   name: string;
   amount: number;
-  type: string;
+  type: "Crop" | "Seed" | "Part";
 }
 
 

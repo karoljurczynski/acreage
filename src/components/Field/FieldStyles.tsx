@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import colorList from '../../config/colorList';
-import { crops } from '../../config/crops';
-import { buildings } from '../../config/buildings';
+
 
 interface FieldProps {
   fieldCrop?: string;

@@ -1,3 +1,8 @@
+// IMPORTS
+
+
+import { CropInterface } from './interfaces';
+
 import wheat from '../images/crops/wheat.png';
 import potato from '../images/crops/potato.png';
 import tomato from '../images/crops/tomato.png';
@@ -10,50 +15,10 @@ import strawberry from '../images/crops/strawberry.png';
 import onion from '../images/crops/onion.png';
 
 
-export interface Crop {
-  [key: string]: CropData 
-}
-
-export interface CropData {
-  cropIcon: string;
-  timeToGrowInSeconds: number;
-  groundRateNeeded: number;
-  waterRateNeeded: number;
-  defaultYield: number;
-  expPerUnit: number;
-}
-
-export interface OldCrop {
-  cropName: string;
-  cropIcon: string;
-  timeToGrowInSeconds: number;
-  groundRateNeeded: number;
-  waterRateNeeded: number;
-  defaultYield: number;
-  expPerUnit: number;
-}
+// DATA
 
 
-const makeArrayFromCrops = () => {
-  const newArray = [];
-  const objectKeys = Object.keys(crops);
-  for (let i = 0; i < objectKeys.length; i++) {
-    let newArrayItem: OldCrop = { 
-      cropName: objectKeys[i], 
-      cropIcon: crops[objectKeys[i]].cropIcon,
-      timeToGrowInSeconds: crops[objectKeys[i]].timeToGrowInSeconds,
-      groundRateNeeded: crops[objectKeys[i]].groundRateNeeded,
-      waterRateNeeded: crops[objectKeys[i]].waterRateNeeded,
-      defaultYield: crops[objectKeys[i]].defaultYield,
-      expPerUnit: crops[objectKeys[i]].expPerUnit
-    }
-    newArray.push(newArrayItem);
-  }
-  return newArray;
-}
-
-
-export const crops: Crop = {
+const crops: CropInterface = {
   Wheat: {
     cropIcon: wheat,
     timeToGrowInSeconds: 1,
@@ -145,4 +110,8 @@ export const crops: Crop = {
   }
 }
 
-export const cropsArray = makeArrayFromCrops();
+
+// EXPORT
+
+
+export default crops;

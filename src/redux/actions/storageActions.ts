@@ -1,4 +1,4 @@
-export const addToUserStorage = (newItemName: string, newItemAmount: number, newItemType: string) => {
+export const addToUserStorage = (newItemName: string, newItemAmount: number, newItemType: "Crop" | "Seed" | "Part") => {
   return {
     type: "ADD_TO_USER_STORAGE",
     newItemName: newItemName,

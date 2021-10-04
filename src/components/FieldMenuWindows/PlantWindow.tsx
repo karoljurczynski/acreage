@@ -23,28 +23,27 @@ import hydration from '../../images/stats/hydration.png';
 import time from '../../images/stats/time.png';
 import filledStar from '../../images/stats/filled_star.png';
 
-import FieldMenuButton from '../FieldMenuButton/FieldMenuButton';
+//import FieldMenuButton from '../FieldMenuButton/FieldMenuButton';
 import React, { useState, useEffect } from 'react';
 import LargeButton from '../LargeButton/LargeButton';
-import { crops, cropsArray } from '../../config/crops';
+import crops from '../../config/crops';
 import { FieldInterface}  from '../../redux/reducers/fieldReducer';
 import { Seed } from '../../config/seeds';
 import { seeds } from '../../config/seeds';
 import { StorageItem } from '../../redux/reducers/storageReducer';
 import plant from '../../images/icons/plant.png';
-import { store } from '../../redux/reduxStore';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { StateInterface } from '../../redux/reduxStore';
-import { setBuildingType, setCropType } from '../../redux/actions/fieldActions';
+import { setBuildingType, setCropType, setFieldIcon, setFieldName } from '../../redux/actions/fieldActions';
 
 
 interface _FieldPlantWindow {
   fieldId: number;
-  handlePlantWindow: () => void;
+  closeWindow: () => void;
 }
 
-const FieldPlantWindow: React.FC<_FieldPlantWindow> = ({ fieldId, handlePlantWindow }) => {
+const PlantWindow: React.FC<_FieldPlantWindow> = ({ fieldId, closeWindow }) => {
   const state = useSelector(state => state) as StateInterface;
   const field: FieldInterface = state.fields[fieldId];
   const storage: StorageItem[] = state.storage;
@@ -72,15 +71,14 @@ const FieldPlantWindow: React.FC<_FieldPlantWindow> = ({ fieldId, handlePlantWin
   }
 
   const handlePlantSelectedSeed = () => {
-    cropsArray.forEach(crop => {
+    let cropName = selectedItem?.children[0].textContent as string;
       if (selectedItem) {
-        if (crop.cropName === selectedItem.children[0].textContent) {
-          dispatch(setBuildingType(fieldId, ""));
-          dispatch(setCropType(fieldId, crop.cropName));
-        }
+        dispatch(setBuildingType(fieldId, ""));
+        dispatch(setCropType(fieldId, cropName));
+        dispatch(setFieldName(fieldId, cropName));
+        dispatch(setFieldIcon(fieldId, crops[cropName].cropIcon));
       }
-    });
-    handlePlantWindow();
+    closeWindow();
   }
   return (
     <>
@@ -139,7 +137,7 @@ const FieldPlantWindow: React.FC<_FieldPlantWindow> = ({ fieldId, handlePlantWin
     </TopSection> 
 
     <BottomSection>
-      <LargeButton onClick={ handlePlantWindow } secondary>Close</LargeButton>
+      <LargeButton onClick={ closeWindow } secondary>Close</LargeButton>
       <LargeButton onClick={ handlePlantSelectedSeed } primary disabled={ !selectedItem ? true : false }>Plant</LargeButton>
     </BottomSection>
 
@@ -148,4 +146,4 @@ const FieldPlantWindow: React.FC<_FieldPlantWindow> = ({ fieldId, handlePlantWin
   )
 }
 
-export default FieldPlantWindow;
+export default PlantWindow;

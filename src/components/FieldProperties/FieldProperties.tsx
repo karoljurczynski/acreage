@@ -15,14 +15,13 @@ import { FieldInterface } from '../../redux/reducers/fieldReducer';
 // COMPONENT
 
 
-const FieldProperties: React.FC<FieldPropertiesInterface> = ({ fieldId, fieldIcon, closeWindow }) => {
+const FieldProperties: React.FC<FieldPropertiesInterface> = ({ fieldId, closeWindow }) => {
   
 
   // STATE
   
 
-  const state: StateInterface = useSelector((state: StateInterface): StateInterface => state);
-  const field: FieldInterface = state.fields[fieldId];
+  const field: FieldInterface = useSelector((state: StateInterface): FieldInterface => state.fields[fieldId]);
   
 
   // JSX
@@ -34,7 +33,7 @@ const FieldProperties: React.FC<FieldPropertiesInterface> = ({ fieldId, fieldIco
       <TopSection>
         <HeadingContainer>
           <CropImageContainer>
-            <CropImage src={ fieldIcon } />
+            <CropImage src={ field.cropProps.cropType ? field.cropProps.cropIcon : field.buildingProps.buildingIcon } />
           </CropImageContainer>
           <Name>{ `Field #${ field.fieldId + 1 }` }</Name>
           <FieldNumber>Properties</FieldNumber>

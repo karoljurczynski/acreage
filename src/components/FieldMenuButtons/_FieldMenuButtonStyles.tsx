@@ -1,21 +1,25 @@
+// IMPORTS
+
+
 import styled from 'styled-components';
 import colorList from '../../config/colorList';
 
-interface ButtonProps {
-  size: "half" | "full";
+interface ButtonPropsInterface {
+  isLarge: boolean;
   buttonFor?: string;
 }
-
-interface TextContentProps {
-  size: "half" | "full";
-  buttonFor?: string;
+interface ButtonTextPropsInterface {
   primary?: boolean;
   failed?: boolean;
   watered?: boolean;
   fertilized?: boolean;
 }
 
-export const Button = styled.button<ButtonProps>`
+
+// STYLES
+
+
+export const Button = styled.button<ButtonPropsInterface>`
   background-color: ${ colorList.white };
   color: ${ colorList.black };
   display: flex;
@@ -26,22 +30,14 @@ export const Button = styled.button<ButtonProps>`
   height: 86px;
   border-radius: 5px;
   cursor: pointer;
-  
-  ${({ size }) => (size === "full") && `
+
+  :hover {
+    background-color: ${ colorList.hoverGray };
+  }
+
+  ${({ isLarge }) => isLarge && `
     grid-column: 1 / 3;
     width: 2fr;
-  `};
-
-  ${({ buttonFor }) => buttonFor && `
-    align-items: flex-start;
-    cursor: default;
-    padding-left: 15px;
-  `};
-
-  ${({ buttonFor }) => !buttonFor && `
-    :hover, :focus {
-      opacity: 0.65;
-    }
   `};
 `;
 
@@ -50,7 +46,7 @@ export const ButtonHeading = styled.h4`
   color: ${ colorList.textGray };
 `;
 
-export const ButtonTextContent = styled.p<TextContentProps>`
+export const ButtonText = styled.p<ButtonTextPropsInterface>`
   font-size: 16px;
   color: ${ colorList.textGray };
 
@@ -69,11 +65,6 @@ export const ButtonTextContent = styled.p<TextContentProps>`
   ${({ fertilized }) => fertilized && `
     color: ${ colorList.darkBrown };
   `};
-
-  ${({ size, buttonFor }) => (size === "full" && buttonFor) && `
-    font-size: 24px;
-    color: ${ colorList.black };
-  `}
 `;
 
 export const ButtonIcon = styled.img`

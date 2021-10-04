@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { StateInterface } from '../../redux/reduxStore';
 import { StorageItem } from '../../redux/reducers/storageReducer'; 
 import { useSelector } from 'react-redux';
-import { cropsArray } from '../../config/crops';
+import crops from '../../config/crops';
 import { seeds } from '../../config/seeds';
 import { parts } from '../../config/parts';
 
@@ -17,11 +17,7 @@ const StorageContent: React.FC = () => {
     let icon: string = "";
     switch (type) {
       case "Crop": {
-        cropsArray.forEach(crop => {
-          if (crop.cropName === name)
-            icon = crop.cropIcon;
-        });
-        break;
+        return crops[name].cropIcon;
       }
       case "Seed": {
         seeds.forEach(seed => {

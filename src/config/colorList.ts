@@ -5,6 +5,7 @@ interface ColorListPattern {
 const colorList: ColorListPattern = {
   white: "#FFFFFF",
   textGray: "#C5C5C5",
+  hoverGray: "#f2f2f2",
   backgroundGray: "#EFEFEF",
   mainOrange: "#FFB029",
   lightBrown: "#C19553",

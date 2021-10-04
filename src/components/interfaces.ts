@@ -12,17 +12,49 @@ export interface FieldPropsInterface {
 }
 export interface FieldMenuPropsInterface {
   fieldId: number;
-  fieldName: string;
-  fieldIcon: string;
   closeFieldMenu: (e: React.MouseEvent) => void;
 }
 export interface FieldPropertiesInterface {
   fieldId: number;
-  fieldIcon: string;
   closeWindow: () => void;
 }
 export interface FieldMenuInfoBoxInterface {
   rateInfoBox?: boolean;
   title: string;
   content: string | number;
+}
+
+export interface PlantButtonProps {
+  handleWindow: () => void;
+}
+export interface HarvestButtonProps {
+  fieldId: number;
+  handleWindow: () => void;
+}
+export interface BuildButtonProps {
+  handleWindow: () => void;
+}
+export interface DestroyButtonProps {
+  fieldId: number;
+  handleWindow: () => void;
+}
+export interface BuySellFieldButtonProps {
+  fieldId: number;
+}
+
+export interface PlantWindowPropsInterface {
+  fieldId: number;
+  closeWindow: () => void;
+}
+export interface HarvestWindowPropsInterface {
+  fieldId: number;
+  closeWindow: () => void;
+}
+export interface BuildWindowPropsInterface {
+  fieldId: number;
+  closeWindow: () => void;
+}
+export interface DestroyWindowPropsInterface {
+  fieldId: number;
+  closeWindow: () => void;
 }

@@ -12,7 +12,7 @@ import {
   SelectListItem
 } from '../FieldMenu/FieldMenuStyles';
 
-import FieldMenuButton from '../FieldMenuButton/FieldMenuButton';
+//import FieldMenuButton from '../FieldMenuButton/FieldMenuButton';
 import React, { useState, useEffect } from 'react';
 import LargeButton from '../LargeButton/LargeButton';
 import { buildings } from '../../config/buildings';
@@ -26,10 +26,10 @@ import { setBuildingType, setCropType } from '../../redux/actions/fieldActions';
 
 interface _FieldBuildWindow {
   fieldId: number;
-  handleBuildWindow: () => void;
+  closeWindow: () => void;
 }
 
-const FieldBuildWindow: React.FC<_FieldBuildWindow> = ({ fieldId, handleBuildWindow }) => {
+const BuildWindow: React.FC<_FieldBuildWindow> = ({ fieldId, closeWindow }) => {
   const state = useSelector(state => state) as StateInterface;
   const field: FieldInterface = state.fields[fieldId];
   const dispatch = useDispatch();
@@ -54,7 +54,7 @@ const FieldBuildWindow: React.FC<_FieldBuildWindow> = ({ fieldId, handleBuildWin
         }
       }
     });
-    handleBuildWindow();
+    closeWindow();
   }
   return (
     <>
@@ -90,7 +90,7 @@ const FieldBuildWindow: React.FC<_FieldBuildWindow> = ({ fieldId, handleBuildWin
     </TopSection> 
 
     <BottomSection>
-      <LargeButton onClick={ handleBuildWindow } secondary>Close</LargeButton>
+      <LargeButton onClick={ closeWindow } secondary>Close</LargeButton>
       <LargeButton onClick={ handleBuildSelectedBuilding } primary disabled={ !selectedItem ? true : false }>Build</LargeButton>
     </BottomSection>
 
@@ -99,4 +99,4 @@ const FieldBuildWindow: React.FC<_FieldBuildWindow> = ({ fieldId, handleBuildWin
   )
 }
 
-export default FieldBuildWindow;
+export default BuildWindow;

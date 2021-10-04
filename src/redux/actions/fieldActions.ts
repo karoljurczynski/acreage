@@ -1,7 +1,21 @@
+export const setFieldIcon = (fieldId: number, fieldIcon: string) => {
+  return {
+    type: "SET_FIELD_ICON",
+    fieldId: fieldId,
+    fieldIcon: fieldIcon
+  }
+}
 export const setIsFieldBought = (fieldId: number) => {
   return {
     type: "SET_IS_FIELD_BOUGHT",
     fieldId: fieldId
+  }
+}
+export const setFieldName = (fieldId: number, fieldName: string) => {
+  return {
+    type: "SET_FIELD_ICON",
+    fieldId: fieldId,
+    fieldName: fieldName
   }
 }
 export const setCropType = (fieldId: number, cropType: string) => {
