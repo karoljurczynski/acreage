@@ -10,7 +10,6 @@ import FieldMenuButton from '../FieldMenuButton/FieldMenuButton';
 import LargeButton from '../LargeButton/LargeButton';
 
 import { Wrapper, TopSection, HeadingContainer, CropImageContainer, CropImage, Name, FieldNumber, Main, BottomSection } from './FieldMenuStyles';
-import logo from '../../images/logo.png';
 import { portal } from '../../config/StylesConfig';
 import { FieldMenuPropsInterface } from '../interfaces';
 
@@ -24,17 +23,18 @@ import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-do
 // COMPONENT
 
 
-const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu }): JSX.Element => {
+const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, fieldName, fieldIcon, closeFieldMenu }): JSX.Element => {
   
 
   // STATE
 
 
-  const fields: FieldInterface[] = useSelector((state: StateInterface): FieldInterface[] => state.fields);
-  const field: FieldInterface = fields[fieldId];
+  const field: FieldInterface = useSelector((state: StateInterface): FieldInterface => state.fields[fieldId]);
   const [redirectPath, setRedirectPath]: [string, Dispatch<React.SetStateAction<string>>] = useState<string>(`/farm/field${fieldId + 1}`);
 
+
   // EFFECTS
+
 
   const startDragWindow = (e: DragEvent) => {
     const img = new Image();
@@ -46,17 +46,18 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
     portal.style.left =  `${String(e.clientX)}px`;
   }
 
-
   useEffect(() => {
     portal.draggable = true;
     portal.addEventListener("dragstart", startDragWindow);
     portal.addEventListener("dragover", dragWindow);
 
     return () => {
+      portal.draggable = false;
       portal.removeEventListener("dragstart", startDragWindow);
       portal.removeEventListener("dragover", dragWindow);
     }
   }, []);
+
 
   // HANDLERS
 
@@ -134,24 +135,6 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
       return [ <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="full" textContent="Buy this field" primary /> ];
     }
   }
-  const setFieldName = (): string => {
-    if (field.fieldProps.isFieldBought) {
-      if (field.cropProps.cropType)
-        return field.cropProps.cropType as string;
-      if (field.cropProps.buildingType)
-        return field.cropProps.buildingType as string;
-      else
-        return "Empty";
-    }
-    else
-      return `${field.fieldProps.fieldPrice} $`;
-  }
-  const getIcon = (): string => {
-    if (setFieldName() === "Empty" || Number(setFieldName()[0]))
-      return logo;
-    else
-      return logo;
-  }
   
 
   // JSX
@@ -162,7 +145,7 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
       <Switch>
 
         <Route path={`/farm/field${fieldId + 1}/properties`}>
-          <FieldProperties fieldId={ fieldId } closeWindow={ closeWindow } />
+          <FieldProperties fieldId={ fieldId } fieldIcon={ fieldIcon } closeWindow={ closeWindow } />
         </Route>
 
         <Route path={`/farm/field${fieldId + 1}/plant`}>
@@ -182,9 +165,9 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
         <TopSection>
           <HeadingContainer>
             <CropImageContainer>
-              <CropImage src={ getIcon() } />
+              <CropImage src={ fieldIcon } />
             </CropImageContainer>
-            <Name>{ setFieldName() }</Name>
+            <Name>{ fieldName }</Name>
             <FieldNumber>{ `Field #${ field.fieldId + 1 }` }</FieldNumber>
           </HeadingContainer>
           <Main>

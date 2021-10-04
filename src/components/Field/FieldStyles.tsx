@@ -17,6 +17,7 @@ const emptyFieldHover: string = "rgba(148, 126, 82, 0.6)"
 export const FieldSegment = styled.button<FieldProps>`
   width: 100%;
   height: 100%;
+  transition: 0.3s ease;
   background: ${ disabledField };
   color: ${ colorList.black };
   cursor: pointer;

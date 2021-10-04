@@ -88,40 +88,40 @@ const createFieldsArray = () => {
 export const fieldReducer = (state = createFieldsArray(), action: any) => {
   switch (action.type) {
     case "SET_IS_FIELD_BOUGHT": {
-      const newFields = state;
+      const newFields = [...state];
       newFields[action.fieldId].fieldProps.isFieldBought = !state[action.fieldId].fieldProps.isFieldBought;
       return newFields;
     }
     case "SET_CROP_TYPE": {
-      const newFields = state;
+      const newFields = [...state];
       newFields[action.fieldId].cropProps.cropType = action.cropType;
       return newFields;
     }
     case "SET_BUILDING_TYPE": {
-      const newFields = state;
+      const newFields = [...state];
       newFields[action.fieldId].cropProps.buildingType = action.buildingType;
       return newFields;
     }
     case "SET_IS_CROP_READY_TO_HARVEST": {
-      const newFields = state;
+      const newFields = [...state];
       newFields[action.fieldId].cropProps.isReadyToHarvest = !state[action.fieldId].cropProps.isReadyToHarvest;
       return newFields;
     }
     case "UPDATE_TIME_TO_GROW": {
-      const newFields = state;
+      const newFields = [...state];
       newFields[action.fieldId].cropProps.timeToGrow = action.newTimeInSeconds;
       return newFields;
     }
     case "SET_IS_CROP_WATERED": {
-      const newFields = state;
+      const newFields = [...state];
       newFields[action.fieldId].cropProps.isWatered = !state[action.fieldId].cropProps.isWatered;
       return newFields;
     }
     case "SET_IS_CROP_FERTILIZED": {
-      const newFields = state;
+      const newFields = [...state];
       newFields[action.fieldId].cropProps.isFertilized = !state[action.fieldId].cropProps.isFertilized;
       return newFields;
     }
-    default: return state;
+    default: return [...state];
   }
 }

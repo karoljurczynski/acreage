@@ -44,45 +44,45 @@ const initialState: UserInterface = {
 export const userReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case "SET_IS_LOGGED": {
-      const newState = state;
+      const newState = {...state};
       newState.settings.isLogged = !state.settings.isLogged;
       return newState;
     }
     case "SET_USERNAME": {
-      const newState = state;
+      const newState = {...state};
       newState.settings.username = action.newUsername;
       return newState;
     }
     case "SET_PASSWORD": {
-      const newState = state;
+      const newState = {...state};
       newState.settings.password = action.newPassword;
       return newState;
     }
     case "SET_EMAIL": {
-      const newState = state;
+      const newState = {...state};
       newState.settings.email = action.newEmail;
       return newState;
     }
     case "SET_AVATAR": {
-      const newState = state;
+      const newState = {...state};
       newState.settings.avatarUrl = action.newAvatarUrl;
       return newState;
     }
     case "SET_USER_MONEY": {
-      const newState = state;
+      const newState = {...state};
       newState.gameplay.userMoney = action.newUserMoney;
       return newState;
     }
     case "SET_USER_EXPERIENCE": {
-      const newState = state;
+      const newState = {...state};
       newState.gameplay.userExperience = action.newUserExperience;
       return newState;
     }
     case "SET_USER_LEVEL": {
-      const newState = state;
+      const newState = {...state};
       newState.gameplay.userLevel = action.newUserLevel;
       return newState;
     }
-    default: return state;
+    default: return {...state};
   }
 }

@@ -1,5 +1,4 @@
 import { Button, ButtonHeading, ButtonTextContent, ButtonIcon } from './FieldMenuButtonStyles';
-import { store } from '../../redux/reduxStore';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { StateInterface } from '../../redux/reduxStore';
@@ -17,6 +16,7 @@ import upgrade from '../../images/icons/upgrade.png';
 import destroy from '../../images/icons/destroy.png';
 import buyField from '../../images/icons/buy.png';
 import sellField from '../../images/icons/sell.png';
+
 
 interface FieldMenuButtonProps {
   fieldId: number;
@@ -58,9 +58,11 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, handleBuildWi
   }
   const handleWaterButton = () => {
     dispatch(setIsCropWatered(fieldId));
+
     if (field.cropProps.isWatered && field.cropProps.isFertilized) {
       dispatch(setIsCropReadyToHarvest(fieldId));
     }
+
   }
   const handleFertilizeButton = () => {
     dispatch(setIsCropFertilized(fieldId));
@@ -87,6 +89,8 @@ const FieldMenuButton: React.FC<FieldMenuButtonProps> = ({fieldId, handleBuildWi
       if (userData.gameplay.userMoney >= field.fieldProps.fieldPrice) {
         setUserMoney(userData.gameplay.userMoney -= field.fieldProps.fieldPrice);
         dispatch(setIsFieldBought(fieldId));
+        console.log(userData.gameplay.userMoney);
+        console.log(state.userData.gameplay.userMoney);
       }
       else {
         window.alert("Not enough money to buy this field!");

@@ -5,7 +5,6 @@ import LargeButton from '../LargeButton/LargeButton';
 import FieldMenuInfoBox from '../FieldMenuInfoBox/FieldMenuInfoBox';
 import { Wrapper, TopSection, HeadingContainer, CropImageContainer, CropImage, Name, FieldNumber, Main, BottomSection } from '../FieldMenu/FieldMenuStyles';
 
-import logo from '../../images/logo.png';
 import { FieldPropertiesInterface } from '../interfaces';
 
 import { useSelector } from 'react-redux';
@@ -16,7 +15,7 @@ import { FieldInterface } from '../../redux/reducers/fieldReducer';
 // COMPONENT
 
 
-const FieldProperties: React.FC<FieldPropertiesInterface> = ({ fieldId, closeWindow }) => {
+const FieldProperties: React.FC<FieldPropertiesInterface> = ({ fieldId, fieldIcon, closeWindow }) => {
   
 
   // STATE
@@ -35,7 +34,7 @@ const FieldProperties: React.FC<FieldPropertiesInterface> = ({ fieldId, closeWin
       <TopSection>
         <HeadingContainer>
           <CropImageContainer>
-            <CropImage src={ logo } />
+            <CropImage src={ fieldIcon } />
           </CropImageContainer>
           <Name>{ `Field #${ field.fieldId + 1 }` }</Name>
           <FieldNumber>Properties</FieldNumber>

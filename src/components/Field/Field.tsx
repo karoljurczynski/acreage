@@ -1,7 +1,7 @@
 // IMPORTS
 
 
-import { useState, useEffect, Dispatch } from 'react';
+import React, { useState, useEffect, Dispatch, useContext } from 'react';
 import FieldMenu from '../FieldMenu/FieldMenu';
 import BackgroundCloser from '../BackgroundCloser/BackgroundCloser';
 
@@ -9,13 +9,13 @@ import { FieldSegment, FieldIcon } from './FieldStyles';
 import { FieldPropsInterface } from '../interfaces';
 import { cropsArray } from '../../config/crops';
 import { buildings } from '../../config/buildings';
+import logo from '../../images/logo.png';
 
 import { useSelector } from 'react-redux';
 import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
 
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
-
 
 // COMPONENT
 
@@ -26,9 +26,8 @@ const Field: React.FC<FieldPropsInterface> = ({ fieldId }): JSX.Element => {
   // STATE
   
 
-  const fields: FieldInterface[] = useSelector((state: StateInterface): FieldInterface[] => state.fields);  
+  const field: FieldInterface = useSelector((state: StateInterface): FieldInterface => state.fields[fieldId]);  
   const [redirectPath, setRedirectPath]: [string, Dispatch<React.SetStateAction<string>>] = useState<string>(`/farm`);
-  const field: FieldInterface = fields[fieldId];
 
 
   // EFFECTS
@@ -56,8 +55,31 @@ const Field: React.FC<FieldPropsInterface> = ({ fieldId }): JSX.Element => {
 
   // TOOL FUNCTIONS
 
-  
-  const getIcon = () => {
+  // const getFieldName = (): string => {
+  //   if (field.fieldProps.isFieldBought) {
+  //     if (field.cropProps.cropType)
+  //       return field.cropProps.cropType as string;
+  //     if (field.cropProps.buildingType)
+  //       return field.cropProps.buildingType as string;
+  //     else
+  //       return "Empty";
+  //   }
+  //   else
+  //     return `${field.fieldProps.fieldPrice} $`;
+  // }
+  const getFieldName = (): string => {
+    if (field.fieldProps.isFieldBought) {
+      if (field.cropProps.cropType)
+        return field.cropProps.cropType as string;
+      if (field.cropProps.buildingType)
+        return field.cropProps.buildingType as string;
+      else
+        return "Empty";
+    }
+    else
+      return `${field.fieldProps.fieldPrice} $`;
+  }
+  const getIcon = (): string => {
     let icon: string = "";
     if (field.cropProps.cropType) {
       cropsArray.forEach(crop => {
@@ -65,11 +87,14 @@ const Field: React.FC<FieldPropsInterface> = ({ fieldId }): JSX.Element => {
           icon = crop.cropIcon;
       });
     }
-    else {
+    else if (field.cropProps.buildingType) {
       buildings.forEach(building => {
         if (building.buildingName === field.cropProps.buildingType)
           icon = building.buildingIcon;
       });
+    }
+    else {
+      icon = logo;
     }
     return icon;
   }
@@ -84,6 +109,8 @@ const Field: React.FC<FieldPropsInterface> = ({ fieldId }): JSX.Element => {
         <Route path={`/farm/field${fieldId + 1}`}>
           <FieldMenu
             fieldId={ fieldId }
+            fieldName={ getFieldName() }
+            fieldIcon={ getIcon() }
             closeFieldMenu={ handleFieldOnClick }
           />
         </Route>

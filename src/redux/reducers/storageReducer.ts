@@ -29,7 +29,7 @@ export const storageReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case "ADD_TO_USER_STORAGE": {
       let newItemExistInStorage = false;
-      const newState = state;
+      const newState = [...state];
       const newItem: StorageItem = { name: action.newItemName, amount: action.newItemAmount, type: action.newItemType };
       
       state.forEach((item, index) => {
@@ -45,7 +45,7 @@ export const storageReducer = (state = initialState, action: any) => {
       return newState;
     }
     case "REMOVE_FROM_USER_STORAGE": {
-      const newState = state;
+      const newState = [...state];
       const removedItem: StorageItem = { name: action.removedItemName, amount: action.removedItemAmount, type: action.removedItemType };
       
       state.forEach((item, index) => {
@@ -59,6 +59,6 @@ export const storageReducer = (state = initialState, action: any) => {
 
       return newState;
     }
-    default: return state;
+    default: return [...state];
   }
 }
