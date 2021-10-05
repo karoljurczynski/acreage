@@ -7,6 +7,9 @@ export interface AppPropsInterface {
 export interface BoardPropsInterface {
   
 }
+export interface BackgroundCloserPropsInterface {
+  onClick: () => void;
+}
 export interface FieldPropsInterface {
   fieldId: number;
 }
@@ -57,4 +60,15 @@ export interface BuildWindowPropsInterface {
 export interface DestroyWindowPropsInterface {
   fieldId: number;
   closeWindow: () => void;
+}
+export interface WarningWindowPropsInterface {
+  fieldId: number;
+  warningText: string;
+  warningTip: string;
+  shortcutButton?: ShortcutButtonInterface;
+  closeWindow: () => void;
+}
+export interface ShortcutButtonInterface {
+  shortcutDestination: string;
+  shortcutTitle: string;
 }

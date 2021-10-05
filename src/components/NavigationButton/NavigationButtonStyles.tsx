@@ -14,10 +14,7 @@ export const Button = styled.button<Props>`
   border-radius: 10px;
   padding: 12px 0;
   width: 130px;
-
-  :nth-of-type(2) {
-    margin: 0 15px;
-  }
+  margin: 0 4px;
 
   :hover, :focus {
     color: ${ colorList.black };

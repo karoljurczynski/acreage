@@ -75,11 +75,12 @@ const Field: React.FC<FieldPropsInterface> = ({ fieldId }): JSX.Element => {
         fieldStatus={ field.fieldProps.isFieldBought }
         isReadyToHarvest={ field.cropProps.isReadyToHarvest }
         onClick={ handleFieldOnClick }
-        title={ field.cropProps.cropType ? field.cropProps.cropType : field.buildingProps.buildingType }>
-          
-        { field.cropProps.cropType && <FieldIcon src={ field.cropProps.cropIcon } /> }
-        { field.buildingProps.buildingType && <FieldIcon src={ field.buildingProps.buildingIcon } /> }
+        title={ field.cropProps.cropType.length ? field.cropProps.cropType : field.buildingProps.buildingType }>
 
+        { (field.cropProps.cropType || field.buildingProps.buildingType) &&
+          <FieldIcon src={ field.cropProps.cropType ? field.cropProps.cropIcon : field.buildingProps.buildingIcon } />
+        }
+      
       </FieldSegment>
       </Link>
     </Router> 

@@ -3,7 +3,7 @@
 
 import { Button, ButtonIcon, ButtonText } from './_FieldMenuButtonStyles';
 import { PlantButtonProps } from '../interfaces';
-import plant from '../../images/icons/plant.png';
+import upgrade from '../../images/icons/upgrade.png';
 
 
 // COMPONENT
@@ -19,8 +19,8 @@ const PlantButton: React.FC<PlantButtonProps> = ({ handleWindow }) => {
     <Button
       isLarge={ false }
       onClick={ handleWindow }>
-      <ButtonIcon src={ plant }></ButtonIcon>
-      <ButtonText primary>Plant</ButtonText>
+      <ButtonIcon src={ upgrade }></ButtonIcon>
+      <ButtonText primary>Upgrade</ButtonText>
     </Button>
   )
 }

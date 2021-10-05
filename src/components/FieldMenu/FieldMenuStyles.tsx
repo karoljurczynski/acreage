@@ -1,19 +1,26 @@
 import styled from 'styled-components';
 import colorList from '../../config/colorList';
 
+
 interface WrapperProps {
   fieldProperties?: boolean;
+  warning?: boolean;
   width?: number;
   hide?: boolean;
 }
-
+interface TopSectionPropsInterface {
+  alignItems?: string;
+}
+interface BottomSectionPropsInterface {
+  warning?: boolean;
+}
 interface SelectListItemProps {
   heading?: boolean;
 }
-
 interface MainProps {
   fullSize?: boolean;
 }
+
 
 export const Wrapper = styled.div<WrapperProps>`
   position: relative;
@@ -21,11 +28,11 @@ export const Wrapper = styled.div<WrapperProps>`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  border-radius: 8px;
+  box-shadow: 2px 1px 4px ${colorList.textGray}, 0px 2px 3px ${colorList.textGray}, 0px -1px 3px ${colorList.textGray};
+  border-radius: 10px;
   width: 224px;
-  background-color: ${colorList.white};
+  margin: 5px;
   z-index: 2;
-  box-shadow: 1px 1px 5px ${colorList.textGray}, -1px -1px 5px ${colorList.textGray};
 
   ${({ hide }) => hide && `
     display: none;
@@ -33,17 +40,24 @@ export const Wrapper = styled.div<WrapperProps>`
   ${({ width }) => width && `
     width: ${ width }px;
   `}
+  ${({ warning }) => warning && `
+    width: 400px;
+  `}
 `;
 
-export const TopSection = styled.section`
+export const TopSection = styled.section<TopSectionPropsInterface>`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  border-radius: 8px 8px 0 0;
-  background-color: ${ colorList.mainOrange };
+  border-radius: 10px 10px 0 0;
+  background: ${colorList.backgroundGradient};
   padding: 20px;
+
+  ${({ alignItems }) => alignItems && `
+    align-items: ${alignItems};
+  `}
 `;
 
 export const Main = styled.main<MainProps>`
@@ -58,10 +72,19 @@ export const Main = styled.main<MainProps>`
   `}
 `;
 
-export const BottomSection = styled.section`
+export const BottomSection = styled.section<BottomSectionPropsInterface>`
   padding: 40px 20px 20px;
+  background-color: ${colorList.white};
+  border-radius: 0 0 10px 10px;
   width: 100%;
-  font-size: 14px;
+
+  ${({ warning }) => warning && `
+    padding: 20px 10px 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+  `}
 `;
 
 export const HeadingContainer = styled.section`
@@ -134,7 +157,6 @@ export const SelectListItem = styled.li<SelectListItemProps>`
 export const SelectListItemText = styled.p`
   height: 70%;
   width: auto;
-
 `;
 export const SelectListItemImage = styled.img`
   height: 90%;
@@ -146,4 +168,89 @@ export const SelectListItemWrapper = styled.span`
   align-items: center;
   justify-content: flex-start;
   height: 100%;
+`;
+
+
+export const WarningContainer = styled.div`
+  display: flex; 
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 20px 0px;
+`;
+export const WarningTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-left: 20px;
+  height: 80px;
+`;
+export const WarningImage = styled.img`
+  display: block;
+  width: auto;
+  height: 85px;
+`;
+export const WarningTitle = styled.h2`
+  color: ${colorList.warningRed};
+  margin-bottom: 7px;
+  font-size: 26px;
+`;
+export const WarningText = styled.h5`
+  color: ${colorList.black};
+  margin-bottom: 1px;
+  font-size: 18px;
+  font-weight: bold;
+`;
+export const WarningTip = styled.p`
+  color: ${colorList.white};
+  font-size: 12px;
+`;
+
+interface WindowButtonPropsInterface {
+  primary?: boolean;
+  secondary ?: boolean;
+  tertiary?: boolean;
+  disabled?: boolean;
+}
+export const WindowButton = styled.button<WindowButtonPropsInterface>`
+  background-color: ${ colorList.white };
+  color: ${ colorList.black };
+  border: none;
+  text-align: center;
+  font-size: 11px;
+  font-weight: bold;
+  box-shadow: none;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 80px;
+  padding: 10px 0;
+
+  :last-of-type {
+    margin-left: 8px;
+  }
+  
+  ${({ primary }) => primary && `
+    background-color: ${ colorList.mainOrange };
+    box-shadow: 1px 1px 3px ${ colorList.textGray };
+    :hover, :focus {
+      opacity: 0.85;
+    }
+  `}
+  ${({ secondary }) => secondary && `
+    border: 1px solid ${ colorList.mainOrange };
+    :hover, :focus {
+      color: ${ colorList.mainOrange };
+    }
+  `}
+  ${({ tertiary }) => tertiary && `
+    color: ${ colorList.mainOrange };
+    border: 1px solid ${ colorList.textGray };
+  `}
+  ${({ disabled }) => disabled && `
+    :hover, :focus {
+      opacity: 0.5; 
+    }
+    opacity: 0.5;
+  `}
 `;

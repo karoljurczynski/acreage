@@ -4,20 +4,19 @@
 import FieldMenuInfoBox from '../FieldMenuInfoBox/FieldMenuInfoBox';
 import LargeButton from '../LargeButton/LargeButton';
 
-import { Wrapper, TopSection, HeadingContainer, CropImageContainer, 
-         CropImage, Name, FieldNumber, Main, BottomSection
-} from '../FieldMenu/FieldMenuStyles';
+import { Wrapper, TopSection, HeadingContainer, CropImageContainer, CropImage, Name, FieldNumber, Main, BottomSection } from '../FieldMenu/FieldMenuStyles';
 import { HarvestWindowPropsInterface } from '../interfaces';
-import harvest from '../../images/icons/harvest.png';
-import logo from '../../images/logo.png';
 import crops from '../../config/crops';
 
+import harvest from '../../images/icons/harvest.png';
+import logo from '../../images/logo.png';
+
 import { useSelector, useDispatch } from 'react-redux';
-import { StateInterface } from '../../redux/reduxStore';
-import { setBuildingType, setCropType, setFieldIcon } from '../../redux/actions/fieldActions';
-import { FieldInterface } from '../../redux/reducers/fieldReducer';
-import { StorageItem } from '../../redux/reducers/storageReducer';
+import { setBuildingType, setCropType, setCropIcon } from '../../redux/actions/fieldActions';
 import { addToUserStorage } from '../../redux/actions/storageActions';
+import { StateInterface } from '../../redux/reduxStore';
+import { FieldInterface } from '../../redux/reducers/fieldReducer';
+
 
 
 // COMPONENT
@@ -38,12 +37,10 @@ const HarvestWindow: React.FC<HarvestWindowPropsInterface> = ({ fieldId, closeWi
 
 
   const handleCollectButton = () => {
-    closeWindow();
-    setState(setCropType(fieldId, ""));
-    setState(setBuildingType(fieldId, ""));
-    setState(setFieldIcon(fieldId, logo));
     setState(addToUserStorage(field.cropProps.cropType, crops[field.cropProps.cropType].defaultYield, "Crop"));
-    
+    setState(setCropType(fieldId, ""));
+    setState(setCropIcon(fieldId, logo));
+    closeWindow();
   }
 
   
@@ -77,5 +74,9 @@ const HarvestWindow: React.FC<HarvestWindowPropsInterface> = ({ fieldId, closeWi
   </Wrapper>
   )
 }
+
+
+// EXPORT
+
 
 export default HarvestWindow;

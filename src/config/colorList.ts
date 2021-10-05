@@ -12,10 +12,11 @@ const colorList: ColorListPattern = {
   darkBrown: "#947E52",
   black: "#000000",
   blue: "#00B2CE",
-  warningRed: "#E60000",
+  warningRed: "#FF0000",
   lightGreen: "#08cc0f",
   green: "#009105",
-  yellow: "#FFCC00"
+  yellow: "#FFCC00",
+  backgroundGradient: "linear-gradient(to top right, #FFE229 0%, #FFB029 40%, #FF7229 100%);",
 }
 
 export default colorList;

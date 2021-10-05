@@ -51,7 +51,7 @@ const crops: CropInterface = {
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateNeeded: 0,
-    defaultYield: 0,
+    defaultYield: 1,
     expPerUnit: 0
   },
 
@@ -60,7 +60,7 @@ const crops: CropInterface = {
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateNeeded: 0,
-    defaultYield: 0,
+    defaultYield: 1,
     expPerUnit: 0
   },
 
@@ -69,7 +69,7 @@ const crops: CropInterface = {
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateNeeded: 0,
-    defaultYield: 0,
+    defaultYield: 1,
     expPerUnit: 0
   },
 
@@ -78,7 +78,7 @@ const crops: CropInterface = {
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateNeeded: 0,
-    defaultYield: 0,
+    defaultYield: 1,
     expPerUnit: 0
   },
 
@@ -87,7 +87,7 @@ const crops: CropInterface = {
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateNeeded: 0,
-    defaultYield: 0,
+    defaultYield: 1,
     expPerUnit: 0
   },
 
@@ -96,7 +96,7 @@ const crops: CropInterface = {
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateNeeded: 0,
-    defaultYield: 0,
+    defaultYield: 1,
     expPerUnit: 0
   },
 
@@ -105,7 +105,7 @@ const crops: CropInterface = {
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateNeeded: 0,
-    defaultYield: 0,
+    defaultYield: 1,
     expPerUnit: 0
   }
 }

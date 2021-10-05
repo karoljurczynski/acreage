@@ -133,12 +133,12 @@ export const fieldReducer = (state: FieldInterface[] = createFieldsArray(), acti
     }
     case "SET_FIELD_NAME": {
       const newFields = [...state];
-      newFields[action.fieldId].fieldProps.fieldName = action.fieldName;
+      newFields[action.fieldId].fieldProps.fieldName = action.newFieldName;
       return newFields;
     }
     case "SET_CROP_TYPE": {
       const newFields = [...state];
-      newFields[action.fieldId].cropProps.cropType = action.cropType;
+      newFields[action.fieldId].cropProps.cropType = action.newCropType;
       return newFields;
     }
     case "SET_CROP_ICON": {

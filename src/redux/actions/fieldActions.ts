@@ -1,35 +1,28 @@
-export const setFieldIcon = (fieldId: number, fieldIcon: string) => {
-  return {
-    type: "SET_FIELD_ICON",
-    fieldId: fieldId,
-    fieldIcon: fieldIcon
-  }
-}
 export const setIsFieldBought = (fieldId: number) => {
   return {
     type: "SET_IS_FIELD_BOUGHT",
     fieldId: fieldId
   }
 }
-export const setFieldName = (fieldId: number, fieldName: string) => {
+export const setFieldName = (fieldId: number, newFieldName: string) => {
   return {
-    type: "SET_FIELD_ICON",
+    type: "SET_FIELD_NAME",
     fieldId: fieldId,
-    fieldName: fieldName
+    newFieldName: newFieldName
   }
 }
-export const setCropType = (fieldId: number, cropType: string) => {
+export const setCropType = (fieldId: number, newCropType: string) => {
   return {
     type: "SET_CROP_TYPE",
     fieldId: fieldId,
-    cropType: cropType
+    newCropType: newCropType
   }
 }
-export const setBuildingType = (fieldId: number, buildingType: string) => {
+export const setCropIcon = (fieldId: number, newIcon: string) => {
   return {
-    type: "SET_BUILDING_TYPE",
+    type: "SET_CROP_ICON",
     fieldId: fieldId,
-    buildingType: buildingType
+    newIcon: newIcon
   }
 }
 export const setIsCropReadyToHarvest = (fieldId: number) => {
@@ -44,7 +37,6 @@ export const updateTimeToGrow = (fieldId: number, newTimeInSeconds: number) => {
     fieldId: fieldId,
     newTimeInSeconds: newTimeInSeconds
   }
-
 }
 export const setIsCropWatered = (fieldId: number) => {
   return {
@@ -56,5 +48,39 @@ export const setIsCropFertilized = (fieldId: number) => {
   return {
     type: "SET_IS_CROP_FERTILIZED",
     fieldId: fieldId
+  }
+}
+export const setBuildingType = (fieldId: number, newBuildingType: string) => {
+  return {
+    type: "SET_BUILDING_TYPE",
+    fieldId: fieldId,
+    newBuildingType: newBuildingType
+  }
+}
+export const setBuildingIcon = (fieldId: number, newIcon: string) => {
+  return {
+    type: "SET_BUILDING_ICON",
+    fieldId: fieldId,
+    newIcon: newIcon
+  }
+}
+export const setBuildingLevel = (fieldId: number, newLevel: number) => {
+  return {
+    type: "SET_BUILDING_LEVEL",
+    fieldId: fieldId,
+    newLevel: newLevel
+  }
+}
+export const setIsUpgradeReady = (fieldId: number) => {
+  return {
+    type: "SET_IS_UPGRADE_READY",
+    fieldId: fieldId,
+  }
+}
+export const setBuildingCapacity = (fieldId: number, newCapacity: number) => {
+  return {
+    type: "SET_BUILDING_CAPACITY",
+    fieldId: fieldId,
+    newCapacity: newCapacity
   }
 }
