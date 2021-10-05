@@ -1,7 +1,7 @@
 // IMPORTS
 
 
-import { useState, Dispatch, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import FieldProperties from '../FieldProperties/FieldProperties';
 import PlantWindow from '../FieldMenuWindows/PlantWindow';
@@ -24,6 +24,8 @@ import { FieldInterface } from '../../redux/reducers/fieldReducer';
 import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import HarvestWindow from '../FieldMenuWindows/HarvestWindow';
 import HarvestButton from '../FieldMenuButtons/HarvestButton';
+import { StorageItem } from '../../redux/reducers/storageReducer';
+import WarningWindow from '../FieldMenuWindows/WarningWindow';
 
 
 
@@ -31,13 +33,19 @@ import HarvestButton from '../FieldMenuButtons/HarvestButton';
 
 
 const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu }): JSX.Element => {
-  
+  const filterForSeeds = (item: StorageItem) => {
+    if (item.type === "Seed" && item.amount)
+      return item;
+  }
 
   // STATE
 
+  const state: StateInterface = useSelector((state: StateInterface): StateInterface => state);
+  const field: FieldInterface = state.fields[fieldId];
+  const storage: StorageItem[] = state.storage.filter(filterForSeeds);
 
-  const field: FieldInterface = useSelector((state: StateInterface): FieldInterface => state.fields[fieldId]);
-  const [redirectPath, setRedirectPath]: [string, Dispatch<React.SetStateAction<string>>] = useState<string>(`/farm/field${fieldId + 1}`);
+  const [redirectPath, setRedirectPath]: [string, React.Dispatch<React.SetStateAction<string>>] = useState<string>(`/farm/field${fieldId + 1}`);
+  const [isWarningActive, setIsWarningActive]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(false);
 
 
   // EFFECTS
@@ -54,6 +62,10 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
       portal.removeEventListener("dragover", dragWindow);
     }
   }, []);
+
+  useEffect(() => {
+    if (storage.length === 0) setIsWarningActive(true);
+  }, [storage]);
 
   
   // HANDLERS
@@ -140,7 +152,18 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
         </Route>
 
         <Route path={`/farm/field${fieldId + 1}/plant`}>
-          <PlantWindow fieldId={ fieldId } closeWindow={() => handleWindow("plant")} />
+          { isWarningActive
+            ? <WarningWindow 
+                warningText="No seeds in storage!" 
+                warningTip="You can buy more seeds in the Shop." 
+                closeWindow={ () => handleWindow("plant") } 
+                shortcutButton={{
+                  shortcutPath: "/shop",
+                  shortcutTitle: "Visit Shop"
+                }}
+              />
+            : <PlantWindow fieldId={ fieldId } closeWindow={() => handleWindow("plant")} />
+          }
         </Route>
 
         <Route path={`/farm/field${fieldId + 1}/build`}>

@@ -169,14 +169,12 @@ export const SelectListItemWrapper = styled.span`
   justify-content: flex-start;
   height: 100%;
 `;
-
-
 export const WarningContainer = styled.div`
   display: flex; 
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
-  margin: 20px 0px;
+  margin: 25px 0px;
 `;
 export const WarningTextWrapper = styled.div`
   display: flex;
@@ -193,14 +191,13 @@ export const WarningImage = styled.img`
 `;
 export const WarningTitle = styled.h2`
   color: ${colorList.warningRed};
-  margin-bottom: 7px;
-  font-size: 26px;
+  margin-bottom: 8px;
+  font-size: 24px;
 `;
 export const WarningText = styled.h5`
   color: ${colorList.black};
   margin-bottom: 1px;
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 16px;
 `;
 export const WarningTip = styled.p`
   color: ${colorList.white};
@@ -240,7 +237,7 @@ export const WindowButton = styled.button<WindowButtonPropsInterface>`
   ${({ secondary }) => secondary && `
     border: 1px solid ${ colorList.mainOrange };
     :hover, :focus {
-      color: ${ colorList.mainOrange };
+      background-color: #f7f7f7;
     }
   `}
   ${({ tertiary }) => tertiary && `

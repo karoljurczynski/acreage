@@ -62,13 +62,12 @@ export interface DestroyWindowPropsInterface {
   closeWindow: () => void;
 }
 export interface WarningWindowPropsInterface {
-  fieldId: number;
   warningText: string;
   warningTip: string;
   shortcutButton?: ShortcutButtonInterface;
   closeWindow: () => void;
 }
 export interface ShortcutButtonInterface {
-  shortcutDestination: string;
+  shortcutPath: string;
   shortcutTitle: string;
 }

@@ -1,7 +1,7 @@
 // IMPORT
 
 
-import { SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import LargeButton from '../LargeButton/LargeButton';
 
 import { Wrapper, TopSection, HeadingContainer, CropImageContainer, CropImage, Name, FieldNumber, Main, BottomSection, SelectListContainer, SelectListItem, SelectListItemWrapper, SelectListItemText, SelectListItemImage } from '../FieldMenu/FieldMenuStyles';
@@ -22,7 +22,6 @@ import { removeFromUserStorage } from '../../redux/actions/storageActions';
 import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
 import { StorageItem } from '../../redux/reducers/storageReducer';
-import WarningWindow from './WarningWindow';
 
 
 // COMPONENT
@@ -31,25 +30,15 @@ import WarningWindow from './WarningWindow';
 const PlantWindow: React.FC<PlantWindowPropsInterface> = ({ fieldId, closeWindow }) => {
   
 
-  // TOOL FUNCTIONS
-
-
-  const filterForSeeds = (item: StorageItem) => {
-    if (item.type === "Seed" && item.amount)
-      return item;
-  }
-  
-  
   // STATE
 
   
   const state: StateInterface = useSelector((state: StateInterface): StateInterface => state);
   const field: FieldInterface = state.fields[fieldId];
-  const storage: StorageItem[] = state.storage.filter(filterForSeeds);
+  const storage: StorageItem[] = state.storage;
   const setState = useDispatch();
 
-  const [selectedItem, setSelectedItem]: [HTMLLIElement, React.Dispatch<SetStateAction<HTMLLIElement>>] = useState<HTMLLIElement>(document.createElement("li"));
-  const [isWarningActive, setIsWarningActive]: [boolean, React.Dispatch<SetStateAction<boolean>>] = useState<boolean>(false);
+  const [selectedItem, setSelectedItem]: [HTMLLIElement, React.Dispatch<React.SetStateAction<HTMLLIElement>>] = useState<HTMLLIElement>(document.createElement("li"));
 
 
   // EFFECTS
@@ -60,11 +49,7 @@ const PlantWindow: React.FC<PlantWindowPropsInterface> = ({ fieldId, closeWindow
     return () => { if (selectedItem) selectedItem.style.backgroundColor = "white" }
   }, [ selectedItem ]);
 
-  useEffect(() => {
-    if (storage.length === 0) setIsWarningActive(true);
-  }, [ storage ])
-
-
+  
   // HANDLERS
 
 
@@ -83,89 +68,84 @@ const PlantWindow: React.FC<PlantWindowPropsInterface> = ({ fieldId, closeWindow
   }
 
 
+  // TOOL FUNCTIONS
+
+
+  const filterForSeeds = (item: StorageItem) => {
+    if (item.type === "Seed" && item.amount)
+      return item;
+  }
+
+
   // JSX
 
 
   return (
-    <>
-    { isWarningActive 
-      ? <WarningWindow 
-          fieldId={fieldId} 
-          warningText="No seeds in storage!" 
-          warningTip="You can buy more seeds in the Shop." 
-          closeWindow={ closeWindow } 
-          shortcutButton={{
-            shortcutDestination: "home",
-            shortcutTitle: "Visit Shop"
-          }}
-        />
-      : <Wrapper fieldProperties={ true } width={ 480 } hide={isWarningActive}>
+    <Wrapper fieldProperties={ true } width={ 480 }>
 
-        <TopSection>
-          <HeadingContainer>
-            <CropImageContainer>
-              <CropImage src={ plant } />
-            </CropImageContainer>
-            <Name>Select a seed</Name>
-            <FieldNumber>{ `Field #${ field.fieldId + 1 } ` }</FieldNumber>
-          </HeadingContainer>
+      <TopSection>
+        <HeadingContainer>
+          <CropImageContainer>
+            <CropImage src={ plant } />
+          </CropImageContainer>
+          <Name>Select a seed</Name>
+          <FieldNumber>{ `Field #${ field.fieldId + 1 } ` }</FieldNumber>
+        </HeadingContainer>
 
-          <Main fullSize>
+        <Main fullSize>
 
-            <SelectListContainer>
-              <SelectListItem heading>
-                <SelectListItemWrapper>
-                  <SelectListItemText>Crop name</SelectListItemText>
-                </SelectListItemWrapper>
-                <SelectListItemWrapper>
-                  <SelectListItemText><SelectListItemImage src={ storagedSeeds } title="Seeds in storage" /></SelectListItemText>
-                  <SelectListItemText><SelectListItemImage src={ storagedCrops } title="Crops in storage" /></SelectListItemText>
-                </SelectListItemWrapper>
-                <SelectListItemWrapper>
-                  <SelectListItemText><SelectListItemImage src={ ground } title="Required ground rate" /></SelectListItemText>
-                  <SelectListItemText><SelectListItemImage src={ hydration } title="Required water rate" /></SelectListItemText>
-                </SelectListItemWrapper>
-                <SelectListItemWrapper>
-                  <SelectListItemText><SelectListItemImage src={ time } title="Growing time" /></SelectListItemText>
-                </SelectListItemWrapper>
-              </SelectListItem>
-            </SelectListContainer>
+          <SelectListContainer>
+            <SelectListItem heading>
+              <SelectListItemWrapper>
+                <SelectListItemText>Crop name</SelectListItemText>
+              </SelectListItemWrapper>
+              <SelectListItemWrapper>
+                <SelectListItemText><SelectListItemImage src={ storagedSeeds } title="Seeds in storage" /></SelectListItemText>
+                <SelectListItemText><SelectListItemImage src={ storagedCrops } title="Crops in storage" /></SelectListItemText>
+              </SelectListItemWrapper>
+              <SelectListItemWrapper>
+                <SelectListItemText><SelectListItemImage src={ ground } title="Required ground rate" /></SelectListItemText>
+                <SelectListItemText><SelectListItemImage src={ hydration } title="Required water rate" /></SelectListItemText>
+              </SelectListItemWrapper>
+              <SelectListItemWrapper>
+                <SelectListItemText><SelectListItemImage src={ time } title="Growing time" /></SelectListItemText>
+              </SelectListItemWrapper>
+            </SelectListItem>
+          </SelectListContainer>
 
-            <SelectListContainer>
-              { storage.map((seed, index) => {
-                return (
-                  <SelectListItem onClick={ handleItemSelect } key={ index }>
+          <SelectListContainer>
+            { storage.filter(filterForSeeds).map((seed, index) => {
+              return (
+                <SelectListItem onClick={ handleItemSelect } key={ index }>
+                  <SelectListItemWrapper>
+                    <SelectListItemText>{ seed.name }</SelectListItemText>
+                  </SelectListItemWrapper>
+                  <SelectListItemWrapper>
+                    <SelectListItemText>{ seed.amount }</SelectListItemText>
+                    <SelectListItemText>{ seed.amount }</SelectListItemText>
+                  </SelectListItemWrapper>
+                  <SelectListItemWrapper>
+                    <SelectListItemText>{ crops[seed.name].groundRateNeeded }<SelectListItemImage src={ filledStar }/></SelectListItemText>
+                    <SelectListItemText>{ crops[seed.name].waterRateNeeded }<SelectListItemImage src={ filledStar }/></SelectListItemText>
+                  </SelectListItemWrapper>
                     <SelectListItemWrapper>
-                      <SelectListItemText>{ seed.name }</SelectListItemText>
-                    </SelectListItemWrapper>
-                    <SelectListItemWrapper>
-                      <SelectListItemText>{ seed.amount }</SelectListItemText>
-                      <SelectListItemText>{ seed.amount }</SelectListItemText>
-                    </SelectListItemWrapper>
-                    <SelectListItemWrapper>
-                      <SelectListItemText>{ crops[seed.name].groundRateNeeded }<SelectListItemImage src={ filledStar }/></SelectListItemText>
-                      <SelectListItemText>{ crops[seed.name].waterRateNeeded }<SelectListItemImage src={ filledStar }/></SelectListItemText>
-                    </SelectListItemWrapper>
-                      <SelectListItemWrapper>
-                      <SelectListItemText>{ crops[seed.name].timeToGrowInSeconds }</SelectListItemText>
-                    </SelectListItemWrapper>   
-                  </SelectListItem>
-                )
-              }) }
-            </SelectListContainer>
+                    <SelectListItemText>{ crops[seed.name].timeToGrowInSeconds }</SelectListItemText>
+                  </SelectListItemWrapper>   
+                </SelectListItem>
+              )
+            }) }
+          </SelectListContainer>
 
-          </Main>
+        </Main>
 
-        </TopSection> 
+      </TopSection> 
 
-        <BottomSection>
-          <LargeButton onClick={ closeWindow } secondary>Close</LargeButton>
-          <LargeButton onClick={ handlePlantSelectedSeed } primary disabled={ !selectedItem.textContent ? true : false }>Plant</LargeButton>
-        </BottomSection>
+      <BottomSection>
+        <LargeButton onClick={ closeWindow } secondary>Close</LargeButton>
+        <LargeButton onClick={ handlePlantSelectedSeed } primary disabled={ !selectedItem.textContent ? true : false }>Plant</LargeButton>
+      </BottomSection>
 
-      </Wrapper>
-    }
-    </>
+    </Wrapper>
   )
 }
 

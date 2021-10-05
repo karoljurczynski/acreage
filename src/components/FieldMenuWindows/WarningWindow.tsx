@@ -1,23 +1,33 @@
 // IMPORT
 
 
+import { useState } from 'react';
 import { Wrapper, TopSection, BottomSection, WarningContainer, WarningImage, WarningTextWrapper, WarningTitle, WarningText, WarningTip, WindowButton } from '../FieldMenu/FieldMenuStyles';
 import { WarningWindowPropsInterface } from '../interfaces';
 
 import danger from '../../images/icons/danger.png';
 
+import {BrowserRouter as Router, Redirect, Switch } from 'react-router-dom';
+
 
 // COMPONENT
 
 
-const WarningWindow: React.FC<WarningWindowPropsInterface> = ({ fieldId, warningText, warningTip, closeWindow, shortcutButton }) => {
+const WarningWindow: React.FC<WarningWindowPropsInterface> = ({ warningText, warningTip, closeWindow, shortcutButton }) => {
+
+
+  // STATE
+
+
+  const [redirectPath, setRedirectPath]: [string, React.Dispatch<React.SetStateAction<string>>] = useState<string>("");
 
 
   // HANDLERS
 
 
   const handleShortcutButton = () => {
-    console.log(shortcutButton?.shortcutDestination);
+    if (shortcutButton)
+      setRedirectPath(shortcutButton?.shortcutPath);
   }
 
   
@@ -25,25 +35,33 @@ const WarningWindow: React.FC<WarningWindowPropsInterface> = ({ fieldId, warning
 
 
   return (
+    <Router>
+      <Switch>
+
+      
     <Wrapper warning>
 
-    <TopSection alignItems="flex-start">
-      <WarningContainer>
-        <WarningImage src={danger} />
-        <WarningTextWrapper>
-          <WarningTitle>Warning!</WarningTitle>
-          <WarningText>{warningText}</WarningText>
-          <WarningTip>{`Tip: ${warningTip}`}</WarningTip>
-        </WarningTextWrapper>
-      </WarningContainer>
-    </TopSection> 
+      { redirectPath && <Redirect to={redirectPath} /> }
 
-    <BottomSection warning>
-      <WindowButton onClick={ closeWindow } secondary={shortcutButton ? true : false} primary={shortcutButton ? false : true}>Close</WindowButton>
-      {shortcutButton && <WindowButton onClick={ handleShortcutButton } primary>{shortcutButton.shortcutTitle}</WindowButton>}
-    </BottomSection>
+      <TopSection alignItems="flex-start">
+        <WarningContainer>
+          <WarningImage src={danger} />
+          <WarningTextWrapper>
+            <WarningTitle>Warning!</WarningTitle>
+            <WarningText>{warningText}</WarningText>
+            <WarningTip>{`Tip: ${warningTip}`}</WarningTip>
+          </WarningTextWrapper>
+        </WarningContainer>
+      </TopSection> 
 
-  </Wrapper>
+      <BottomSection warning>
+        <WindowButton onClick={ closeWindow } secondary={shortcutButton ? true : false} primary={shortcutButton ? false : true}>Close</WindowButton>
+        {shortcutButton && <WindowButton onClick={ handleShortcutButton } primary>{shortcutButton.shortcutTitle}</WindowButton>}
+      </BottomSection>
+
+    </Wrapper>
+    </Switch>
+    </Router>
   )
 }
 
