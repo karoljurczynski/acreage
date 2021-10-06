@@ -28,7 +28,7 @@ export const Wrapper = styled.div<WrapperProps>`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 2px 1px 4px ${colorList.textGray}, 0px 2px 3px ${colorList.textGray}, 0px -1px 3px ${colorList.textGray};
+  box-shadow: 1px 0px 3px ${colorList.textGray}, -1px 0px 3px ${colorList.textGray}, 0px 1px 3px ${colorList.textGray}, 0px -1px 3px ${colorList.textGray};
   border-radius: 10px;
   width: 224px;
   margin: 5px;
@@ -169,41 +169,6 @@ export const SelectListItemWrapper = styled.span`
   justify-content: flex-start;
   height: 100%;
 `;
-export const WarningContainer = styled.div`
-  display: flex; 
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  margin: 25px 0px;
-`;
-export const WarningTextWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  margin-left: 20px;
-  height: 80px;
-`;
-export const WarningImage = styled.img`
-  display: block;
-  width: auto;
-  height: 85px;
-`;
-export const WarningTitle = styled.h2`
-  color: ${colorList.warningRed};
-  margin-bottom: 8px;
-  font-size: 24px;
-`;
-export const WarningText = styled.h5`
-  color: ${colorList.black};
-  margin-bottom: 1px;
-  font-size: 16px;
-`;
-export const WarningTip = styled.p`
-  color: ${colorList.white};
-  font-size: 12px;
-`;
-
 interface WindowButtonPropsInterface {
   primary?: boolean;
   secondary ?: boolean;
@@ -250,4 +215,38 @@ export const WindowButton = styled.button<WindowButtonPropsInterface>`
     }
     opacity: 0.5;
   `}
+`;
+export const WarningContainer = styled.div`
+  display: flex; 
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 25px 0px;
+`;
+export const WarningImage = styled.img`
+  display: block;
+  width: auto;
+  height: 85px;
+`;
+export const WarningTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-left: 20px;
+  height: 80px;
+`;
+export const WarningTitle = styled.h2`
+  color: ${colorList.warningRed};
+  margin-bottom: 8px;
+  font-size: 24px;
+`;
+export const WarningText = styled.h5`
+  color: ${colorList.black};
+  margin-bottom: 1px;
+  font-size: 16px;
+`;
+export const WarningTip = styled.p`
+  color: ${colorList.white};
+  font-size: 12px;
 `;
