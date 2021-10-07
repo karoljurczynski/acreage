@@ -18,10 +18,11 @@ interface WindowContainerPropsInterface {
 }
 interface WindowTilePropsInterface {
   backgroundColor?: "white" | "green" | "warningRed" | "blueprint"; 
+  selected?: boolean;
+  disabled?: boolean;
 }
 interface WindowTileTextsPropsInterface {
   textColor?: "gold" | "darkBrown" | "ground" | "lightBrown" | "blue" | "black" | "white" | "mainOrange";
-  large?: boolean;
 }
 
 export const WindowWrapper = styled.div<WindowWrapperPropsInterface>`
@@ -91,7 +92,7 @@ export const WindowSectionVerticalSeparator = styled.span`
 export const WindowSectionHorizontalSeparator = styled.span`
   display: block;
   height: 2px;
-  margin: 35px 0;
+  margin-bottom: 25px;
   width: 100%;
   background: ${colorList.black};
 `;
@@ -152,6 +153,7 @@ export const WindowBarText = styled.p`
 export const WindowTile = styled.div<WindowTilePropsInterface>`
   width: 80px;
   height: 80px;
+  position: relative;
   background: ${colorList.white};
   border-radius: 6px;
   display: flex;
@@ -159,13 +161,36 @@ export const WindowTile = styled.div<WindowTilePropsInterface>`
   align-items: center;
   justify-content: flex-end;
   margin-right: 12px;
+  cursor: pointer;
+
+  ::after {
+    content: '';
+    display: block;
+    width: 76px;
+    height: 76px;
+    position: absolute;
+    border-radius: 6px;
+    z-index: 1;
+  }
+
+  ${({selected}) => selected && `
+    ::after {
+      border: 2px solid red
+    }
+  `};
+
+  ${({disabled}) => disabled && `
+    opacity: 0.5;
+  `};
   
-  :nth-of-type(4) {
+  :nth-of-type(4n) {
     margin-right: 0;
+    margin-bottom: 12px;
   }
-  :nth-of-type(5) {
-    margin-top: 12px;
+  :last-of-type {
+    margin-bottom: 0;
   }
+
   
   ${({backgroundColor}) => backgroundColor && `
     background: ${colorList[backgroundColor]};
@@ -185,14 +210,9 @@ export const WindowTileHeading = styled.h3<WindowTileTextsPropsInterface>`
   `};
 `;
 export const WindowTileText = styled.p<WindowTileTextsPropsInterface>`
-  font-size: 14px;
+  font-size: 16px;
   margin: 5px 0 12px;
   color: ${colorList.black};
-
-  ${({large}) => large && `
-    font-size: 20px;
-    margin: 5px 0 8px;
-  `}
 
   ${({textColor}) => textColor && `
     color: ${colorList[textColor]};

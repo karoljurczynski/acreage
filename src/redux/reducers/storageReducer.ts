@@ -5,6 +5,7 @@ export interface StorageItem {
   name: string;
   amount: number;
   type: "Crop" | "Seed" | "Part";
+  selected?: boolean;
 }
 
 
@@ -16,8 +17,12 @@ const initialState: StorageItem[] = [
   { name: "Potato", amount: 12, type: "Crop" },
   { name: "Strawberry", amount: 5, type: "Crop" },
   { name: "Tomato", amount: 2, type: "Crop" },
-  { name: "Onion", amount: 1, type: "Seed" },
-  { name: "Grass", amount: 1, type: "Seed" },
+  { name: "Wheat", amount: 2, type: "Seed" },
+  { name: "Potato", amount: 3, type: "Seed" },
+  { name: "Tomato", amount: 5, type: "Seed" },
+  { name: "Strawberry", amount: 5, type: "Seed" },
+  { name: "Cabbage", amount: 1, type: "Seed" },
+  { name: "Corn", amount: 2, type: "Seed" },
   { name: "Bolt", amount: 3, type: "Part" }
 ]
 
@@ -34,8 +39,10 @@ export const storageReducer = (state = initialState, action: any) => {
       
       state.forEach((item, index) => {
         if (item.name === newItem.name) {
-          newState[index].amount += newItem.amount;
-          newItemExistInStorage = true;
+          if (item.type === newItem.type) {
+            newState[index].amount += newItem.amount;
+            newItemExistInStorage = true;
+          }
         } 
       });
       
@@ -50,10 +57,12 @@ export const storageReducer = (state = initialState, action: any) => {
       
       state.forEach((item, index) => {
         if (item.name === removedItem.name) {
-          if (item.amount === removedItem.amount)
-            newState.splice(index, 1);
-          else
-            newState[index].amount -= removedItem.amount;
+          if (item.type === removedItem.type) {
+            if (item.amount === removedItem.amount)
+              newState.splice(index, 1);
+            else
+              newState[index].amount -= removedItem.amount;
+          }
         } 
       });
 

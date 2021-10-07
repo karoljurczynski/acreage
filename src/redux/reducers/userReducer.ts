@@ -32,7 +32,7 @@ const initialState: UserInterface = {
   },
   gameplay: {
     userMoney: 10000,
-    userExperience: 0,
+    userExperience: 5,
     userLevel: 1
   }
 }

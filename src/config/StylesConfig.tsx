@@ -5,8 +5,6 @@ export const root = document.querySelector("#root") as HTMLElement;
 export const portal = document.querySelector("#portal") as HTMLElement;
 export const backgroundCloser = document.querySelector("#backgroundCloser") as HTMLElement;
 const StylesConfig = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
   * {
     margin: 0;
     padding: 0;
@@ -20,6 +18,7 @@ const StylesConfig = createGlobalStyle`
     font-style: normal;
     color: ${colorList.black};
     user-select: none;
+    overflow: hidden;
   }
 
   #portal {

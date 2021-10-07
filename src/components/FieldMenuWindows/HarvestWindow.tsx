@@ -1,14 +1,9 @@
 // IMPORT
 
 
-import FieldMenuInfoBox from '../FieldMenuInfoBox/FieldMenuInfoBox';
-import LargeButton from '../LargeButton/LargeButton';
-
-import { Wrapper, TopSection, HeadingContainer, CropImageContainer, CropImage, Name, FieldNumber, Main, BottomSection } from '../FieldMenu/FieldMenuStyles';
 import { HarvestWindowPropsInterface } from '../interfaces';
 import crops from '../../config/crops';
 
-import harvest from '../../images/icons/harvest.png';
 import ground from '../../images/stats/ground.png';
 import water from '../../images/parts/water.png';
 import fertilizer from '../../images/parts/fertilizer.png';
@@ -79,15 +74,15 @@ const HarvestWindow: React.FC<HarvestWindowPropsInterface> = ({ fieldId, closeWi
             </WindowTile>
             <WindowTile>
               <WindowTileIcon src={ ground } />
-              <WindowTileText large textColor="ground">+1</WindowTileText>
+              <WindowTileText textColor="ground">+1</WindowTileText>
             </WindowTile>
             <WindowTile>
             <WindowTileIcon src={ water } />
-              <WindowTileText large textColor="blue">+1</WindowTileText>
+              <WindowTileText textColor="blue">+1</WindowTileText>
             </WindowTile>
             <WindowTile>
             <WindowTileIcon src={ fertilizer } />
-              <WindowTileText large textColor="darkBrown">+1</WindowTileText>
+              <WindowTileText textColor="darkBrown">+1</WindowTileText>
             </WindowTile>
           </WindowRowContainer>
         </WindowColumnContainer>
@@ -97,7 +92,7 @@ const HarvestWindow: React.FC<HarvestWindowPropsInterface> = ({ fieldId, closeWi
           <WindowRowContainer>
             <WindowTile>
               <WindowTileIcon src={field.cropProps.cropIcon}/>
-              <WindowTileText large>3x</WindowTileText>
+              <WindowTileText>3x</WindowTileText>
             </WindowTile>
             <WindowTile>
               <WindowTileHeading>5</WindowTileHeading>

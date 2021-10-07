@@ -20,93 +20,133 @@ import onion from '../images/crops/onion.png';
 
 const crops: CropInterface = {
   Wheat: {
+    cropLevel: 1,
     cropIcon: wheat,
-    timeToGrowInSeconds: 1,
+    timeToGrowInSeconds: 60,
     groundRateNeeded: 1,
-    waterRateNeeded: 3,
+    waterRateNeeded: 1,
     defaultYield: 1,
-    expPerUnit: 0.5
+    xpPerUnit: 1,
+    levelNeeded: 1,
+    currentCropXp: 15,
+    cropXpPerHarvest: 2 
   },
 
   Potato: {
+    cropLevel: 1,
     cropIcon: potato,
-    timeToGrowInSeconds: 1,
-    groundRateNeeded: 1,
-    waterRateNeeded: 3,
-    defaultYield: 1,
-    expPerUnit: 1
+    timeToGrowInSeconds: 180,
+    groundRateNeeded: 2,
+    waterRateNeeded: 2,
+    defaultYield: 2,
+    xpPerUnit: 2,
+    levelNeeded: 1,
+    currentCropXp: 5,
+    cropXpPerHarvest: 2
   },
 
   Tomato: {
+    cropLevel: 2,
     cropIcon: tomato,
-    timeToGrowInSeconds: 2,
-    groundRateNeeded: 2,
-    waterRateNeeded: 5,
+    timeToGrowInSeconds: 90,
+    groundRateNeeded: 3,
+    waterRateNeeded: 2,
     defaultYield: 3,
-    expPerUnit: 0.5 
+    xpPerUnit: 1,
+    levelNeeded: 2,
+    currentCropXp: 36,
+    cropXpPerHarvest: 2
   },
 
   Grass: {
+    cropLevel: 1,
     cropIcon: grass,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateNeeded: 0,
     defaultYield: 1,
-    expPerUnit: 0
+    xpPerUnit: 0,
+    levelNeeded: 2,
+    currentCropXp: 10,
+    cropXpPerHarvest: 2
   },
 
   Cabbage: {
+    cropLevel: 1,
     cropIcon: cabbage,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateNeeded: 0,
     defaultYield: 1,
-    expPerUnit: 0
+    xpPerUnit: 0,
+    levelNeeded: 2,
+    currentCropXp: 10,
+    cropXpPerHarvest: 2
   },
 
   Beet: {
+    cropLevel: 1,
     cropIcon: beet,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateNeeded: 0,
     defaultYield: 1,
-    expPerUnit: 0
+    xpPerUnit: 0,
+    levelNeeded: 2,
+    currentCropXp: 10,
+    cropXpPerHarvest: 2
   },
 
   Carrot: {
+    cropLevel: 1,
     cropIcon: carrot,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateNeeded: 0,
     defaultYield: 1,
-    expPerUnit: 0
+    xpPerUnit: 0,
+    levelNeeded: 2,
+    currentCropXp: 10,
+    cropXpPerHarvest: 2
   },
 
   Corn: {
+    cropLevel: 1,
     cropIcon: corn,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateNeeded: 0,
     defaultYield: 1,
-    expPerUnit: 0
+    xpPerUnit: 0,
+    levelNeeded: 2,
+    currentCropXp: 10,
+    cropXpPerHarvest: 2
   },
 
   Strawberry: {
+    cropLevel: 1,
     cropIcon: strawberry,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateNeeded: 0,
     defaultYield: 1,
-    expPerUnit: 0
+    xpPerUnit: 0,
+    levelNeeded: 2,
+    currentCropXp: 10,
+    cropXpPerHarvest: 2
   },
 
   Onion: {
+    cropLevel: 1,
     cropIcon: onion,
     timeToGrowInSeconds: 0,
     groundRateNeeded: 0,
     waterRateNeeded: 0,
     defaultYield: 1,
-    expPerUnit: 0
+    xpPerUnit: 0,
+    levelNeeded: 2,
+    currentCropXp: 10,
+    cropXpPerHarvest: 2
   }
 }
 

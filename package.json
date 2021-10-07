@@ -1,7 +1,7 @@
 {
   "name": "acreage",
   "version": "0.1.0",
-  "homepage": "https://karoljurczynski.github.io/acreage",
+  "homepage": "https://karoljurczynski.github.io/farm",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",

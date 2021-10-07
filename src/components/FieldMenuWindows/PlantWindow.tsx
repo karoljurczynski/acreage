@@ -1,20 +1,17 @@
 // IMPORT
 
 
-import { useEffect, useState } from 'react';
-import LargeButton from '../LargeButton/LargeButton';
+import { useState } from 'react';
 
-import { Wrapper, TopSection, HeadingContainer, CropImageContainer, CropImage, Name, FieldNumber, Main, BottomSection, SelectListContainer, SelectListItem, SelectListItemWrapper, SelectListItemText, SelectListItemImage } from '../FieldMenu/FieldMenuStyles';
+import { WindowBarContainer, WindowBarFull, WindowBarText, WindowBigHeading, WindowBigImage, WindowBottomSection, WindowButton, WindowColumnContainer, WindowRowContainer, WindowSectionHorizontalSeparator, WindowSectionVerticalSeparator, WindowSmallHeading, WindowText, WindowTile, WindowTileHeading, WindowTileIcon, WindowTileText, WindowTopSection, WindowWrapper } from './WindowStyles';
 import { PlantWindowPropsInterface } from '../interfaces';
 import crops from '../../config/crops';
+import { cropLevels, Level } from '../../config/levels';
 
 import plant from '../../images/icons/plant.png';
-import storagedSeeds from '../../images/stats/storaged_seeds.png';
-import storagedCrops from '../../images/stats/storaged_crops.png';
 import ground from '../../images/stats/ground.png';
 import hydration from '../../images/stats/hydration.png';
 import time from '../../images/stats/time.png';
-import filledStar from '../../images/stats/filled_star.png';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setCropIcon, setCropType, setFieldName } from '../../redux/actions/fieldActions';
@@ -22,6 +19,7 @@ import { removeFromUserStorage } from '../../redux/actions/storageActions';
 import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
 import { StorageItem } from '../../redux/reducers/storageReducer';
+import { UserInterface } from '../../redux/reducers/userReducer';
 
 
 // COMPONENT
@@ -30,44 +28,6 @@ import { StorageItem } from '../../redux/reducers/storageReducer';
 const PlantWindow: React.FC<PlantWindowPropsInterface> = ({ fieldId, closeWindow }) => {
   
 
-  // STATE
-
-  
-  const state: StateInterface = useSelector((state: StateInterface): StateInterface => state);
-  const field: FieldInterface = state.fields[fieldId];
-  const storage: StorageItem[] = state.storage;
-  const setState = useDispatch();
-
-  const [selectedItem, setSelectedItem]: [HTMLLIElement, React.Dispatch<React.SetStateAction<HTMLLIElement>>] = useState<HTMLLIElement>(document.createElement("li"));
-
-
-  // EFFECTS
-
-  // Changing color of selected item
-  useEffect(() => {
-    if (selectedItem) selectedItem.style.backgroundColor = "red";
-    return () => { if (selectedItem) selectedItem.style.backgroundColor = "white" }
-  }, [ selectedItem ]);
-
-  
-  // HANDLERS
-
-
-  const handleItemSelect: React.MouseEventHandler = (e: React.MouseEvent) => {
-    setSelectedItem(e.target as HTMLLIElement);
-  }
-  const handlePlantSelectedSeed = () => {
-    if (selectedItem.textContent) {
-      let cropName = selectedItem?.children[0].textContent as string;
-      setState(setCropType(fieldId, cropName));
-      setState(setFieldName(fieldId, cropName));
-      setState(setCropIcon(fieldId, crops[cropName].cropIcon));
-      setState(removeFromUserStorage(cropName, 1, "Seed"));
-    }
-    closeWindow();
-  }
-
-
   // TOOL FUNCTIONS
 
 
@@ -75,77 +35,156 @@ const PlantWindow: React.FC<PlantWindowPropsInterface> = ({ fieldId, closeWindow
     if (item.type === "Seed" && item.amount)
       return item;
   }
+  const countCropLevelProgress = (): number => {
+    const filterLevels = (item: Level) => {
+      if (item.level === crops[selectedItem.name].cropLevel + 1)
+        return item;
+    }
+    const xpToNextCropLevel: number = cropLevels.filter(filterLevels)[0].xp;
+    return (crops[selectedItem.name].currentCropXp / xpToNextCropLevel * 100);
+  }
+
+
+  // STATE
+
+  
+  const state: StateInterface = useSelector((state: StateInterface): StateInterface => state);
+  const field: FieldInterface = state.fields[fieldId];
+  const userData: UserInterface = state.userData;
+  const storage: StorageItem[] = state.storage;
+  const setState = useDispatch();
+
+  const [selectedItem, setSelectedItem]: [StorageItem, React.Dispatch<React.SetStateAction<StorageItem>>] = useState<StorageItem>({name: "", amount: 0, type: "Seed"});
+  const [availableSeeds, setAvailableSeeds] = useState(storage.filter(filterForSeeds).map(seed => { return {...seed, selected: false} }));
+
+  
+  // HANDLERS
+  
+
+  const handleItemSelect: React.MouseEventHandler = (e: React.MouseEvent) => {
+    let selectedSeed = e.target as HTMLDivElement;
+    setAvailableSeeds(availableSeeds.map(seed => {
+      if (seed.name === selectedSeed.title) {
+        setSelectedItem(seed);
+        return {...seed, selected: true};
+      }
+      else
+        return {...seed, selected: false};
+    }));
+  }
+  const handlePlantSelectedSeed = () => {
+    setState(setCropType(fieldId, selectedItem.name));
+    setState(setFieldName(fieldId, selectedItem.name));
+    setState(setCropIcon(fieldId, crops[selectedItem.name].cropIcon));
+    setState(removeFromUserStorage(selectedItem.name, 1, "Seed"));
+    closeWindow();
+  }
+  const lockPlantButton = () => {
+    if (selectedItem.name) {
+      if ((field.fieldProps.groundRate >= crops[selectedItem.name].groundRateNeeded) &&
+          (field.fieldProps.waterRate >= crops[selectedItem.name].waterRateNeeded) &&
+          (userData.gameplay.userLevel >= crops[selectedItem.name].levelNeeded)) {
+          return false;
+      }
+      else
+        return true;
+    }
+    else
+      return true;
+  }
 
 
   // JSX
 
 
   return (
-    <Wrapper fieldProperties={ true } width={ 480 }>
+    <WindowWrapper>
 
-      <TopSection>
-        <HeadingContainer>
-          <CropImageContainer>
-            <CropImage src={ plant } />
-          </CropImageContainer>
-          <Name>Select a seed</Name>
-          <FieldNumber>{ `Field #${ field.fieldId + 1 } ` }</FieldNumber>
-        </HeadingContainer>
+      <WindowTopSection>
 
-        <Main fullSize>
+        <WindowRowContainer section>
+          <WindowBigImage src={selectedItem.name ? crops[selectedItem.name].cropIcon : plant} />
+          <WindowSectionVerticalSeparator />
+          <WindowColumnContainer>
+            <WindowText>Plant</WindowText>
+            <WindowBigHeading>{selectedItem.name ? selectedItem.name : "Select a seed"}</WindowBigHeading>
+            <WindowText>{selectedItem.name ? `lvl ${crops[selectedItem.name].cropLevel}` :" To show requirements"}</WindowText>
+            {selectedItem.name &&
+              <WindowBarContainer>
+                <WindowBarFull percent={ countCropLevelProgress() } />
+                <WindowBarText>{`${crops[selectedItem.name].currentCropXp} xp`}</WindowBarText>
+              </WindowBarContainer>
+            }
+          </WindowColumnContainer>
+        </WindowRowContainer>
 
-          <SelectListContainer>
-            <SelectListItem heading>
-              <SelectListItemWrapper>
-                <SelectListItemText>Crop name</SelectListItemText>
-              </SelectListItemWrapper>
-              <SelectListItemWrapper>
-                <SelectListItemText><SelectListItemImage src={ storagedSeeds } title="Seeds in storage" /></SelectListItemText>
-                <SelectListItemText><SelectListItemImage src={ storagedCrops } title="Crops in storage" /></SelectListItemText>
-              </SelectListItemWrapper>
-              <SelectListItemWrapper>
-                <SelectListItemText><SelectListItemImage src={ ground } title="Required ground rate" /></SelectListItemText>
-                <SelectListItemText><SelectListItemImage src={ hydration } title="Required water rate" /></SelectListItemText>
-              </SelectListItemWrapper>
-              <SelectListItemWrapper>
-                <SelectListItemText><SelectListItemImage src={ time } title="Growing time" /></SelectListItemText>
-              </SelectListItemWrapper>
-            </SelectListItem>
-          </SelectListContainer>
+        {selectedItem.name &&
+        <> 
+        <WindowColumnContainer section>
+          <WindowSmallHeading>Plant requirements</WindowSmallHeading>
+          <WindowRowContainer>
+            <WindowTile title="Required user level" disabled={userData.gameplay.userLevel >= crops[selectedItem.name].levelNeeded ? false : true }>
+              <WindowTileHeading>{`${crops[selectedItem.name].levelNeeded}`}</WindowTileHeading>
+              <WindowTileText textColor="gold">Level</WindowTileText>
+            </WindowTile>
+            <WindowTile title="Time to grow">
+              <WindowTileIcon src={ time } />
+              <WindowTileText textColor="black">{`${crops[selectedItem.name].timeToGrowInSeconds}s`}</WindowTileText>
+            </WindowTile>
+            <WindowTile title="Required ground rate" disabled={field.fieldProps.groundRate >= crops[selectedItem.name].groundRateNeeded ? false : true }>
+              <WindowTileIcon src={ ground } />
+              <WindowTileText textColor="darkBrown">{`lvl ${crops[selectedItem.name].groundRateNeeded}`}</WindowTileText>
+            </WindowTile>
+            <WindowTile title="Required water rate" disabled={field.fieldProps.waterRate >= crops[selectedItem.name].waterRateNeeded ? false : true }>
+              <WindowTileIcon src={ hydration } />
+              <WindowTileText textColor="blue">{`lvl ${crops[selectedItem.name].waterRateNeeded}`}</WindowTileText>
+            </WindowTile>
+          </WindowRowContainer>
+        </WindowColumnContainer>
 
-          <SelectListContainer>
-            { storage.filter(filterForSeeds).map((seed, index) => {
-              return (
-                <SelectListItem onClick={ handleItemSelect } key={ index }>
-                  <SelectListItemWrapper>
-                    <SelectListItemText>{ seed.name }</SelectListItemText>
-                  </SelectListItemWrapper>
-                  <SelectListItemWrapper>
-                    <SelectListItemText>{ seed.amount }</SelectListItemText>
-                    <SelectListItemText>{ seed.amount }</SelectListItemText>
-                  </SelectListItemWrapper>
-                  <SelectListItemWrapper>
-                    <SelectListItemText>{ crops[seed.name].groundRateNeeded }<SelectListItemImage src={ filledStar }/></SelectListItemText>
-                    <SelectListItemText>{ crops[seed.name].waterRateNeeded }<SelectListItemImage src={ filledStar }/></SelectListItemText>
-                  </SelectListItemWrapper>
-                    <SelectListItemWrapper>
-                    <SelectListItemText>{ crops[seed.name].timeToGrowInSeconds }</SelectListItemText>
-                  </SelectListItemWrapper>   
-                </SelectListItem>
-              )
-            }) }
-          </SelectListContainer>
+        <WindowColumnContainer section>
+          <WindowSmallHeading>Potential yield</WindowSmallHeading>
+          <WindowRowContainer>
+            <WindowTile title="Yield without bonuses to obtain">
+              <WindowTileIcon src={crops[selectedItem.name].cropIcon}/>
+              <WindowTileText>{`${crops[selectedItem.name].defaultYield}x`}</WindowTileText>
+            </WindowTile>
+            <WindowTile title="User XP to obtain">
+              <WindowTileHeading>{crops[selectedItem.name].defaultYield * crops[selectedItem.name].xpPerUnit}</WindowTileHeading>
+              <WindowTileText textColor="gold">XP</WindowTileText>
+            </WindowTile>
+            <WindowTile title="Crop XP to obtain">
+              <WindowTileHeading>{crops[selectedItem.name].cropXpPerHarvest}</WindowTileHeading>
+              <WindowTileText textColor="gold">Crop XP</WindowTileText>
+            </WindowTile>
+          </WindowRowContainer>
+        </WindowColumnContainer>
+        <WindowSectionHorizontalSeparator />
+        </>
+        }
+        
+        <WindowColumnContainer section>
+          <WindowSmallHeading>Available seeds</WindowSmallHeading>
+          <WindowRowContainer>
+          { availableSeeds.map((seed, index) => {
+            return (
+              <WindowTile id={`${index}`} key={index} selected={seed.selected} backgroundColor="green" title={seed.name} onClick={handleItemSelect}>
+                <WindowTileIcon src={crops[seed.name].cropIcon}/>
+                <WindowTileText textColor="white">{`${seed.amount}x`}</WindowTileText>
+              </WindowTile>
+            )}) 
+          }
+          </WindowRowContainer>
+        </WindowColumnContainer>
 
-        </Main>
+      </WindowTopSection>
 
-      </TopSection> 
+      <WindowBottomSection>
+        <WindowButton onClick={ closeWindow } secondary>Cancel</WindowButton>
+        <WindowButton onClick={ handlePlantSelectedSeed } primary disabled={ lockPlantButton() }>Plant</WindowButton>
+      </WindowBottomSection>
 
-      <BottomSection>
-        <LargeButton onClick={ closeWindow } secondary>Close</LargeButton>
-        <LargeButton onClick={ handlePlantSelectedSeed } primary disabled={ !selectedItem.textContent ? true : false }>Plant</LargeButton>
-      </BottomSection>
-
-    </Wrapper>
+    </WindowWrapper>
   )
 }
 
