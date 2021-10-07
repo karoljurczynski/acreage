@@ -20,6 +20,7 @@ import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
 import { StorageItem } from '../../redux/reducers/storageReducer';
 import { UserInterface } from '../../redux/reducers/userReducer';
+import { setUserExperience } from '../../redux/actions/userActions';
 
 
 // COMPONENT
@@ -55,7 +56,7 @@ const PlantWindow: React.FC<PlantWindowPropsInterface> = ({ fieldId, closeWindow
   const setState = useDispatch();
 
   const [selectedItem, setSelectedItem]: [StorageItem, React.Dispatch<React.SetStateAction<StorageItem>>] = useState<StorageItem>({name: "", amount: 0, type: "Seed"});
-  const [availableSeeds, setAvailableSeeds] = useState(storage.filter(filterForSeeds).map(seed => { return {...seed, selected: false} }));
+  const [availableSeeds, setAvailableSeeds] = useState(storage.filter(filterForSeeds).map(seed => { return {...seed, selected: true} }));
 
   
   // HANDLERS
@@ -145,7 +146,7 @@ const PlantWindow: React.FC<PlantWindowPropsInterface> = ({ fieldId, closeWindow
         <WindowColumnContainer section>
           <WindowSmallHeading>Potential yield</WindowSmallHeading>
           <WindowRowContainer>
-            <WindowTile title="Yield without bonuses to obtain">
+            <WindowTile title="Yield without bonuses">
               <WindowTileIcon src={crops[selectedItem.name].cropIcon}/>
               <WindowTileText>{`${crops[selectedItem.name].defaultYield}x`}</WindowTileText>
             </WindowTile>

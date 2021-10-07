@@ -15,6 +15,9 @@ import { addToUserStorage } from '../../redux/actions/storageActions';
 import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
 import { WindowBarContainer, WindowBarFull, WindowTileText, WindowBigHeading, WindowBigImage, WindowBottomSection, WindowColumnContainer, WindowRowContainer, WindowSectionVerticalSeparator, WindowSmallHeading, WindowText, WindowTile, WindowTileHeading, WindowTopSection, WindowWrapper, WindowButton, WindowTileIcon, WindowBarText } from './WindowStyles';
+import { UserInterface } from '../../redux/reducers/userReducer';
+import { StorageItem } from '../../redux/reducers/storageReducer';
+import { setUserExperience } from '../../redux/actions/userActions';
 
 
 // COMPONENT
@@ -28,14 +31,26 @@ const HarvestWindow: React.FC<HarvestWindowPropsInterface> = ({ fieldId, closeWi
   
   const state: StateInterface = useSelector((state: StateInterface): StateInterface => state);
   const field: FieldInterface = state.fields[fieldId];
+  const userData: UserInterface = state.userData;
+  const storage: StorageItem[] = state.storage;
   const setState = useDispatch();
 
 
   // HANDLERS
 
+  const countTotalYield = () => {
+    let totalYield: number = 0;
+    totalYield += crops[field.cropProps.cropType].defaultYield;
+    totalYield += crops[field.cropProps.cropType].cropLevel;
+    field.cropProps.isWatered ? totalYield += 1 : totalYield += 0;
+    field.cropProps.isFertilized ? totalYield += 1 : totalYield += 0;
+    totalYield += field.fieldProps.groundRate - crops[field.cropProps.cropType].groundRateNeeded;
+    return totalYield;
+  }
 
   const handleCollectButton = () => {
-    setState(addToUserStorage(field.cropProps.cropType, crops[field.cropProps.cropType].defaultYield, "Crop"));
+    setState(addToUserStorage(field.cropProps.cropType, countTotalYield(), "Crop"));
+    setState(setUserExperience(userData.gameplay.userExperience += crops[field.cropProps.cropType].xpPerUnit * countTotalYield()));
     setState(setCropType(fieldId, ""));
     setState(setCropIcon(fieldId, logo));
     setState(setFieldName(fieldId, "Empty"));
@@ -49,67 +64,71 @@ const HarvestWindow: React.FC<HarvestWindowPropsInterface> = ({ fieldId, closeWi
   return (
     <WindowWrapper>
 
-      <WindowTopSection>
+    { field.cropProps.cropType &&
+      <>
+        <WindowTopSection>
 
-        <WindowRowContainer section>
-          <WindowBigImage src={field.cropProps.cropIcon} />
-          <WindowSectionVerticalSeparator />
-          <WindowColumnContainer>
-            <WindowText>Harvest</WindowText>
-            <WindowBigHeading>{field.cropProps.cropType}</WindowBigHeading>
-            <WindowText>Lvl 1</WindowText>
-            <WindowBarContainer>
-              <WindowBarFull percent={45} />
-              <WindowBarText>15 xp</WindowBarText>
-            </WindowBarContainer>
+          <WindowRowContainer section>
+            <WindowBigImage src={field.cropProps.cropIcon} />
+            <WindowSectionVerticalSeparator />
+            <WindowColumnContainer>
+              <WindowText>Harvest</WindowText>
+              <WindowBigHeading>{field.cropProps.cropType}</WindowBigHeading>
+              <WindowText>Lvl 1</WindowText>
+              <WindowBarContainer>
+                <WindowBarFull percent={45} />
+                <WindowBarText>15 xp</WindowBarText>
+              </WindowBarContainer>
+            </WindowColumnContainer>
+          </WindowRowContainer>
+
+          <WindowColumnContainer section>
+            <WindowSmallHeading>Bonuses</WindowSmallHeading>
+            <WindowRowContainer>
+              <WindowTile title="Experience bonus">
+                <WindowTileHeading>{`+${crops[field.cropProps.cropType].cropLevel}`}</WindowTileHeading>
+                <WindowTileText textColor="gold">Crop lvl</WindowTileText>
+              </WindowTile>
+              <WindowTile title="Ground bonus" disabled={field.fieldProps.groundRate - crops[field.cropProps.cropType].groundRateNeeded === 0 ? true : false}>
+                <WindowTileIcon src={ ground } />
+                <WindowTileText textColor="ground">{`+${field.fieldProps.groundRate - crops[field.cropProps.cropType].groundRateNeeded}`}</WindowTileText>
+              </WindowTile>
+              <WindowTile title="Watered bonus" disabled={field.cropProps.isWatered ? false : true}>
+              <WindowTileIcon src={ water } />
+                <WindowTileText textColor="blue">{field.cropProps.isWatered ? "+1" : "0"}</WindowTileText>
+              </WindowTile>
+              <WindowTile title="Fertilizer bonus" disabled={field.cropProps.isFertilized ? false : true}>
+              <WindowTileIcon src={ fertilizer } />
+                <WindowTileText textColor="darkBrown">{field.cropProps.isFertilized ? "+1" : "0"}</WindowTileText>
+              </WindowTile>
+            </WindowRowContainer>
           </WindowColumnContainer>
-        </WindowRowContainer>
 
-        <WindowColumnContainer section>
-          <WindowSmallHeading>Bonus yield</WindowSmallHeading>
-          <WindowRowContainer>
-            <WindowTile>
-              <WindowTileHeading>+1</WindowTileHeading>
-              <WindowTileText textColor="gold">Crop lvl</WindowTileText>
-            </WindowTile>
-            <WindowTile>
-              <WindowTileIcon src={ ground } />
-              <WindowTileText textColor="ground">+1</WindowTileText>
-            </WindowTile>
-            <WindowTile>
-            <WindowTileIcon src={ water } />
-              <WindowTileText textColor="blue">+1</WindowTileText>
-            </WindowTile>
-            <WindowTile>
-            <WindowTileIcon src={ fertilizer } />
-              <WindowTileText textColor="darkBrown">+1</WindowTileText>
-            </WindowTile>
-          </WindowRowContainer>
-        </WindowColumnContainer>
+          <WindowColumnContainer section>
+            <WindowSmallHeading>Total yield</WindowSmallHeading>
+            <WindowRowContainer>
+              <WindowTile title="Total yield obtained">
+                <WindowTileIcon src={field.cropProps.cropIcon}/>
+                <WindowTileText>{`${countTotalYield()}x`}</WindowTileText>
+              </WindowTile>
+              <WindowTile title="Total user XP obtained">
+                <WindowTileHeading>{crops[field.cropProps.cropType].xpPerUnit * countTotalYield()}</WindowTileHeading>
+                <WindowTileText textColor="gold">XP</WindowTileText>
+              </WindowTile>
+              <WindowTile title="Total crop XP obtained">
+                <WindowTileHeading>{crops[field.cropProps.cropType].cropXpPerHarvest}</WindowTileHeading>
+                <WindowTileText textColor="gold">Crop XP</WindowTileText>
+              </WindowTile>
+            </WindowRowContainer>
+          </WindowColumnContainer>
 
-        <WindowColumnContainer section>
-          <WindowSmallHeading>Summary</WindowSmallHeading>
-          <WindowRowContainer>
-            <WindowTile>
-              <WindowTileIcon src={field.cropProps.cropIcon}/>
-              <WindowTileText>3x</WindowTileText>
-            </WindowTile>
-            <WindowTile>
-              <WindowTileHeading>5</WindowTileHeading>
-              <WindowTileText textColor="gold">XP</WindowTileText>
-            </WindowTile>
-            <WindowTile>
-              <WindowTileHeading>1</WindowTileHeading>
-              <WindowTileText textColor="gold">Crop XP</WindowTileText>
-            </WindowTile>
-          </WindowRowContainer>
-        </WindowColumnContainer>
+          </WindowTopSection>
 
-      </WindowTopSection>
-
-      <WindowBottomSection>
-        <WindowButton onClick={handleCollectButton} primary>Collect</WindowButton>
-      </WindowBottomSection>
+          <WindowBottomSection>
+          <WindowButton onClick={handleCollectButton} primary>Collect</WindowButton>
+          </WindowBottomSection>
+      </>
+    }
 
     </WindowWrapper>
   )

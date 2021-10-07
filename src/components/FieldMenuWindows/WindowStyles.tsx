@@ -162,6 +162,7 @@ export const WindowTile = styled.div<WindowTilePropsInterface>`
   justify-content: flex-end;
   margin-right: 12px;
   cursor: pointer;
+  opacity: 1;
 
   ::after {
     content: '';
@@ -174,9 +175,11 @@ export const WindowTile = styled.div<WindowTilePropsInterface>`
   }
 
   ${({selected}) => selected && `
-    ::after {
-      border: 2px solid red
-    }
+    opacity: 1;
+  `};
+
+  ${({selected}) => selected === false && `
+    opacity: 0.5;
   `};
 
   ${({disabled}) => disabled && `
