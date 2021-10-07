@@ -1,1 +1,1 @@
-Demo: https://karoljurczynski.github.io/acreage
+Demo: https://acreage.netlify.app
