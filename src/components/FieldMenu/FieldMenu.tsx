@@ -37,15 +37,22 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
     if (item.type === "Seed" && item.amount)
       return item;
   }
+  const filterForBlueprints = (item: StorageItem) => {
+    if (item.type === "Blueprint" && item.amount)
+      return item;
+  }
 
   // STATE
 
   const state: StateInterface = useSelector((state: StateInterface): StateInterface => state);
   const field: FieldInterface = state.fields[fieldId];
-  const storage: StorageItem[] = state.storage.filter(filterForSeeds);
+  const storage: StorageItem[] = state.storage;
+  const seeds: StorageItem[] = storage.filter(filterForSeeds);
+  const blueprints: StorageItem[] = storage.filter(filterForBlueprints);
 
   const [redirectPath, setRedirectPath]: [string, React.Dispatch<React.SetStateAction<string>>] = useState<string>(`/farm/field${fieldId + 1}`);
-  const [isWarningActive, setIsWarningActive]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(false);
+  const [isPlantWarningActive, setIsPlantWarningActive]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(false);
+  const [isBuildWarningActive, setIsBuildWarningActive]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(false);
 
 
   // EFFECTS
@@ -64,8 +71,9 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
   }, []);
 
   useEffect(() => {
-    if (storage.length === 0) setIsWarningActive(true);
-  }, [storage]);
+    if (seeds.length === 0) setIsPlantWarningActive(true);
+    if (blueprints.length === 0) setIsBuildWarningActive(true);
+  }, [ storage ]);
 
   
   // HANDLERS
@@ -152,10 +160,10 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
         </Route>
 
         <Route path={`/farm/field${fieldId + 1}/plant`}>
-          { isWarningActive
+          { isPlantWarningActive
             ? <WarningWindow 
-                warningText="No seeds in storage!" 
-                warningTip="You can buy more seeds in the Shop." 
+                warningText="No more seeds in storage!" 
+                warningTip="You can buy more seeds in the Garden Shop." 
                 closeWindow={ () => handleWindow("plant") } 
                 shortcutButton={{
                   shortcutPath: "/shop",
@@ -167,7 +175,18 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
         </Route>
 
         <Route path={`/farm/field${fieldId + 1}/build`}>
-          <BuildWindow fieldId={ fieldId } closeWindow={() => handleWindow("build")} />
+          { isBuildWarningActive
+            ? <WarningWindow 
+                warningText="No blueprints found in storage!" 
+                warningTip="You can buy blueprints in the Construction Shop." 
+                closeWindow={ () => handleWindow("build") } 
+                shortcutButton={{
+                  shortcutPath: "/shop",
+                  shortcutTitle: "Visit Shop"
+                }}
+              />
+            : <BuildWindow fieldId={ fieldId } closeWindow={() => handleWindow("build")} />
+            }
         </Route>
         
         <Route path={`/farm/field${fieldId + 1}/harvest`}>

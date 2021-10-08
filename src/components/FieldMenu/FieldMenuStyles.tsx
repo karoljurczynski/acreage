@@ -234,7 +234,6 @@ export const WarningTextWrapper = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   margin-left: 20px;
-  height: 80px;
 `;
 export const WarningTitle = styled.h2`
   color: ${colorList.warningRed};
