@@ -16,6 +16,9 @@ interface WindowBarFullPropsInterface {
 interface WindowContainerPropsInterface {
   section?: boolean;
 }
+interface WindowBigHeadingPropsInterface {
+  long?: boolean;
+}
 interface WindowTilePropsInterface {
   backgroundColor?: "white" | "green" | "warningRed" | "blueprint"; 
   selected?: boolean;
@@ -105,15 +108,19 @@ export const WindowText = styled.p`
   font-size: 13px;
   color: ${colorList.white};
 `;
-export const WindowBigHeading = styled.h1`
+export const WindowBigHeading = styled.h1<WindowBigHeadingPropsInterface>`
   margin: 3px 0 -2px;
   font-size: 32px;
   letter-spacing: -0.5px;
   color: ${colorList.black};
+
+  ${({long}) => long && `
+    font-size: 26px;
+  `}
 `;
 export const WindowSmallHeading = styled.h3`
   font-size: 20px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   color: ${colorList.black};
 `;
 export const WindowBarContainer = styled.div`

@@ -4,8 +4,9 @@ import { StateInterface } from '../../redux/reduxStore';
 import { StorageItem } from '../../redux/reducers/storageReducer'; 
 import { useSelector } from 'react-redux';
 import crops from '../../config/crops';
+import buildings from '../../config/buildings';
 import { seeds } from '../../config/seeds';
-import { parts } from '../../config/parts';
+import parts from '../../config/parts';
 
 const StorageContent: React.FC = () => {
   const state: StateInterface = useSelector(state => state) as StateInterface;
@@ -19,6 +20,9 @@ const StorageContent: React.FC = () => {
       case "Crop": {
         return crops[name].cropIcon;
       }
+      case "Blueprint": {
+        return buildings[name].buildingIcon;
+      }
       case "Seed": {
         seeds.forEach(seed => {
           if (seed.seedName === name)
@@ -27,11 +31,7 @@ const StorageContent: React.FC = () => {
         break;
       }
       case "Part": {
-        parts.forEach(part => {
-          if (part.partName === name)
-            icon = part.partIcon;
-        });
-        break;
+        return parts[name].partIcon;
       }
     }
     return icon;

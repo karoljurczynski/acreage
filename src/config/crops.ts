@@ -29,7 +29,8 @@ const crops: CropInterface = {
     xpPerUnit: 1,
     levelNeeded: 1,
     currentCropXp: 15,
-    cropXpPerHarvest: 2 
+    cropXpPerHarvest: 2,
+    seedPrice: 2
   },
 
   Potato: {
@@ -42,7 +43,8 @@ const crops: CropInterface = {
     xpPerUnit: 2,
     levelNeeded: 1,
     currentCropXp: 5,
-    cropXpPerHarvest: 2
+    cropXpPerHarvest: 2,
+    seedPrice: 2
   },
 
   Tomato: {
@@ -55,7 +57,8 @@ const crops: CropInterface = {
     xpPerUnit: 1,
     levelNeeded: 2,
     currentCropXp: 36,
-    cropXpPerHarvest: 2
+    cropXpPerHarvest: 2,
+    seedPrice: 2
   },
 
   Grass: {
@@ -68,7 +71,8 @@ const crops: CropInterface = {
     xpPerUnit: 0,
     levelNeeded: 2,
     currentCropXp: 10,
-    cropXpPerHarvest: 2
+    cropXpPerHarvest: 2,
+    seedPrice: 2
   },
 
   Cabbage: {
@@ -81,7 +85,8 @@ const crops: CropInterface = {
     xpPerUnit: 0,
     levelNeeded: 2,
     currentCropXp: 10,
-    cropXpPerHarvest: 2
+    cropXpPerHarvest: 2,
+    seedPrice: 2
   },
 
   Beet: {
@@ -94,7 +99,8 @@ const crops: CropInterface = {
     xpPerUnit: 0,
     levelNeeded: 2,
     currentCropXp: 10,
-    cropXpPerHarvest: 2
+    cropXpPerHarvest: 2,
+    seedPrice: 2
   },
 
   Carrot: {
@@ -107,7 +113,8 @@ const crops: CropInterface = {
     xpPerUnit: 0,
     levelNeeded: 2,
     currentCropXp: 10,
-    cropXpPerHarvest: 2
+    cropXpPerHarvest: 2,
+    seedPrice: 2
   },
 
   Corn: {
@@ -120,7 +127,8 @@ const crops: CropInterface = {
     xpPerUnit: 0,
     levelNeeded: 2,
     currentCropXp: 10,
-    cropXpPerHarvest: 2
+    cropXpPerHarvest: 2,
+    seedPrice: 2
   },
 
   Strawberry: {
@@ -133,7 +141,8 @@ const crops: CropInterface = {
     xpPerUnit: 0,
     levelNeeded: 2,
     currentCropXp: 10,
-    cropXpPerHarvest: 2
+    cropXpPerHarvest: 2,
+    seedPrice: 2
   },
 
   Onion: {
@@ -146,9 +155,10 @@ const crops: CropInterface = {
     xpPerUnit: 0,
     levelNeeded: 2,
     currentCropXp: 10,
-    cropXpPerHarvest: 2
+    cropXpPerHarvest: 2,
+    seedPrice: 2
   }
-}
+};
 
 
 // EXPORT

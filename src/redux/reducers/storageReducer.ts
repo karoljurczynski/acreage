@@ -4,7 +4,7 @@
 export interface StorageItem {
   name: string;
   amount: number;
-  type: "Crop" | "Seed" | "Part";
+  type: "Crop" | "Seed" | "Part" | "Blueprint";
   selected?: boolean;
 }
 
@@ -23,7 +23,12 @@ const initialState: StorageItem[] = [
   { name: "Strawberry", amount: 5, type: "Seed" },
   { name: "Cabbage", amount: 1, type: "Seed" },
   { name: "Corn", amount: 2, type: "Seed" },
-  { name: "Bolt", amount: 3, type: "Part" }
+  { name: "Bolt", amount: 3, type: "Part" },
+  { name: "Brick", amount: 5, type: "Part" },
+  { name: "Pipe", amount: 5, type: "Part" },
+  { name: "Plank", amount: 8, type: "Part" },
+  { name: "Well", amount: 1, type: "Blueprint" },
+  { name: "Barn", amount: 1, type: "Blueprint" }
 ]
 
 

@@ -1,3 +1,8 @@
+// IMPORTS
+
+
+import { BuildingInterface } from './interfaces';
+
 import farmhouse from '../images/buildings/farmhouse.png';
 import barn from '../images/buildings/barn.png';
 import well from '../images/buildings/well.png';
@@ -5,47 +10,68 @@ import chicken from '../images/buildings/chicken.png';
 import cow from '../images/buildings/cow.png';
 
 
-export interface Building {
-  buildingName: string;
-  buildingIcon: string;
-  buildingLevel: number;
-  buildingComponents: BuildingPart[];
-}
-
-export interface BuildingPart {
-  [key: string]: number;
-}
+// DATA
 
 
-export const buildings: Building[] = [
-  {
-    buildingName: "Farmhouse",
+const buildings: BuildingInterface = {
+  Farmhouse: {
+    buildingLevel: 1,
     buildingIcon: farmhouse,
-    buildingLevel: 1,
-    buildingComponents: [{ brick: 3, concrete: 1 }]
+    levelNeeded: 1,
+    timeToBuildInSeconds: 60,
+    groundRateNeeded: 0,
+    waterRateNeeded: 0,
+    xpPerUpgrade: 2,
+    partsNeeded: [{name: "Brick", amount: 3}, {name: "Plank", amount: 2}, {name: "Bolt", amount: 2}]
   },
-  {
-    buildingName: "Barn",
+
+  Barn: {
+    buildingLevel: 1,
     buildingIcon: barn,
-    buildingLevel: 1,
-    buildingComponents: [{ brick: 3, concrete: 1 }]
+    levelNeeded: 1,
+    timeToBuildInSeconds: 60,
+    groundRateNeeded: 0,
+    waterRateNeeded: 0,
+    xpPerUpgrade: 2,
+    partsNeeded: [{name: "Brick", amount: 3}, {name: "Plank", amount: 2}, {name: "Bolt", amount: 2}]
   },
-  {
-    buildingName: "Well",
+
+  Well: {
+    buildingLevel: 1,
     buildingIcon: well,
-    buildingLevel: 1,
-    buildingComponents: [{ brick: 3, concrete: 1 }]
+    levelNeeded: 1,
+    timeToBuildInSeconds: 60,
+    groundRateNeeded: 0,
+    waterRateNeeded: 3,
+    xpPerUpgrade: 2,
+    partsNeeded: [{name: "Brick", amount: 3}, {name: "Plank", amount: 2}, {name: "Pipe", amount: 2}]
   },
-  {
-    buildingName: "Chickens",
+
+  Chickens: {
+    buildingLevel: 1,
     buildingIcon: chicken,
-    buildingLevel: 1,
-    buildingComponents: [{ brick: 3, concrete: 1 }]
+    levelNeeded: 3,
+    timeToBuildInSeconds: 60,
+    groundRateNeeded: 0,
+    waterRateNeeded: 0,
+    xpPerUpgrade: 2,
+    partsNeeded: [{name: "Brick", amount: 3}, {name: "Plank", amount: 2}, {name: "Bolt", amount: 2}]
   },
-  {
-    buildingName: "Cows",
-    buildingIcon: cow,
+
+  Cows: {
     buildingLevel: 1,
-    buildingComponents: [{ brick: 3, concrete: 1 }]
+    buildingIcon: cow,
+    levelNeeded: 3,
+    timeToBuildInSeconds: 60,
+    groundRateNeeded: 0,
+    waterRateNeeded: 0,
+    xpPerUpgrade: 2,
+    partsNeeded: [{name: "Brick", amount: 3}, {name: "Plank", amount: 2}, {name: "Bolt", amount: 2}]
   }
-]
+};
+  
+
+// EXPORT
+
+
+export default buildings;

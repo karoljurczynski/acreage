@@ -4,6 +4,7 @@
 import { HarvestWindowPropsInterface } from '../interfaces';
 import crops from '../../config/crops';
 
+import { WindowBarContainer, WindowBarFull, WindowTileText, WindowBigHeading, WindowBigImage, WindowBottomSection, WindowColumnContainer, WindowRowContainer, WindowSectionVerticalSeparator, WindowSmallHeading, WindowText, WindowTile, WindowTileHeading, WindowTopSection, WindowWrapper, WindowButton, WindowTileIcon, WindowBarText } from './WindowStyles';
 import ground from '../../images/stats/ground.png';
 import water from '../../images/parts/water.png';
 import fertilizer from '../../images/parts/fertilizer.png';
@@ -11,13 +12,11 @@ import logo from '../../images/logo.png';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setCropType, setCropIcon, setFieldName } from '../../redux/actions/fieldActions';
+import { setUserExperience } from '../../redux/actions/userActions';
 import { addToUserStorage } from '../../redux/actions/storageActions';
 import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
-import { WindowBarContainer, WindowBarFull, WindowTileText, WindowBigHeading, WindowBigImage, WindowBottomSection, WindowColumnContainer, WindowRowContainer, WindowSectionVerticalSeparator, WindowSmallHeading, WindowText, WindowTile, WindowTileHeading, WindowTopSection, WindowWrapper, WindowButton, WindowTileIcon, WindowBarText } from './WindowStyles';
 import { UserInterface } from '../../redux/reducers/userReducer';
-import { StorageItem } from '../../redux/reducers/storageReducer';
-import { setUserExperience } from '../../redux/actions/userActions';
 
 
 // COMPONENT
@@ -32,11 +31,11 @@ const HarvestWindow: React.FC<HarvestWindowPropsInterface> = ({ fieldId, closeWi
   const state: StateInterface = useSelector((state: StateInterface): StateInterface => state);
   const field: FieldInterface = state.fields[fieldId];
   const userData: UserInterface = state.userData;
-  const storage: StorageItem[] = state.storage;
   const setState = useDispatch();
 
 
-  // HANDLERS
+  // TOOL FUNCTIONS
+
 
   const countTotalYield = () => {
     let totalYield: number = 0;
@@ -48,6 +47,10 @@ const HarvestWindow: React.FC<HarvestWindowPropsInterface> = ({ fieldId, closeWi
     return totalYield;
   }
 
+
+  // HANDLERS
+
+  
   const handleCollectButton = () => {
     setState(addToUserStorage(field.cropProps.cropType, countTotalYield(), "Crop"));
     setState(setUserExperience(userData.gameplay.userExperience += crops[field.cropProps.cropType].xpPerUnit * countTotalYield()));
@@ -63,7 +66,6 @@ const HarvestWindow: React.FC<HarvestWindowPropsInterface> = ({ fieldId, closeWi
 
   return (
     <WindowWrapper>
-
     { field.cropProps.cropType &&
       <>
         <WindowTopSection>
@@ -91,7 +93,7 @@ const HarvestWindow: React.FC<HarvestWindowPropsInterface> = ({ fieldId, closeWi
               </WindowTile>
               <WindowTile title="Ground bonus" disabled={field.fieldProps.groundRate - crops[field.cropProps.cropType].groundRateNeeded === 0 ? true : false}>
                 <WindowTileIcon src={ ground } />
-                <WindowTileText textColor="ground">{`+${field.fieldProps.groundRate - crops[field.cropProps.cropType].groundRateNeeded}`}</WindowTileText>
+                <WindowTileText textColor="ground">{`${(field.fieldProps.groundRate - crops[field.cropProps.cropType].groundRateNeeded) === 0 ? "" : "+"}${field.fieldProps.groundRate - crops[field.cropProps.cropType].groundRateNeeded}`}</WindowTileText>
               </WindowTile>
               <WindowTile title="Watered bonus" disabled={field.cropProps.isWatered ? false : true}>
               <WindowTileIcon src={ water } />
@@ -129,7 +131,6 @@ const HarvestWindow: React.FC<HarvestWindowPropsInterface> = ({ fieldId, closeWi
           </WindowBottomSection>
       </>
     }
-
     </WindowWrapper>
   )
 }

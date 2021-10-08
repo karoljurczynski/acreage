@@ -3,6 +3,7 @@ export interface Level {
   xp: number;
 }
 
+
 export const userLevels: Level[] = [
   { level: 1, xp: 0 },
   { level: 2, xp: 20 },
@@ -47,4 +48,4 @@ export const cropLevels: Level[] = [
   { level: 18, xp: 1160 },
   { level: 19, xp: 1320 },
   { level: 20, xp: 1480 }
-]
+];

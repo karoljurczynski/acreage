@@ -38,6 +38,10 @@ export const Block = styled.div<BlockProps>`
     background-color: ${ colorList.darkBrown };
   `}
 
+  ${({ itemType }) => itemType === "Blueprint" && `
+    background-color: ${ colorList.blueprint };
+  `}
+
   :hover {
     opacity: 0.85;
   }

@@ -1,3 +1,8 @@
+// IMPORTS
+
+
+import { PartInterface } from './interfaces';
+
 import water from '../images/parts/water.png';
 import fertilizer from '../images/parts/fertilizer.png';
 import plank from '../images/parts/plank.png';
@@ -6,49 +11,49 @@ import bolt from '../images/parts/bolt.png';
 import pipe from '../images/parts/pipe.png';
 
 
-export interface Part {
-  partName: string;
-  partIcon: string;
-  partPrice: number;
-  levelNeeded: number;
-}
+// DATA
 
 
-export const parts: Part[] = [
-  {
-    partName: "Water",
+const parts: PartInterface = {
+  Water: {
     partIcon: water,
     partPrice: 1,
     levelNeeded: 1
   },
-  {
-    partName: "Fertilizer",
+
+  Fertilizer: {
     partIcon: fertilizer,
     partPrice: 1,
     levelNeeded: 1
   },
-  {
-    partName: "Plank",
+
+  Plank: {
     partIcon: plank,
     partPrice: 1,
     levelNeeded: 1
   },
-  {
-    partName: "Brick",
+
+  Brick: {
     partIcon: brick,
     partPrice: 1,
     levelNeeded: 1
   },
-  {
-    partName: "Bolt",
+
+  Bolt: {
     partIcon: bolt,
     partPrice: 1,
     levelNeeded: 1
   },
-  {
-    partName: "Pipe",
+
+  Pipe: {
     partIcon: pipe,
     partPrice: 1,
     levelNeeded: 1
   }
-]
+}
+
+
+// EXPORT
+
+
+export default parts;

@@ -20,7 +20,6 @@ import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
 import { StorageItem } from '../../redux/reducers/storageReducer';
 import { UserInterface } from '../../redux/reducers/userReducer';
-import { setUserExperience } from '../../redux/actions/userActions';
 
 
 // COMPONENT
@@ -43,6 +42,19 @@ const PlantWindow: React.FC<PlantWindowPropsInterface> = ({ fieldId, closeWindow
     }
     const xpToNextCropLevel: number = cropLevels.filter(filterLevels)[0].xp;
     return (crops[selectedItem.name].currentCropXp / xpToNextCropLevel * 100);
+  }
+  const lockPlantButton = () => {
+    if (selectedItem.name) {
+      if ((field.fieldProps.groundRate >= crops[selectedItem.name].groundRateNeeded) &&
+          (field.fieldProps.waterRate >= crops[selectedItem.name].waterRateNeeded) &&
+          (userData.gameplay.userLevel >= crops[selectedItem.name].levelNeeded)) {
+          return false;
+      }
+      else
+        return true;
+    }
+    else
+      return true;
   }
 
 
@@ -79,19 +91,6 @@ const PlantWindow: React.FC<PlantWindowPropsInterface> = ({ fieldId, closeWindow
     setState(setCropIcon(fieldId, crops[selectedItem.name].cropIcon));
     setState(removeFromUserStorage(selectedItem.name, 1, "Seed"));
     closeWindow();
-  }
-  const lockPlantButton = () => {
-    if (selectedItem.name) {
-      if ((field.fieldProps.groundRate >= crops[selectedItem.name].groundRateNeeded) &&
-          (field.fieldProps.waterRate >= crops[selectedItem.name].waterRateNeeded) &&
-          (userData.gameplay.userLevel >= crops[selectedItem.name].levelNeeded)) {
-          return false;
-      }
-      else
-        return true;
-    }
-    else
-      return true;
   }
 
 
@@ -144,7 +143,7 @@ const PlantWindow: React.FC<PlantWindowPropsInterface> = ({ fieldId, closeWindow
         </WindowColumnContainer>
 
         <WindowColumnContainer section>
-          <WindowSmallHeading>Potential yield</WindowSmallHeading>
+          <WindowSmallHeading>Awards</WindowSmallHeading>
           <WindowRowContainer>
             <WindowTile title="Yield without bonuses">
               <WindowTileIcon src={crops[selectedItem.name].cropIcon}/>
