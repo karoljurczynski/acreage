@@ -9,6 +9,7 @@ export interface Gameplay {
   userMoney: number;
   userExperience: number;
   userLevel: number;
+  storageCapacity: number;
 }
 export interface Settings {
   isLogged: boolean;
@@ -32,8 +33,9 @@ const initialState: UserInterface = {
   },
   gameplay: {
     userMoney: 10000,
-    userExperience: 5,
-    userLevel: 1
+    userExperience: 0,
+    userLevel: 1,
+    storageCapacity: 25
   }
 }
 

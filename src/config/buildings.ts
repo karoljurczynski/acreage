@@ -42,7 +42,7 @@ const buildings: BuildingInterface = {
     levelNeeded: 1,
     timeToBuildInSeconds: 60,
     groundRateNeeded: 0,
-    waterRateNeeded: 3,
+    waterRateNeeded: 1,
     xpPerUpgrade: 2,
     partsNeeded: [{name: "Brick", amount: 3}, {name: "Plank", amount: 2}, {name: "Pipe", amount: 2}]
   },

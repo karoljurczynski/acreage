@@ -1,3 +1,7 @@
+// IMPORTS
+
+import { SeedInterface } from './interfaces';
+
 import wheat from '../images/crops/wheat.png';
 import potato from '../images/crops/potato.png';
 import tomato from '../images/crops/tomato.png';
@@ -10,73 +14,73 @@ import strawberry from '../images/crops/strawberry.png';
 import onion from '../images/crops/onion.png';
 
 
-export interface Seed {
-  seedName: string;
-  seedIcon: string;
-  seedPrice: number;
-  levelNeeded: number
-}
+// DATA
 
 
-export const seeds: Seed[] = [
-  {
-    seedName: "Wheat",
+const seeds: SeedInterface = {
+  Wheat: {
     seedIcon: wheat,
     seedPrice: 1,
     levelNeeded: 1
   },
-  {
-    seedName: "Potato",
+
+  Potato: {
     seedIcon: potato,
     seedPrice: 1,
     levelNeeded: 1
   },
-  {
-    seedName: "Tomato",
+
+  Tomato: {
     seedIcon: tomato,
     seedPrice: 1,
     levelNeeded: 1
   },
-  {
-    seedName: "Grass",
+
+  Grass: {
     seedIcon: grass,
     seedPrice: 1,
     levelNeeded: 1
   },
-  {
-    seedName: "Cabbage",
+
+  Cabbage: {
     seedIcon: cabbage,
     seedPrice: 1,
     levelNeeded: 1
   },
-  {
-    seedName: "Beet",
+
+  Beet: {
     seedIcon: beet,
     seedPrice: 1,
     levelNeeded: 1
   },
-  {
-    seedName: "Carrot",
+
+  Carrot: {
     seedIcon: carrot,
     seedPrice: 1,
     levelNeeded: 1
   },
-  {
-    seedName: "Corn",
+
+  Corn: {
     seedIcon: corn,
     seedPrice: 1,
     levelNeeded: 1
   },
-  {
-    seedName: "Strawberry",
+
+  Strawberry: {
     seedIcon: strawberry,
     seedPrice: 1,
     levelNeeded: 1
   },
-  {
-    seedName: "Onion",
+
+  Onion: {
     seedIcon: onion,
     seedPrice: 1,
     levelNeeded: 1
   }
-]
+};
+
+
+// EXPORTS
+
+
+export default seeds;

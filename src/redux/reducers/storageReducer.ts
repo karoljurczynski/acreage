@@ -20,6 +20,8 @@ const initialState: StorageItem[] = [
   { name: "Tomato", amount: 5, type: "Seed" },
   { name: "Bolt", amount: 3, type: "Part" },
   { name: "Brick", amount: 5, type: "Part" },
+  { name: "Plank", amount: 3, type: "Part" },
+
   { name: "Pipe", amount: 5, type: "Part" },
   { name: "Well", amount: 1, type: "Blueprint" }
 ]

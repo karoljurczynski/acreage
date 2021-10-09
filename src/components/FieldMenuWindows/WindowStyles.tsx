@@ -187,6 +187,9 @@ export const WindowTile = styled.div<WindowTilePropsInterface>`
 
   ${({selected}) => selected === false && `
     opacity: 0.5;
+    :hover {
+    opacity: 0.85;
+  }
   `};
 
   ${({disabled}) => disabled && `

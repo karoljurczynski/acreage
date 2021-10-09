@@ -12,11 +12,11 @@ export const Wrapper = styled.div<WrapperProps>`
   justify-content: ${({ type }) => type === "Right" ? "flex-start" : "space-between" };
   height: calc(100vh - 150px);
   background: ${ colorList.white };
-  min-width: ${({ type }) => type === "Right" ? "300px" : "0" };
+  min-width: ${({ type }) => type === "Right" ? "294px" : "0" };
   width: ${({ type }) => { 
     if (type === "Center") return "880px";
     if (type === "Left") return "300px";
-    if (type === "Right") return "300px";
+    if (type === "Right") return "294px";
   }};
   margin: ${({ type }) => type === "Center" ? "0 20px" : "0 0" };
   border-radius: 10px;

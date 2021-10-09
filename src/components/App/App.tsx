@@ -106,7 +106,7 @@ const App: React.FC<AppPropsInterface> = (): JSX.Element => {
               <InfoIcon color={ colorList.white } pos="top" />
             </TopSection>
 
-            <BottomSection color={ colorList.white } padding="15px 0 0 15px" >
+            <BottomSection color={ colorList.white } padding="15px" >
               <StorageContent />
             </BottomSection>
           </MainBox>

@@ -1,19 +1,34 @@
+// IMPORTS
+
+
 import { Wrapper, Block, CropIcon, CropAmount } from './StorageContentStyles';
-import { useState } from 'react';
-import { StateInterface } from '../../redux/reduxStore';
-import { StorageItem } from '../../redux/reducers/storageReducer'; 
-import { useSelector } from 'react-redux';
+import { StorageContentPropsInterface } from '../interfaces';
 import crops from '../../config/crops';
+import seeds  from '../../config/seeds';
 import buildings from '../../config/buildings';
-import { seeds } from '../../config/seeds';
 import parts from '../../config/parts';
 
-const StorageContent: React.FC = () => {
-  const state: StateInterface = useSelector(state => state) as StateInterface;
+import { useSelector } from 'react-redux';
+import { StateInterface } from '../../redux/reduxStore';
+import { StorageItem } from '../../redux/reducers/storageReducer'; 
+
+
+// COMPONENT
+
+
+const StorageContent: React.FC<StorageContentPropsInterface> = () => {
+
+
+  // STATE
+
+
+  const state: StateInterface = useSelector((state: StateInterface): StateInterface => state);
   const storage: StorageItem[] = state.storage;
 
-  const [storageArray, setStorageArray] = useState(storage);
 
+  // TOOL FUNCTIONS
+
+  
   const getIcon = (name: string, type: string): string => {
     let icon: string = "";
     switch (type) {
@@ -24,11 +39,7 @@ const StorageContent: React.FC = () => {
         return buildings[name].buildingIcon;
       }
       case "Seed": {
-        seeds.forEach(seed => {
-          if (seed.seedName === name)
-            icon = seed.seedIcon;
-        });
-        break;
+        return seeds[name].seedIcon;
       }
       case "Part": {
         return parts[name].partIcon;
@@ -37,9 +48,13 @@ const StorageContent: React.FC = () => {
     return icon;
   }
 
+
+  // JSX
+
+
   return (
     <Wrapper>
-      { storageArray.map(item => {
+      { storage.map(item => {
         return (
           <Block title={`${item.type} - ${item.name}`} itemType={ item.type }>
             <CropIcon src={ getIcon(item.name, item.type) }/>
@@ -50,5 +65,9 @@ const StorageContent: React.FC = () => {
     </Wrapper>
   )
 }
+
+
+// EXPORT
+
 
 export default StorageContent;

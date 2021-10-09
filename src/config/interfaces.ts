@@ -44,3 +44,12 @@ export interface PartDataInterface {
   partPrice: number;
   levelNeeded: number;
 }
+
+export interface SeedInterface {
+  [key: string]: SeedDataInterface 
+}
+export interface SeedDataInterface {
+  seedIcon: string;
+  seedPrice: number;
+  levelNeeded: number
+}

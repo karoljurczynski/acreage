@@ -15,16 +15,18 @@ export const Wrapper = styled.div`
 `;
 
 export const Block = styled.div<BlockProps>`
+  width: 80px;
+  height: 80px;
+  position: relative;
+  background: ${colorList.white};
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  width: 80px;
-  height: 80px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  margin-right: 15px;
+  margin-right: 12px;
   cursor: pointer;
+  opacity: 1;
 
   ${({ itemType }) => itemType === "Crop" && `
     background-color: ${ colorList.mainOrange };
@@ -42,20 +44,26 @@ export const Block = styled.div<BlockProps>`
     background-color: ${ colorList.blueprint };
   `}
 
+  :nth-of-type(3n) {
+    margin-right: 0;
+    margin-bottom: 12px;
+  }
+  :last-of-type {
+    margin-bottom: 0;
+  }
+
   :hover {
     opacity: 0.85;
   }
 `;
 
 export const CropIcon = styled.img`
-  width: 40%;
-  height: 40%;
+  width: 32px;
+  height: 32px;
 `;
 
 export const CropAmount = styled.h4`
-  font-size: 20px;
-  color: ${ colorList.white };
-  margin-bottom: 8px;
-
-
+  font-size: 16px;
+  margin: 5px 0 12px;
+  color: ${colorList.white};
 `;

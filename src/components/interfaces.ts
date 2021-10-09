@@ -71,3 +71,7 @@ export interface ShortcutButtonInterface {
   shortcutPath: string;
   shortcutTitle: string;
 }
+
+export interface StorageContentPropsInterface {
+  
+}
