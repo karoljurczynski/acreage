@@ -2,7 +2,8 @@ import styled from "styled-components";
 import colorList from '../../config/colorList';
 
 interface WindowWrapperPropsInterface {
-
+  warning?: boolean;
+  hide?: boolean;
 }
 interface WindowButtonPropsInterface {
   primary?: boolean;
@@ -37,6 +38,17 @@ export const WindowWrapper = styled.div<WindowWrapperPropsInterface>`
   margin: 5px;
   border-radius: 10px;
   box-shadow: 1px 0px 3px ${colorList.textGray}, -1px 0px 3px ${colorList.textGray}, 0px 1px 3px ${colorList.textGray}, 0px -1px 3px ${colorList.textGray};
+  
+  ${({ hide }) => hide && `
+    display: none;
+  `}
+  ${({ warning }) => warning && `
+    display: flex;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 99;
+  `}
 `;
 export const WindowTopSection = styled.section`
   display: flex;
@@ -272,4 +284,38 @@ export const WindowButton = styled.button<WindowButtonPropsInterface>`
     }
     opacity: 0.5;
   `}
+`;
+
+export const WarningContainer = styled.div`
+  display: flex; 
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 25px 0px;
+`;
+export const WarningImage = styled.img`
+  display: block;
+  width: auto;
+  height: 85px;
+`;
+export const WarningTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-left: 20px;
+`;
+export const WarningTitle = styled.h2`
+  color: ${colorList.warningRed};
+  margin-bottom: 8px;
+  font-size: 24px;
+`;
+export const WarningText = styled.h5`
+  color: ${colorList.black};
+  margin-bottom: 1px;
+  font-size: 16px;
+`;
+export const WarningTip = styled.p`
+  color: ${colorList.white};
+  font-size: 12px;
 `;

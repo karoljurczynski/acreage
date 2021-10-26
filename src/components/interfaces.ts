@@ -38,7 +38,6 @@ export interface BuildButtonProps {
   handleWindow: () => void;
 }
 export interface DestroyButtonProps {
-  fieldId: number;
   handleWindow: () => void;
 }
 export interface BuySellFieldButtonProps {
@@ -65,6 +64,12 @@ export interface WarningWindowPropsInterface {
   warningText: string;
   warningTip: string;
   shortcutButton?: ShortcutButtonInterface;
+  closeWindow: () => void;
+}
+export interface ConfirmWindowPropsInterface {
+  confirmHeading: string;
+  confirmText: string;
+  confirmFunction: () => void;
   closeWindow: () => void;
 }
 export interface ShortcutButtonInterface {

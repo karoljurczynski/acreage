@@ -26,6 +26,8 @@ import HarvestWindow from '../FieldMenuWindows/HarvestWindow';
 import HarvestButton from '../FieldMenuButtons/HarvestButton';
 import { StorageItem } from '../../redux/reducers/storageReducer';
 import WarningWindow from '../FieldMenuWindows/WarningWindow';
+import DestroyButton from '../FieldMenuButtons/DestroyButton';
+import DestroyWindow from '../FieldMenuWindows/DestroyWindow';
 
 
 
@@ -188,6 +190,10 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
             : <BuildWindow fieldId={ fieldId } closeWindow={() => handleWindow("build")} />
             }
         </Route>
+
+        <Route path={`/farm/field${fieldId + 1}/destroy`}>
+          <DestroyWindow fieldId={ fieldId } closeWindow={() => handleWindow("destroy")} /> 
+        </Route>
         
         <Route path={`/farm/field${fieldId + 1}/harvest`}>
           <HarvestWindow fieldId={ fieldId } closeWindow={() => handleWindow("harvest")} />
@@ -212,6 +218,7 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
             <>
               <PlantButton handleWindow={() => handleWindow("plant")} />
               <BuildButton handleWindow={() => handleWindow("build")} />
+              <DestroyButton handleWindow={() => handleWindow("destroy")} />
               <HarvestButton fieldId={fieldId} handleWindow={() => handleWindow("harvest")} />
               <BuySellFieldButton fieldId={fieldId} />
             </>

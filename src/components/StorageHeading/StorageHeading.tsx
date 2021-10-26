@@ -31,11 +31,13 @@ const StorageHeading: React.FC = () => {
     storage.forEach(item => {
       sum += item.amount;
     });
-    // storage.reduce((previousItem, currentItem) => {
-    //   return previousItem.amount + currentItem.amount;
-    // });
     return sum;
   }
+
+  
+  // JSX
+
+  
   return (
     <Wrapper>
       <Heading>Storage</Heading>
@@ -43,5 +45,9 @@ const StorageHeading: React.FC = () => {
     </Wrapper>
   )
 }
+
+
+// EXPORTS
+
 
 export default StorageHeading;
