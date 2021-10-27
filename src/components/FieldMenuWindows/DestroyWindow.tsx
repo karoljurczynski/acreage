@@ -4,17 +4,13 @@
 import { useState } from 'react';
 
 import { WindowBigHeading, WindowBigImage, WindowBottomSection, WindowButton, WindowColumnContainer, WindowRowContainer, WindowSectionHorizontalSeparator, WindowSectionVerticalSeparator, WindowSmallHeading, WindowText, WindowTile, WindowTileHeading, WindowTileIcon, WindowTileText, WindowTopSection, WindowWrapper } from './WindowStyles';
-import { BuildWindowPropsInterface, DestroyWindowPropsInterface } from '../interfaces';
+import { DestroyWindowPropsInterface } from '../interfaces';
 import { BuildingPart } from '../../config/interfaces';
 import buildings from '../../config/buildings';
 import parts from '../../config/parts';
 
 import destroy from '../../images/icons/destroy.png';
 import logo from '../../images/logo.png';
-import money from '../../images/icons/buy.png';
-import time from '../../images/stats/time.png';
-import ground from '../../images/stats/ground.png';
-import hydration from '../../images/stats/hydration.png';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setBuildingIcon, setBuildingType, setFieldName } from '../../redux/actions/fieldActions';
@@ -43,13 +39,9 @@ const DestroyWindow: React.FC<DestroyWindowPropsInterface> = ({ fieldId, closeWi
   const setState = useDispatch();
 
 
-  const countHalfOfPartsUsed = (partAmount: number): number => {
-    if (partAmount % 2) {
-      return Math.floor(partAmount / 2);
-    }
-    else
-      return partAmount / 2;
-  }
+  // HANDLERS
+
+
   const handleDestroyBuilding = (): void => {
     const usedParts: BuildingPart[] = buildings[field.buildingProps.buildingType].partsNeeded;
     usedParts.forEach(usedPart => {
@@ -63,6 +55,18 @@ const DestroyWindow: React.FC<DestroyWindowPropsInterface> = ({ fieldId, closeWi
   }
   const handleDestroyButton = () => {
     setIsConfirmWindowOpened(true);
+  }
+
+
+  // TOOL FUNCTIONS
+
+
+  const countHalfOfPartsUsed = (partAmount: number): number => {
+    if (partAmount % 2) {
+      return Math.floor(partAmount / 2);
+    }
+    else
+      return partAmount / 2;
   }
   const lockDestroyButton = () => {
     return false;
@@ -79,6 +83,7 @@ const DestroyWindow: React.FC<DestroyWindowPropsInterface> = ({ fieldId, closeWi
     // else
     //   return true;
   }
+
 
   // JSX
 
@@ -100,18 +105,14 @@ const DestroyWindow: React.FC<DestroyWindowPropsInterface> = ({ fieldId, closeWi
             </WindowRowContainer>
 
             <WindowColumnContainer section>
-              <WindowSmallHeading>Restored items</WindowSmallHeading>
+              <WindowSmallHeading>Items to claim</WindowSmallHeading>
               <WindowRowContainer>
 
                 <WindowTile backgroundColor="blueprint" title={field.buildingProps.buildingType}>
                   <WindowTileIcon src={buildings[field.buildingProps.buildingType].buildingIcon}/>
                   <WindowTileText textColor="white">1x</WindowTileText>
                 </WindowTile>
-                {/* <WindowTile title="Money">
-                  <WindowTileIcon src={ money } />
-                  <WindowTileText textColor="gold">{field.fieldProps.fieldPrice / 2}</WindowTileText>
-                </WindowTile> */}
-
+              
                 { buildings[field.buildingProps.buildingType] && buildings[field.buildingProps.buildingType].partsNeeded.map(part => {
                   return (
                     <WindowTile title={part.name}>
@@ -120,6 +121,7 @@ const DestroyWindow: React.FC<DestroyWindowPropsInterface> = ({ fieldId, closeWi
                     </WindowTile>
                   )})
                 }
+
               </WindowRowContainer>
             </WindowColumnContainer>
 

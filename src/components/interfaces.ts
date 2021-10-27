@@ -31,17 +31,17 @@ export interface PlantButtonProps {
   handleWindow: () => void;
 }
 export interface HarvestButtonProps {
-  fieldId: number;
   handleWindow: () => void;
 }
 export interface BuildButtonProps {
   handleWindow: () => void;
 }
-export interface DestroyButtonProps {
+export interface BuySellFieldButtonProps {
+  isBuyButton: boolean;
   handleWindow: () => void;
 }
-export interface BuySellFieldButtonProps {
-  fieldId: number;
+export interface DestroyButtonProps {
+  handleWindow: () => void;
 }
 
 export interface PlantWindowPropsInterface {
@@ -58,6 +58,11 @@ export interface BuildWindowPropsInterface {
 }
 export interface DestroyWindowPropsInterface {
   fieldId: number;
+  closeWindow: () => void;
+}
+export interface BuySellFieldWindowPropsInterface {
+  fieldId: number;
+  isBuyWindow: boolean;
   closeWindow: () => void;
 }
 export interface WarningWindowPropsInterface {

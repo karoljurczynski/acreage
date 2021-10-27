@@ -28,6 +28,10 @@ import { StorageItem } from '../../redux/reducers/storageReducer';
 import WarningWindow from '../FieldMenuWindows/WarningWindow';
 import DestroyButton from '../FieldMenuButtons/DestroyButton';
 import DestroyWindow from '../FieldMenuWindows/DestroyWindow';
+import BuySellFieldWindow from '../FieldMenuWindows/BuySellFieldWindow';
+import { UserInterface } from '../../redux/reducers/userReducer';
+import buildings from '../../config/buildings';
+import crops from '../../config/crops';
 
 
 
@@ -47,6 +51,7 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
   // STATE
 
   const state: StateInterface = useSelector((state: StateInterface): StateInterface => state);
+  const userData: UserInterface = state.userData;
   const field: FieldInterface = state.fields[fieldId];
   const storage: StorageItem[] = state.storage;
   const seeds: StorageItem[] = storage.filter(filterForSeeds);
@@ -55,6 +60,7 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
   const [redirectPath, setRedirectPath]: [string, React.Dispatch<React.SetStateAction<string>>] = useState<string>(`/farm/field${fieldId + 1}`);
   const [isPlantWarningActive, setIsPlantWarningActive]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(false);
   const [isBuildWarningActive, setIsBuildWarningActive]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(false);
+  const [isStorageWarningActive, setIsStorageWarningActive]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(false);
 
 
   // EFFECTS
@@ -73,12 +79,45 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
   }, []);
 
   useEffect(() => {
-    if (seeds.length === 0) setIsPlantWarningActive(true);
-    if (blueprints.length === 0) setIsBuildWarningActive(true);
+    // Shows warning when there are no more seeds in storage
+    seeds.length === 0 ? setIsPlantWarningActive(true) : setIsPlantWarningActive(false);
+    // Shows warning when there are no more blueprint in storage
+    blueprints.length === 0 ? setIsBuildWarningActive(true) : setIsBuildWarningActive(false);
+    // Shows warning when storage has not enough space to store more items
+    ((countStorageItems() + countItemsToClaim()) > userData.gameplay.buildingBarnSize) ? setIsStorageWarningActive(true) : setIsStorageWarningActive(false);
+    console.log((countStorageItems() + countItemsToClaim()) > userData.gameplay.buildingBarnSize);
   }, [ storage ]);
 
   
   // HANDLERS
+
+  const countItemsToClaim = (): number => {
+    let itemsNumber: number = 0;
+    if (field.buildingProps.buildingType.length > 0) {
+      buildings[field.buildingProps.buildingType].partsNeeded.forEach(part => {
+        if (part.amount % 2) {
+          itemsNumber += Math.floor(part.amount / 2);
+        }
+        else
+          itemsNumber += part.amount / 2;
+      });
+      // + blueprint
+      itemsNumber++;
+    }
+    else if (field.fieldProps.fieldName !== "Empty" && field.fieldProps.isFieldBought) {
+      itemsNumber += crops[field.fieldProps.fieldName].defaultYield + crops[field.fieldProps.fieldName].cropLevel;
+      if (field.cropProps.isWatered) itemsNumber++;
+      if (field.cropProps.isFertilized) itemsNumber++;
+    }
+    return itemsNumber;
+  }
+  const countStorageItems = (): number => {
+    let sum: number = 0;
+    storage.forEach(item => {
+      sum += item.amount;
+    });
+    return sum;
+  }
 
 
   const handleWindow = (windowName: string): void => {
@@ -192,11 +231,33 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
         </Route>
 
         <Route path={`/farm/field${fieldId + 1}/destroy`}>
-          <DestroyWindow fieldId={ fieldId } closeWindow={() => handleWindow("destroy")} /> 
+          { isStorageWarningActive
+            ? <WarningWindow 
+                warningText="Storage has not enough space to store more parts!" 
+                warningTip="You can sell some crops or upgrade your Barn." 
+                closeWindow={ () => handleWindow("destroy") }    
+              />
+            : <DestroyWindow fieldId={ fieldId } closeWindow={() => handleWindow("destroy")} />
+          }
         </Route>
+
+        <Route path={`/farm/field${fieldId + 1}/buy`}>
+          <BuySellFieldWindow isBuyWindow={ true } fieldId={ fieldId } closeWindow={() => handleWindow("buy")} /> 
+        </Route>
+
+        <Route path={`/farm/field${fieldId + 1}/sell`}>
+          <BuySellFieldWindow isBuyWindow={ false } fieldId={ fieldId } closeWindow={() => handleWindow("sell")} /> 
+        </Route> 
         
         <Route path={`/farm/field${fieldId + 1}/harvest`}>
-          <HarvestWindow fieldId={ fieldId } closeWindow={() => handleWindow("harvest")} />
+          { isStorageWarningActive
+            ? <WarningWindow 
+                warningText="Storage has not enough space to store more crops!" 
+                warningTip="You can sell some crops or upgrade your Barn." 
+                closeWindow={ () => handleWindow("harvest") }
+              />
+            : <HarvestWindow fieldId={ fieldId } closeWindow={() => handleWindow("harvest")} />
+          }
         </Route>
         
       </Switch>
@@ -219,8 +280,9 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
               <PlantButton handleWindow={() => handleWindow("plant")} />
               <BuildButton handleWindow={() => handleWindow("build")} />
               <DestroyButton handleWindow={() => handleWindow("destroy")} />
-              <HarvestButton fieldId={fieldId} handleWindow={() => handleWindow("harvest")} />
-              <BuySellFieldButton fieldId={fieldId} />
+              <HarvestButton handleWindow={() => handleWindow("harvest")} />
+              <BuySellFieldButton isBuyButton={ true } handleWindow={() => handleWindow("buy")} /> 
+              <BuySellFieldButton isBuyButton={ false } handleWindow={() => handleWindow("sell")} /> 
             </>
             }
           </Main>

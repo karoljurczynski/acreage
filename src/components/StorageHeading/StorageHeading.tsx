@@ -41,7 +41,7 @@ const StorageHeading: React.FC = () => {
   return (
     <Wrapper>
       <Heading>Storage</Heading>
-      <Subheading>{`${countStorageItems()} / ${userData.gameplay.storageCapacity}`}</Subheading>
+      <Subheading>{`${countStorageItems()} / ${userData.gameplay.buildingBarnSize}`}</Subheading>
     </Wrapper>
   )
 }

@@ -9,7 +9,10 @@ export interface Gameplay {
   userMoney: number;
   userExperience: number;
   userLevel: number;
-  storageCapacity: number;
+  buildingBarnSize: number;
+  buildingWellPumpSpeed: number;
+  buildingChickenSize: number;
+  buildingCowSize: number;
 }
 export interface Settings {
   isLogged: boolean;
@@ -35,7 +38,10 @@ const initialState: UserInterface = {
     userMoney: 10000,
     userExperience: 0,
     userLevel: 1,
-    storageCapacity: 25
+    buildingBarnSize: 25,
+    buildingWellPumpSpeed: 1,
+    buildingChickenSize: 5,
+    buildingCowSize: 5
   }
 }
 
@@ -83,6 +89,26 @@ export const userReducer = (state = initialState, action: any) => {
     case "SET_USER_LEVEL": {
       const newState = {...state};
       newState.gameplay.userLevel = action.newUserLevel;
+      return newState;
+    }
+    case "SET_BARN_SIZE": {
+      const newState = {...state};
+      newState.gameplay.buildingBarnSize = action.newBarnSize;
+      return newState;
+    }
+    case "SET_WELL_PUMP_SPEED": {
+      const newState = {...state};
+      newState.gameplay.buildingWellPumpSpeed = action.newWellSpeed;
+      return newState;
+    }
+    case "SET_CHICKEN_SIZE": {
+      const newState = {...state};
+      newState.gameplay.buildingChickenSize = action.newChickenSize;
+      return newState;
+    }
+    case "SET_COW_SIZE": {
+      const newState = {...state};
+      newState.gameplay.buildingCowSize = action.newCowSize;
       return newState;
     }
     default: return {...state};

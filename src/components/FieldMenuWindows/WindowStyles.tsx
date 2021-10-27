@@ -2,7 +2,6 @@ import styled from "styled-components";
 import colorList from '../../config/colorList';
 
 interface WindowWrapperPropsInterface {
-  warning?: boolean;
   hide?: boolean;
 }
 interface WindowButtonPropsInterface {
@@ -41,13 +40,6 @@ export const WindowWrapper = styled.div<WindowWrapperPropsInterface>`
   
   ${({ hide }) => hide && `
     display: none;
-  `}
-  ${({ warning }) => warning && `
-    display: flex;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 99;
   `}
 `;
 export const WindowTopSection = styled.section`
@@ -206,6 +198,7 @@ export const WindowTile = styled.div<WindowTilePropsInterface>`
 
   ${({disabled}) => disabled && `
     opacity: 0.5;
+    cursor: default;
   `};
   
   :nth-of-type(4n) {
@@ -283,6 +276,7 @@ export const WindowButton = styled.button<WindowButtonPropsInterface>`
       opacity: 0.5; 
     }
     opacity: 0.5;
+    cursor: default;
   `}
 `;
 
@@ -295,8 +289,8 @@ export const WarningContainer = styled.div`
 `;
 export const WarningImage = styled.img`
   display: block;
-  width: auto;
-  height: 85px;
+  width: 100px;
+  height: auto;
 `;
 export const WarningTextWrapper = styled.div`
   display: flex;
@@ -312,7 +306,7 @@ export const WarningTitle = styled.h2`
 `;
 export const WarningText = styled.h5`
   color: ${colorList.black};
-  margin-bottom: 1px;
+  margin-bottom: 3px;
   font-size: 16px;
 `;
 export const WarningTip = styled.p`

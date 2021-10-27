@@ -45,3 +45,27 @@ export const setUserLevel = (newUserLevel: number) => {
     newUserLevel: newUserLevel
   }
 }
+export const setBarnSize = (newBarnSize: number) => {
+  return {
+    type: "SET_BARN_SIZE",
+    newBarnSize: newBarnSize
+  }
+}
+export const setWellSpeed = (newWellSpeed: number) => {
+  return {
+    type: "SET_WELL_PUMP_SPEED",
+    newWellSpeed: newWellSpeed
+  }
+}
+export const setChickenSize = (newChickenSize: number) => {
+  return {
+    type: "SET_CHICKEN_SIZE",
+    newChickenSize: newChickenSize
+  }
+}
+export const setCowSize = (newCowSize: number) => {
+  return {
+    type: "SET_COW_SIZE",
+    newCowSize: newCowSize
+  }
+}

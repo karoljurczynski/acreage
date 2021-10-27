@@ -15,13 +15,9 @@ export interface StorageItem {
 const initialState: StorageItem[] = [
   { name: "Wheat", amount: 6, type: "Crop" },
   { name: "Tomato", amount: 2, type: "Crop" },
-  { name: "Wheat", amount: 2, type: "Seed" },
+  { name: "Wheat", amount: 3, type: "Seed" },
   { name: "Potato", amount: 3, type: "Seed" },
-  { name: "Tomato", amount: 5, type: "Seed" },
   { name: "Bolt", amount: 3, type: "Part" },
-  { name: "Brick", amount: 5, type: "Part" },
-  { name: "Plank", amount: 3, type: "Part" },
-
   { name: "Pipe", amount: 5, type: "Part" },
   { name: "Well", amount: 1, type: "Blueprint" }
 ]

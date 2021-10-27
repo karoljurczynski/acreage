@@ -2,7 +2,7 @@
 
 
 import { useState } from 'react';
-import { Wrapper, TopSection, BottomSection, WarningContainer, WarningImage, WarningTextWrapper, WarningTitle, WarningText, WarningTip, WindowButton } from '../FieldMenu/FieldMenuStyles';
+import { WindowBottomSection, WindowTopSection, WindowWrapper, WindowButton, WarningContainer, WarningImage, WarningTextWrapper, WarningTitle, WarningText, WarningTip } from './WindowStyles';
 import { WarningWindowPropsInterface } from '../interfaces';
 
 import danger from '../../images/icons/danger.png';
@@ -25,7 +25,7 @@ const WarningWindow: React.FC<WarningWindowPropsInterface> = ({ warningText, war
   // HANDLERS
 
 
-  const handleShortcutButton = () => {
+  const handleShortcutButton = (): void => {
     if (shortcutButton)
       setRedirectPath(shortcutButton?.shortcutPath);
   }
@@ -36,14 +36,13 @@ const WarningWindow: React.FC<WarningWindowPropsInterface> = ({ warningText, war
 
   return (
     <Router>
-      <Switch>
+    <Switch>
 
-      
-    <Wrapper warning>
+    <WindowWrapper>
 
       { redirectPath && <Redirect to={redirectPath} /> }
 
-      <TopSection alignItems="flex-start">
+      <WindowTopSection>
         <WarningContainer>
           <WarningImage src={danger} />
           <WarningTextWrapper>
@@ -52,14 +51,15 @@ const WarningWindow: React.FC<WarningWindowPropsInterface> = ({ warningText, war
             <WarningTip>{`Tip: ${warningTip}`}</WarningTip>
           </WarningTextWrapper>
         </WarningContainer>
-      </TopSection> 
+      </WindowTopSection> 
 
-      <BottomSection warning>
+      <WindowBottomSection>
         <WindowButton onClick={ closeWindow } secondary={shortcutButton ? true : false} primary={shortcutButton ? false : true}>Close</WindowButton>
         {shortcutButton && <WindowButton onClick={ handleShortcutButton } primary>{shortcutButton.shortcutTitle}</WindowButton>}
-      </BottomSection>
+      </WindowBottomSection>
 
-    </Wrapper>
+    </WindowWrapper>
+    
     </Switch>
     </Router>
   )
