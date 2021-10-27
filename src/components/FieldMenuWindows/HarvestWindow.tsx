@@ -1,17 +1,16 @@
 // IMPORT
 
 
-import { HarvestWindowPropsInterface } from '../interfaces';
-import crops from '../../config/crops';
-
 import { WindowBarContainer, WindowBarFull, WindowTileText, WindowBigHeading, WindowBigImage, WindowBottomSection, WindowColumnContainer, WindowRowContainer, WindowSectionVerticalSeparator, WindowSmallHeading, WindowText, WindowTile, WindowTileHeading, WindowTopSection, WindowWrapper, WindowButton, WindowTileIcon, WindowBarText } from './WindowStyles';
 import ground from '../../images/stats/ground.png';
 import water from '../../images/parts/water.png';
 import fertilizer from '../../images/parts/fertilizer.png';
 import logo from '../../images/logo.png';
+import { HarvestWindowPropsInterface } from '../interfaces';
+import crops from '../../config/crops';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setCropType, setCropIcon, setFieldName } from '../../redux/actions/fieldActions';
+import { setCropType, setCropIcon, setFieldName, setIsCropFertilized, setIsCropWatered } from '../../redux/actions/fieldActions';
 import { setUserExperience } from '../../redux/actions/userActions';
 import { addToUserStorage } from '../../redux/actions/storageActions';
 import { StateInterface } from '../../redux/reduxStore';
@@ -54,6 +53,8 @@ const HarvestWindow: React.FC<HarvestWindowPropsInterface> = ({ fieldId, closeWi
   const handleCollectButton = () => {
     setState(addToUserStorage(field.cropProps.cropType, countTotalYield(), "Crop"));
     setState(setUserExperience(userData.gameplay.userExperience += crops[field.cropProps.cropType].xpPerUnit * countTotalYield()));
+    setState(setIsCropWatered(fieldId, false));
+    setState(setIsCropFertilized(fieldId, false));
     setState(setCropType(fieldId, ""));
     setState(setCropIcon(fieldId, logo));
     setState(setFieldName(fieldId, "Empty"));

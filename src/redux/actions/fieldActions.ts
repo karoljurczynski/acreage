@@ -38,16 +38,18 @@ export const updateTimeToGrow = (fieldId: number, newTimeInSeconds: number) => {
     newTimeInSeconds: newTimeInSeconds
   }
 }
-export const setIsCropWatered = (fieldId: number) => {
+export const setIsCropWatered = (fieldId: number, isWatered: boolean) => {
   return {
     type: "SET_IS_CROP_WATERED",
-    fieldId: fieldId
+    fieldId: fieldId,
+    isWatered: isWatered
   }
 }
-export const setIsCropFertilized = (fieldId: number) => {
+export const setIsCropFertilized = (fieldId: number, isFertilized: boolean) => {
   return {
     type: "SET_IS_CROP_FERTILIZED",
-    fieldId: fieldId
+    fieldId: fieldId,
+    isFertilized: isFertilized
   }
 }
 export const setBuildingType = (fieldId: number, newBuildingType: string) => {

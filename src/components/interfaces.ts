@@ -43,6 +43,10 @@ export interface BuySellFieldButtonProps {
 export interface DestroyButtonProps {
   handleWindow: () => void;
 }
+export interface CropCareButtonProps {
+  fieldId: number;
+  careType: "water" | "fertilizer";
+}
 
 export interface PlantWindowPropsInterface {
   fieldId: number;

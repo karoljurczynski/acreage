@@ -158,12 +158,12 @@ export const fieldReducer = (state: FieldInterface[] = createFieldsArray(), acti
     }
     case "SET_IS_CROP_WATERED": {
       const newFields = [...state];
-      newFields[action.fieldId].cropProps.isWatered = !state[action.fieldId].cropProps.isWatered;
+      newFields[action.fieldId].cropProps.isWatered = action.isWatered;
       return newFields;
     }
     case "SET_IS_CROP_FERTILIZED": {
       const newFields = [...state];
-      newFields[action.fieldId].cropProps.isFertilized = !state[action.fieldId].cropProps.isFertilized;
+      newFields[action.fieldId].cropProps.isFertilized = action.isFertilized;
       return newFields;
     }
     case "SET_BUILDING_TYPE": {

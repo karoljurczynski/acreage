@@ -16,9 +16,10 @@ const initialState: StorageItem[] = [
   { name: "Wheat", amount: 6, type: "Crop" },
   { name: "Tomato", amount: 2, type: "Crop" },
   { name: "Wheat", amount: 3, type: "Seed" },
-  { name: "Potato", amount: 3, type: "Seed" },
   { name: "Bolt", amount: 3, type: "Part" },
   { name: "Pipe", amount: 5, type: "Part" },
+  { name: "Water", amount: 1, type: "Part" },
+  { name: "Fertilizer", amount: 1, type: "Part" },
   { name: "Well", amount: 1, type: "Blueprint" }
 ]
 

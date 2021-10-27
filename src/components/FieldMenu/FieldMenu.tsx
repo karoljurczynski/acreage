@@ -6,39 +6,44 @@ import ReactDOM from 'react-dom';
 import FieldProperties from '../FieldProperties/FieldProperties';
 import PlantWindow from '../FieldMenuWindows/PlantWindow';
 import BuildWindow from '../FieldMenuWindows/BuildWindow';
+import WarningWindow from '../FieldMenuWindows/WarningWindow';
+import HarvestWindow from '../FieldMenuWindows/HarvestWindow';
+import DestroyWindow from '../FieldMenuWindows/DestroyWindow';
+import BuySellFieldWindow from '../FieldMenuWindows/BuySellFieldWindow';
 
 //import FieldMenuButton from '../FieldMenuButton/FieldMenuButton';
 import LargeButton from '../LargeButton/LargeButton';
 import PlantButton from '../FieldMenuButtons/PlantButton';
 import BuildButton from '../FieldMenuButtons/BuildButton';
+import DestroyButton from '../FieldMenuButtons/DestroyButton';
+import HarvestButton from '../FieldMenuButtons/HarvestButton';
 import BuySellFieldButton from '../FieldMenuButtons/BuySellFieldButton';
+import CropCareButton from '../FieldMenuButtons/CropCareButton';
 
 import { Wrapper, TopSection, HeadingContainer, CropImageContainer, CropImage, Name, FieldNumber, Main, BottomSection } from './FieldMenuStyles';
 import { portal } from '../../config/StylesConfig';
 import { FieldMenuPropsInterface } from '../interfaces';
-
-import { StateInterface } from '../../redux/reduxStore';
-import { useSelector } from 'react-redux';
-import { FieldInterface } from '../../redux/reducers/fieldReducer';
-
-import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
-import HarvestWindow from '../FieldMenuWindows/HarvestWindow';
-import HarvestButton from '../FieldMenuButtons/HarvestButton';
-import { StorageItem } from '../../redux/reducers/storageReducer';
-import WarningWindow from '../FieldMenuWindows/WarningWindow';
-import DestroyButton from '../FieldMenuButtons/DestroyButton';
-import DestroyWindow from '../FieldMenuWindows/DestroyWindow';
-import BuySellFieldWindow from '../FieldMenuWindows/BuySellFieldWindow';
-import { UserInterface } from '../../redux/reducers/userReducer';
 import buildings from '../../config/buildings';
 import crops from '../../config/crops';
 
+import { useSelector } from 'react-redux';
+import { FieldInterface } from '../../redux/reducers/fieldReducer';
+import { StateInterface } from '../../redux/reduxStore';
+import { UserInterface } from '../../redux/reducers/userReducer';
+import { StorageItem } from '../../redux/reducers/storageReducer';
+
+import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 
 
 // COMPONENT
 
 
 const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu }): JSX.Element => {
+  
+
+  // TOOL FUNCTIONS
+
+
   const filterForSeeds = (item: StorageItem) => {
     if (item.type === "Seed" && item.amount)
       return item;
@@ -47,6 +52,35 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
     if (item.type === "Blueprint" && item.amount)
       return item;
   }
+  const countItemsToClaim = (): number => {
+    let itemsNumber: number = 0;
+    if (field.buildingProps.buildingType.length > 0) {
+      buildings[field.buildingProps.buildingType].partsNeeded.forEach(part => {
+        if (part.amount % 2) {
+          itemsNumber += Math.floor(part.amount / 2);
+        }
+        else
+          itemsNumber += part.amount / 2;
+      });
+      // + blueprint
+      itemsNumber++;
+    }
+    else if (field.fieldProps.fieldName !== "Empty" && field.fieldProps.isFieldBought) {
+      itemsNumber += crops[field.fieldProps.fieldName].defaultYield + crops[field.fieldProps.fieldName].cropLevel;
+      if (field.cropProps.isWatered) itemsNumber++;
+      if (field.cropProps.isFertilized) itemsNumber++;
+      if (field.fieldProps.groundRate > crops[field.fieldProps.fieldName].groundRateNeeded) itemsNumber += field.fieldProps.groundRate - crops[field.fieldProps.fieldName].groundRateNeeded;
+    }
+    return itemsNumber;
+  }
+  const countStorageItems = (): number => {
+    let sum: number = 0;
+    storage.forEach(item => {
+      sum += item.amount;
+    });
+    return sum;
+  }
+
 
   // STATE
 
@@ -78,6 +112,7 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
     }
   }, []);
 
+  // Enables storaged items warnings
   useEffect(() => {
     // Shows warning when there are no more seeds in storage
     seeds.length === 0 ? setIsPlantWarningActive(true) : setIsPlantWarningActive(false);
@@ -90,34 +125,6 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
 
   
   // HANDLERS
-
-  const countItemsToClaim = (): number => {
-    let itemsNumber: number = 0;
-    if (field.buildingProps.buildingType.length > 0) {
-      buildings[field.buildingProps.buildingType].partsNeeded.forEach(part => {
-        if (part.amount % 2) {
-          itemsNumber += Math.floor(part.amount / 2);
-        }
-        else
-          itemsNumber += part.amount / 2;
-      });
-      // + blueprint
-      itemsNumber++;
-    }
-    else if (field.fieldProps.fieldName !== "Empty" && field.fieldProps.isFieldBought) {
-      itemsNumber += crops[field.fieldProps.fieldName].defaultYield + crops[field.fieldProps.fieldName].cropLevel;
-      if (field.cropProps.isWatered) itemsNumber++;
-      if (field.cropProps.isFertilized) itemsNumber++;
-    }
-    return itemsNumber;
-  }
-  const countStorageItems = (): number => {
-    let sum: number = 0;
-    storage.forEach(item => {
-      sum += item.amount;
-    });
-    return sum;
-  }
 
 
   const handleWindow = (windowName: string): void => {
@@ -141,9 +148,6 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
     portal.style.top = `${String(e.clientY)}px`;
     portal.style.left =  `${String(e.clientX)}px`;
   }
-
-
-  // TOOL FUNCTIONS
 
 
   // const selectButtons = (): JSX.Element[] => {      
@@ -215,6 +219,17 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
           }
         </Route>
 
+        <Route path={`/farm/field${fieldId + 1}/harvest`}>
+          { isStorageWarningActive
+            ? <WarningWindow 
+                warningText="Storage has not enough space to store more crops!" 
+                warningTip="You can sell some crops or upgrade your Barn." 
+                closeWindow={ () => handleWindow("harvest") }
+              />
+            : <HarvestWindow fieldId={ fieldId } closeWindow={() => handleWindow("harvest")} />
+          }
+        </Route>
+
         <Route path={`/farm/field${fieldId + 1}/build`}>
           { isBuildWarningActive
             ? <WarningWindow 
@@ -249,17 +264,6 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
           <BuySellFieldWindow isBuyWindow={ false } fieldId={ fieldId } closeWindow={() => handleWindow("sell")} /> 
         </Route> 
         
-        <Route path={`/farm/field${fieldId + 1}/harvest`}>
-          { isStorageWarningActive
-            ? <WarningWindow 
-                warningText="Storage has not enough space to store more crops!" 
-                warningTip="You can sell some crops or upgrade your Barn." 
-                closeWindow={ () => handleWindow("harvest") }
-              />
-            : <HarvestWindow fieldId={ fieldId } closeWindow={() => handleWindow("harvest")} />
-          }
-        </Route>
-        
       </Switch>
 
       { redirectPath && <Redirect to={redirectPath} /> }
@@ -278,9 +282,11 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
             { //selectButtons() 
             <>
               <PlantButton handleWindow={() => handleWindow("plant")} />
+              <HarvestButton handleWindow={() => handleWindow("harvest")} />
               <BuildButton handleWindow={() => handleWindow("build")} />
               <DestroyButton handleWindow={() => handleWindow("destroy")} />
-              <HarvestButton handleWindow={() => handleWindow("harvest")} />
+              <CropCareButton fieldId={ fieldId } careType="water" />
+              <CropCareButton fieldId={ fieldId } careType="fertilizer" />
               <BuySellFieldButton isBuyButton={ true } handleWindow={() => handleWindow("buy")} /> 
               <BuySellFieldButton isBuyButton={ false } handleWindow={() => handleWindow("sell")} /> 
             </>

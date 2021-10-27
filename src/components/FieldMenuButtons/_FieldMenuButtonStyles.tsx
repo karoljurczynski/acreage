@@ -7,6 +7,7 @@ import colorList from '../../config/colorList';
 interface ButtonPropsInterface {
   isLarge: boolean;
   buttonFor?: string;
+  disabled?: boolean;
 }
 interface ButtonTextPropsInterface {
   primary?: boolean;
@@ -38,6 +39,13 @@ export const Button = styled.button<ButtonPropsInterface>`
   ${({ isLarge }) => isLarge && `
     grid-column: 1 / 3;
     width: 2fr;
+  `};
+  ${({ disabled }) => disabled && `
+    opacity: 0.5;
+    cursor: default;
+    &:hover {
+      background-color: ${ colorList.white };
+    }
   `};
 `;
 
