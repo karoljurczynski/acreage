@@ -2,14 +2,14 @@
 
 
 import { Button, ButtonIcon, ButtonText } from './_FieldMenuButtonStyles';
-import { PlantButtonProps } from '../interfaces';
+import { UpgradeButtonProps } from '../interfaces';
 import upgrade from '../../images/icons/upgrade.png';
 
 
 // COMPONENT
 
 
-const PlantButton: React.FC<PlantButtonProps> = ({ handleWindow }) => {
+const UpgradeButton: React.FC<UpgradeButtonProps> = ({ handleWindow }) => {
 
 
   // JSX
@@ -29,4 +29,4 @@ const PlantButton: React.FC<PlantButtonProps> = ({ handleWindow }) => {
 // EXPORT
 
 
-export default PlantButton;
+export default UpgradeButton;

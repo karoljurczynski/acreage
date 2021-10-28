@@ -1,11 +1,3 @@
-// IMPORTS
-
-
-import logo from "../../images/logo.png";
-import barn from '../../images/buildings/barn.png';
-import farmhouse from '../../images/buildings/farmhouse.png';
-
-
 // INTERFACES
 
 
@@ -24,22 +16,17 @@ export interface FieldProps {
 }
 export interface CropProps {
   cropType: string;
-  cropIcon: string;
-  timeToGrow: number;
+  timeToGrowInSeconds: number;
   isReadyToHarvest: boolean;
   isWatered: boolean;
   isFertilized: boolean;
 }
 export interface BuildingProps {
   buildingType: string;
-  buildingIcon: string;
-  buildingLevel: number;
-  buildingStats: BuildingStats;
+  timeToBuildInSeconds: number;
+  isBuildReady: boolean;
 }
-export interface BuildingStats {
-  isUpgradeReady: boolean;
-  capacity: number;
-}
+
 
 // INITIAL STATE CREATING
 
@@ -66,24 +53,38 @@ const createFieldsArray = (): FieldInterface[] => {
         },
         cropProps: {
           cropType: "",
-          cropIcon: logo, 
-          timeToGrow: 0,
+          timeToGrowInSeconds: 0,
           isReadyToHarvest: false,
           isWatered: false,
           isFertilized: false
         },
         buildingProps: {
           buildingType: "",
-          buildingIcon: logo,
-          buildingLevel: 0,
-          buildingStats: {
-            isUpgradeReady: false,
-            capacity: 0
-          }
+          timeToBuildInSeconds: 0,
+          isBuildReady: false
         }
       }
     );
   }
+
+  // DEFAULT FIELDS
+  fields[19].fieldProps.isFieldBought = true;
+  fields[19].fieldProps.groundRate = 1;
+  fields[19].fieldProps.waterRate = 1;
+
+  fields[20].fieldProps.isFieldBought = true;
+  fields[20].fieldProps.groundRate = 2;
+  fields[20].fieldProps.waterRate = 2;
+
+  fields[27].fieldProps.isFieldBought = true;
+  fields[27].buildingProps.buildingType = "Farmhouse";
+  fields[27].fieldProps.groundRate = 1;
+  fields[27].fieldProps.waterRate = 1;
+
+  fields[28].fieldProps.isFieldBought = true;
+  fields[28].buildingProps.buildingType = "Barn";
+  fields[28].fieldProps.groundRate = 1;
+  fields[28].fieldProps.waterRate = 1;
 
   for (let i = 0; i < 64; i++) {
     fields[i].fieldProps.fieldPrice = countFieldPrice(fields[i].fieldProps.groundRate, fields[i].fieldProps.waterRate);
@@ -92,30 +93,10 @@ const createFieldsArray = (): FieldInterface[] => {
     fields[i].fieldProps.fieldName = `${fields[i].fieldProps.fieldPrice} $`;
   }
 
-  // DEFAULT FIELDS
-  fields[19].fieldProps.isFieldBought = true;
   fields[19].fieldProps.fieldName = "Empty";
-  fields[19].fieldProps.groundRate = 1;
-  fields[19].fieldProps.waterRate = 1;
-
-  fields[20].fieldProps.isFieldBought = true;
   fields[20].fieldProps.fieldName = "Empty";
-  fields[20].fieldProps.groundRate = 2;
-  fields[20].fieldProps.waterRate = 2;
-
-  fields[27].fieldProps.isFieldBought = true;
-  fields[27].buildingProps.buildingIcon = farmhouse;
   fields[27].fieldProps.fieldName = "Farmhouse";
-  fields[27].buildingProps.buildingType = "Farmhouse";
-  fields[27].fieldProps.groundRate = 1;
-  fields[27].fieldProps.waterRate = 1;
-
-  fields[28].fieldProps.isFieldBought = true;
-  fields[28].buildingProps.buildingIcon = barn;
   fields[28].fieldProps.fieldName = "Barn";
-  fields[28].buildingProps.buildingType = "Barn";
-  fields[28].fieldProps.groundRate = 1;
-  fields[28].fieldProps.waterRate = 1;
 
   return fields;
 }
@@ -141,19 +122,14 @@ export const fieldReducer = (state: FieldInterface[] = createFieldsArray(), acti
       newFields[action.fieldId].cropProps.cropType = action.newCropType;
       return newFields;
     }
-    case "SET_CROP_ICON": {
-      const newFields = [...state];
-      newFields[action.fieldId].cropProps.cropIcon = action.newIcon;
-      return newFields;
-    }
     case "SET_IS_CROP_READY_TO_HARVEST": {
       const newFields = [...state];
-      newFields[action.fieldId].cropProps.isReadyToHarvest = !state[action.fieldId].cropProps.isReadyToHarvest;
+      newFields[action.fieldId].cropProps.isReadyToHarvest = action.isReadyToHarvest;
       return newFields;
     }
     case "UPDATE_TIME_TO_GROW": {
       const newFields = [...state];
-      newFields[action.fieldId].cropProps.timeToGrow = action.newTimeInSeconds;
+      newFields[action.fieldId].cropProps.timeToGrowInSeconds = action.newTimeInSeconds;
       return newFields;
     }
     case "SET_IS_CROP_WATERED": {
@@ -169,26 +145,6 @@ export const fieldReducer = (state: FieldInterface[] = createFieldsArray(), acti
     case "SET_BUILDING_TYPE": {
       const newFields = [...state];
       newFields[action.fieldId].buildingProps.buildingType = action.newBuildingType;
-      return newFields;
-    }
-    case "SET_BUILDING_ICON": {
-      const newFields = [...state];
-      newFields[action.fieldId].buildingProps.buildingIcon = action.newIcon;
-      return newFields;
-    }
-    case "SET_BUILDING_LEVEL": {
-      const newFields = [...state];
-      newFields[action.fieldId].buildingProps.buildingLevel = action.newLevel;
-      return newFields;
-    }
-    case "SET_IS_UPGRADE_READY": {
-      const newFields = [...state];
-      newFields[action.fieldId].buildingProps.buildingStats.isUpgradeReady = !state[action.fieldId].buildingProps.buildingStats.isUpgradeReady;
-      return newFields;
-    }
-    case "SET_BUILDING_CAPACITY": {
-      const newFields = [...state];
-      newFields[action.fieldId].buildingProps.buildingStats.capacity = action.newCapacity;
       return newFields;
     }
     

@@ -137,7 +137,7 @@ const BuySellFieldWindow: React.FC<BuySellFieldWindowPropsInterface> = ({ fieldI
 
       : <ConfirmWindow 
           confirmHeading={ isBuyWindow ? "Buy field" : "Sell field" }
-          confirmText={`Are you sure you want to ${ isBuyWindow ? "buy field" : "sell field" } #${fieldId + 1}?`}
+          confirmText={`Are you sure you want to ${ isBuyWindow ? "buy field" : "sell field" } #${fieldId + 1} for ${ isBuyWindow ? field.fieldProps.fieldPrice : field.fieldProps.fieldPrice / 2 }?`}
           confirmFunction={ isBuyWindow ? buyField : sellField } 
           closeWindow={ closeWindow }
         />

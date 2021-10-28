@@ -36,6 +36,9 @@ export interface HarvestButtonProps {
 export interface BuildButtonProps {
   handleWindow: () => void;
 }
+export interface UpgradeButtonProps {
+  handleWindow: () => void;
+}
 export interface BuySellFieldButtonProps {
   isBuyButton: boolean;
   handleWindow: () => void;
@@ -57,6 +60,10 @@ export interface HarvestWindowPropsInterface {
   closeWindow: () => void;
 }
 export interface BuildWindowPropsInterface {
+  fieldId: number;
+  closeWindow: () => void;
+}
+export interface UpgradeWindowPropsInterface {
   fieldId: number;
   closeWindow: () => void;
 }

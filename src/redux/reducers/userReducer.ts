@@ -9,10 +9,8 @@ export interface Gameplay {
   userMoney: number;
   userExperience: number;
   userLevel: number;
-  buildingBarnSize: number;
-  buildingWellPumpSpeed: number;
-  buildingChickenSize: number;
-  buildingCowSize: number;
+  cropsLevels: CropsLevels,
+  buildingsLevels: BuildingsLevels
 }
 export interface Settings {
   isLogged: boolean;
@@ -20,6 +18,22 @@ export interface Settings {
   password: string;
   email: string;
   avatarUrl: string;
+}
+export interface CropsLevels {
+  [key: string]: CropLevel;
+}
+export interface CropLevel {
+  cropLevel: number,
+  currentCropXp: number
+}
+export interface BuildingsLevels {
+  [key: string]: BuildingLevel;
+}
+export interface BuildingLevel {
+  buildingLevel: number,
+  timeToUpgradeInSeconds: number,
+  buildingSize: number,
+  buildingSpeed: number
 }
 
 
@@ -37,11 +51,94 @@ const initialState: UserInterface = {
   gameplay: {
     userMoney: 10000,
     userExperience: 0,
-    userLevel: 1,
-    buildingBarnSize: 25,
-    buildingWellPumpSpeed: 1,
-    buildingChickenSize: 5,
-    buildingCowSize: 5
+    userLevel: 2,
+    cropsLevels: {
+      Wheat: {
+        cropLevel: 1,
+        currentCropXp: 0
+      },
+
+      Potato: {
+        cropLevel: 1,
+        currentCropXp: 0
+      },
+    
+      Tomato: {
+        cropLevel: 1,
+        currentCropXp: 0
+      },
+    
+      Grass: {
+        cropLevel: 1,
+        currentCropXp: 0
+      },
+    
+      Cabbage: {
+        cropLevel: 1,
+        currentCropXp: 0
+      },
+    
+      Beet: {
+        cropLevel: 1,
+        currentCropXp: 0
+      },
+    
+      Carrot: {
+        cropLevel: 1,
+        currentCropXp: 0
+      },
+    
+      Corn: {
+        cropLevel: 1,
+        currentCropXp: 0
+      },
+    
+      Strawberry: {
+        cropLevel: 1,
+        currentCropXp: 0
+      },
+    
+      Onion: {
+        cropLevel: 1,
+        currentCropXp: 0
+      }
+    },
+    buildingsLevels: {
+      Farmhouse: {
+        buildingLevel: 1,
+        timeToUpgradeInSeconds: 120,
+        buildingSize: 0,
+        buildingSpeed: 0
+      },
+    
+      Barn: {
+        buildingLevel: 1,
+        timeToUpgradeInSeconds: 120,
+        buildingSize: 30,
+        buildingSpeed: 0
+      },
+    
+      Well: {
+        buildingLevel: 1,
+        timeToUpgradeInSeconds: 120,
+        buildingSize: 5,
+        buildingSpeed: 60
+      },
+    
+      Chickens: {
+        buildingLevel: 1,
+        timeToUpgradeInSeconds: 120,
+        buildingSize: 5,
+        buildingSpeed: 60
+      },
+    
+      Cows: {
+        buildingLevel: 1,
+        timeToUpgradeInSeconds: 120,
+        buildingSize: 5,
+        buildingSpeed: 60
+      }
+    }
   }
 }
 
@@ -91,24 +188,29 @@ export const userReducer = (state = initialState, action: any) => {
       newState.gameplay.userLevel = action.newUserLevel;
       return newState;
     }
-    case "SET_BARN_SIZE": {
+    case "SET_BUILDING_LEVEL": {
       const newState = {...state};
-      newState.gameplay.buildingBarnSize = action.newBarnSize;
+      newState.gameplay.buildingsLevels[action.buildingName].buildingLevel = action.newBuildingLevel;
       return newState;
     }
-    case "SET_WELL_PUMP_SPEED": {
+    case "SET_BUILDING_SIZE": {
       const newState = {...state};
-      newState.gameplay.buildingWellPumpSpeed = action.newWellSpeed;
+      newState.gameplay.buildingsLevels[action.buildingName].buildingSize = action.newBuildingSize;
       return newState;
     }
-    case "SET_CHICKEN_SIZE": {
+    case "SET_BUILDING_SPEED": {
       const newState = {...state};
-      newState.gameplay.buildingChickenSize = action.newChickenSize;
+      newState.gameplay.buildingsLevels[action.buildingName].buildingSpeed = action.newBuildingSpeed;
       return newState;
     }
-    case "SET_COW_SIZE": {
+    case "SET_CROP_LEVEL": {
       const newState = {...state};
-      newState.gameplay.buildingCowSize = action.newCowSize;
+      newState.gameplay.cropsLevels[action.cropName].cropLevel = action.newCropLevel;
+      return newState;
+    }
+    case "SET_CROP_CURRENT_XP": {
+      const newState = {...state};
+      newState.gameplay.cropsLevels[action.cropName].currentCropXp = action.newCurrentCropXp;
       return newState;
     }
     default: return {...state};

@@ -38,7 +38,7 @@ const BuildWindow: React.FC<BuildWindowPropsInterface> = ({ fieldId, closeWindow
       return item;
   }
   const filterForParts = (item: StorageItem) => {
-    if (item.type === "Part" && item.amount)
+    if (item.type === "Part" && item.amount && item.name !== "Water" && item.name !== "Fertilizer")
       return item;
   }
   const checkIfUserHasEnoughParts = (neededParts: BuildingPart): boolean => {
@@ -83,6 +83,7 @@ const BuildWindow: React.FC<BuildWindowPropsInterface> = ({ fieldId, closeWindow
   const field: FieldInterface = state.fields[fieldId];
   const userData: UserInterface = state.userData;
   const storage: StorageItem[] = state.storage;
+  const storagedParts: StorageItem[] = state.storage.filter(filterForParts);
   const setState = useDispatch();
 
   const [selectedItem, setSelectedItem]: [StorageItem, React.Dispatch<React.SetStateAction<StorageItem>>] = useState<StorageItem>({name: "", amount: 0, type: "Blueprint"});
@@ -104,9 +105,8 @@ const BuildWindow: React.FC<BuildWindowPropsInterface> = ({ fieldId, closeWindow
     }));
   }
   const handleBuildSelectedBlueprint = () => {
-    const userParts = storage.filter(filterForParts);
-    userParts.forEach(userPart => {
-      setState(removeFromUserStorage(userPart.name, userPart.amount, "Part"));
+    buildings[selectedItem.name].partsNeeded.forEach(part => {
+      setState(removeFromUserStorage(part.name, part.amount, "Part"));
     });
     setState(setUserExperience(userData.gameplay.userExperience += buildings[selectedItem.name].xpPerUpgrade * buildings[selectedItem.name].buildingLevel));
     setState(setFieldName(fieldId, selectedItem.name));
@@ -198,6 +198,22 @@ const BuildWindow: React.FC<BuildWindowPropsInterface> = ({ fieldId, closeWindow
               <WindowTile id={`${index}`} key={index} selected={blueprint.selected} backgroundColor="blueprint" title={blueprint.name} onClick={handleItemSelect}>
                 <WindowTileIcon src={buildings[blueprint.name].buildingIcon}/>
                 <WindowTileText textColor="white">{`${blueprint.amount}x`}</WindowTileText>
+              </WindowTile>
+            )}) 
+          }
+          </WindowRowContainer>
+        </WindowColumnContainer>
+
+        <WindowSectionHorizontalSeparator />
+        
+        <WindowColumnContainer section>
+          <WindowSmallHeading>Available parts</WindowSmallHeading>
+          <WindowRowContainer>
+          { storagedParts.map((part, index) => {
+            return (
+              <WindowTile title={part.name} key={index}>
+                <WindowTileIcon src={parts[part.name].partIcon} />
+                <WindowTileText textColor="black">{`${part.amount}x`}</WindowTileText>
               </WindowTile>
             )}) 
           }

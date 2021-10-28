@@ -45,27 +45,38 @@ export const setUserLevel = (newUserLevel: number) => {
     newUserLevel: newUserLevel
   }
 }
-export const setBarnSize = (newBarnSize: number) => {
+export const setBuildingLevel = (buildingName: string, newBuildingLevel: number) => {
   return {
-    type: "SET_BARN_SIZE",
-    newBarnSize: newBarnSize
+    type: "SET_BUILDING_LEVEL",
+    buildingName: buildingName,
+    newBuildingLevel: newBuildingLevel
   }
 }
-export const setWellSpeed = (newWellSpeed: number) => {
+export const setBuildingSize = (buildingName: string, newBuildingSize: number) => {
   return {
-    type: "SET_WELL_PUMP_SPEED",
-    newWellSpeed: newWellSpeed
+    type: "SET_BUILDING_SIZE",
+    buildingName: buildingName,
+    newBuildingSize: newBuildingSize
   }
 }
-export const setChickenSize = (newChickenSize: number) => {
+export const setBuildingSpeed = (buildingName: string, newBuildingSpeed: number) => {
   return {
-    type: "SET_CHICKEN_SIZE",
-    newChickenSize: newChickenSize
+    type: "SET_BUILDING_SPEED",
+    buildingName: buildingName,
+    newBuildingSpeed: newBuildingSpeed
   }
 }
-export const setCowSize = (newCowSize: number) => {
+export const setCropLevel = (cropName: string, newCropLevel: number) => {
   return {
-    type: "SET_COW_SIZE",
-    newCowSize: newCowSize
+    type: "SET_CROP_LEVEL",
+    cropName: cropName,
+    newCropLevel: newCropLevel
+  }
+}
+export const setCropCurrentXp = (cropName: string, newCropCurrentXp: number) => {
+  return {
+    type: "SET_CROP_CURRENT_XP",
+    cropName: cropName,
+    newCropCurrentXp: newCropCurrentXp
   }
 }

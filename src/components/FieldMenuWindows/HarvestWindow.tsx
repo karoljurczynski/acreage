@@ -10,7 +10,7 @@ import { HarvestWindowPropsInterface } from '../interfaces';
 import crops from '../../config/crops';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setCropType, setCropIcon, setFieldName, setIsCropFertilized, setIsCropWatered } from '../../redux/actions/fieldActions';
+import { setCropType, setCropIcon, setFieldName, setIsCropFertilized, setIsCropWatered, setIsCropReadyToHarvest } from '../../redux/actions/fieldActions';
 import { setUserExperience } from '../../redux/actions/userActions';
 import { addToUserStorage } from '../../redux/actions/storageActions';
 import { StateInterface } from '../../redux/reduxStore';
@@ -55,6 +55,7 @@ const HarvestWindow: React.FC<HarvestWindowPropsInterface> = ({ fieldId, closeWi
     setState(setUserExperience(userData.gameplay.userExperience += crops[field.cropProps.cropType].xpPerUnit * countTotalYield()));
     setState(setIsCropWatered(fieldId, false));
     setState(setIsCropFertilized(fieldId, false));
+    setState(setIsCropReadyToHarvest(fieldId, false));
     setState(setCropType(fieldId, ""));
     setState(setCropIcon(fieldId, logo));
     setState(setFieldName(fieldId, "Empty"));
@@ -72,7 +73,7 @@ const HarvestWindow: React.FC<HarvestWindowPropsInterface> = ({ fieldId, closeWi
         <WindowTopSection>
 
           <WindowRowContainer section>
-            <WindowBigImage src={field.cropProps.cropIcon} />
+            <WindowBigImage src={crops[field.cropProps.cropType].cropIcon} />
             <WindowSectionVerticalSeparator />
             <WindowColumnContainer>
               <WindowText>Harvest</WindowText>
@@ -111,7 +112,7 @@ const HarvestWindow: React.FC<HarvestWindowPropsInterface> = ({ fieldId, closeWi
             <WindowSmallHeading>Total yield</WindowSmallHeading>
             <WindowRowContainer>
               <WindowTile title="Total yield obtained">
-                <WindowTileIcon src={field.cropProps.cropIcon}/>
+                <WindowTileIcon src={crops[field.cropProps.cropType].cropIcon}/>
                 <WindowTileText>{`${countTotalYield()}x`}</WindowTileText>
               </WindowTile>
               <WindowTile title="Total user XP obtained">

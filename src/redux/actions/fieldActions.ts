@@ -25,10 +25,11 @@ export const setCropIcon = (fieldId: number, newIcon: string) => {
     newIcon: newIcon
   }
 }
-export const setIsCropReadyToHarvest = (fieldId: number) => {
+export const setIsCropReadyToHarvest = (fieldId: number, isReadyToHarvest: boolean) => {
   return {
     type: "SET_IS_CROP_READY_TO_HARVEST",
-    fieldId: fieldId
+    fieldId: fieldId,
+    isReadyToHarvest: isReadyToHarvest
   }
 }
 export const updateTimeToGrow = (fieldId: number, newTimeInSeconds: number) => {

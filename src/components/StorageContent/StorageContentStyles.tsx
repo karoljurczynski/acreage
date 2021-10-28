@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import crate from '../../images/crate.png';
 import colorList from '../../config/colorList';
 
 interface BlockProps {
@@ -11,6 +12,7 @@ export const Wrapper = styled.div`
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
+  background: ${crate};
   flex-wrap: wrap;
 `;
 

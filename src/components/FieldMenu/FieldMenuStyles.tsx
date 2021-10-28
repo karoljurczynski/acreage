@@ -115,6 +115,7 @@ export const Name = styled.h3`
   margin-top: 8px;
   color: ${ colorList.white };
   font-size: 24px;
+  text-shadow: 0px 1px 1px black;
 `;
 
 export const FieldNumber = styled.p`

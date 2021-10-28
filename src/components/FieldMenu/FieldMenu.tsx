@@ -4,25 +4,29 @@
 import { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import FieldProperties from '../FieldProperties/FieldProperties';
+import FieldMenuInfoBox from '../FieldMenuInfoBox/FieldMenuInfoBox';
+import LargeButton from '../LargeButton/LargeButton';
+
 import PlantWindow from '../FieldMenuWindows/PlantWindow';
-import BuildWindow from '../FieldMenuWindows/BuildWindow';
-import WarningWindow from '../FieldMenuWindows/WarningWindow';
 import HarvestWindow from '../FieldMenuWindows/HarvestWindow';
+import BuildWindow from '../FieldMenuWindows/BuildWindow';
+import UpgradeWindow from '../FieldMenuWindows/UpgradeWindow';
 import DestroyWindow from '../FieldMenuWindows/DestroyWindow';
 import BuySellFieldWindow from '../FieldMenuWindows/BuySellFieldWindow';
+import WarningWindow from '../FieldMenuWindows/WarningWindow';
 
-//import FieldMenuButton from '../FieldMenuButton/FieldMenuButton';
-import LargeButton from '../LargeButton/LargeButton';
 import PlantButton from '../FieldMenuButtons/PlantButton';
-import BuildButton from '../FieldMenuButtons/BuildButton';
-import DestroyButton from '../FieldMenuButtons/DestroyButton';
 import HarvestButton from '../FieldMenuButtons/HarvestButton';
+import BuildButton from '../FieldMenuButtons/BuildButton';
+import UpgradeButton from '../FieldMenuButtons/UpgradeButton';
+import DestroyButton from '../FieldMenuButtons/DestroyButton';
 import BuySellFieldButton from '../FieldMenuButtons/BuySellFieldButton';
 import CropCareButton from '../FieldMenuButtons/CropCareButton';
 
 import { Wrapper, TopSection, HeadingContainer, CropImageContainer, CropImage, Name, FieldNumber, Main, BottomSection } from './FieldMenuStyles';
 import { portal } from '../../config/StylesConfig';
 import { FieldMenuPropsInterface } from '../interfaces';
+import logo from '../../images/logo.png';
 import buildings from '../../config/buildings';
 import crops from '../../config/crops';
 
@@ -33,6 +37,7 @@ import { UserInterface } from '../../redux/reducers/userReducer';
 import { StorageItem } from '../../redux/reducers/storageReducer';
 
 import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
+
 
 
 // COMPONENT
@@ -119,8 +124,8 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
     // Shows warning when there are no more blueprint in storage
     blueprints.length === 0 ? setIsBuildWarningActive(true) : setIsBuildWarningActive(false);
     // Shows warning when storage has not enough space to store more items
-    ((countStorageItems() + countItemsToClaim()) > userData.gameplay.buildingBarnSize) ? setIsStorageWarningActive(true) : setIsStorageWarningActive(false);
-    console.log((countStorageItems() + countItemsToClaim()) > userData.gameplay.buildingBarnSize);
+    ((countStorageItems() + countItemsToClaim()) > userData.gameplay.buildingsLevels["Barn"].buildingSize) ? setIsStorageWarningActive(true) : setIsStorageWarningActive(false);
+    console.log((countStorageItems() + countItemsToClaim()) > userData.gameplay.buildingsLevels["Barn"].buildingSize);
   }, [ storage ]);
 
   
@@ -149,48 +154,55 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
     portal.style.left =  `${String(e.clientX)}px`;
   }
 
+  const selectButtons = (): JSX.Element[] => {
+    if (field.fieldProps.isFieldBought) {
+      if (field.cropProps.cropType) {
+        if (field.cropProps.isReadyToHarvest) {
+          return [
+            <HarvestButton handleWindow={() => handleWindow("harvest")} />,
+            <CropCareButton fieldId={ fieldId } careType="water" />,
+            <CropCareButton fieldId={ fieldId } careType="fertilizer" />
+          ];
+        }
 
-  // const selectButtons = (): JSX.Element[] => {      
-  //   if (field.fieldProps.isFieldBought) {
-  //     if (field.cropProps.cropType) {
-  //       if (field.cropProps.isReadyToHarvest) {
-  //         return [
-  //           <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="full" textContent="Harvest" primary />,
-  //           <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="half" textContent={ field.cropProps.isWatered ? "Watered" : "Water" } watered={ field.cropProps.isWatered ? true : false } primary={ !field.cropProps.isWatered ? true : false } />,
-  //           <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="half" textContent={ field.cropProps.isFertilized ? "Fertilized" : "Fertilize" } fertilized={ field.cropProps.isFertilized ? true : false } primary={ !field.cropProps.isFertilized ? true : false } />
-  //         ];
-  //       }
+        else {
+          return [
+            <FieldMenuInfoBox title="Time to harvest" content={`04:20 min`} />,
+            <CropCareButton fieldId={ fieldId } careType="water" />,
+            <CropCareButton fieldId={ fieldId } careType="fertilizer" />
+          ];
+        }
+      }
 
-  //       else {
-  //         return [
-  //           <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="full" buttonFor="Time" textContent="14:20" />,
-  //           <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="half" textContent={ field.cropProps.isWatered ? "Watered" : "Water" } watered={ field.cropProps.isWatered ? true : false } primary={ !field.cropProps.isWatered ? true : false } />,
-  //           <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="half" textContent={ field.cropProps.isFertilized ? "Fertilized" : "Fertilize" } fertilized={ field.cropProps.isFertilized ? true : false } primary={ !field.cropProps.isFertilized ? true : false } />
-  //         ];
-  //       }
-  //     }
+      if (field.buildingProps.buildingType) {
+        let returnedButtons: JSX.Element[] = [];
+        if (userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSpeed > 0) returnedButtons.push(<FieldMenuInfoBox title="Production speed" content={`${userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSpeed / 60} min`} />);
+        if (userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSize > 0) returnedButtons.push(<FieldMenuInfoBox title="Building capacity" content={`${userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSize} units`} />);
+        if (field.buildingProps.buildingType === "Chicken" || field.buildingProps.buildingType === "Cow") {
+          // feedbutton
+          // collectbutton
+          // clearbutton
+        }
+        returnedButtons.push(<UpgradeButton handleWindow={() => handleWindow("upgrade")} />);
+        returnedButtons.push(<DestroyButton handleWindow={() => handleWindow("destroy")} />);
+        return returnedButtons;
+      }
 
-  //     if (field.cropProps.buildingType) {
-  //       return [
-  //         <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="half" textContent="Upgrade" primary />,
-  //         <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="half" textContent="Destroy" />,
-  //         <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="full" buttonFor="Barn" textContent="100" />
-  //       ];
-  //     }
+      else {
+        return [
+          <PlantButton handleWindow={() => handleWindow("plant")} />,
+          <BuildButton handleWindow={() => handleWindow("build")} />,
+          <BuySellFieldButton isBuyButton={ false } handleWindow={() => handleWindow("sell")} />
+        ];
+      }
+    }
 
-  //     else {
-  //       return [
-  //         <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="half" textContent="Plant" primary />,
-  //         <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="half" textContent="Build" primary />,
-  //         <FieldMenuButton fieldId={ fieldId } handlePlantWindow={ handlePlantWindow } handleBuildWindow ={ handleBuildWindow }  size="full" textContent="Sell this field" />
-  //       ];
-  //     }
-  //   }
-
-  //   else {
-  //     return [ <BuySellFieldButton fieldId={fieldId} /> ];
-  //   }
-  // }
+    else {
+      return [ 
+        <BuySellFieldButton isBuyButton={ true } handleWindow={() => handleWindow("buy")} /> 
+      ];
+    }
+  }
 
 
   // JSX
@@ -245,6 +257,10 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
             }
         </Route>
 
+        <Route path={`/farm/field${fieldId + 1}/upgrade`}>
+          <UpgradeWindow fieldId={ fieldId } closeWindow={() => handleWindow("upgrade")} />
+        </Route>
+
         <Route path={`/farm/field${fieldId + 1}/destroy`}>
           { isStorageWarningActive
             ? <WarningWindow 
@@ -273,24 +289,16 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
         <TopSection>
           <HeadingContainer>
             <CropImageContainer>
-              <CropImage src={ field.cropProps.cropType ? field.cropProps.cropIcon: field.buildingProps.buildingIcon } />
+              { (field.cropProps.cropType || field.buildingProps.buildingType)
+                ? <CropImage src={ field.cropProps.cropType ? crops[field.cropProps.cropType].cropIcon : buildings[field.buildingProps.buildingType].buildingIcon } />
+                : <CropImage src={ logo } />
+              }
             </CropImageContainer>
             <Name>{ field.fieldProps.fieldName }</Name>
             <FieldNumber>{ `Field #${ field.fieldId + 1 }` }</FieldNumber>
           </HeadingContainer>
           <Main>
-            { //selectButtons() 
-            <>
-              <PlantButton handleWindow={() => handleWindow("plant")} />
-              <HarvestButton handleWindow={() => handleWindow("harvest")} />
-              <BuildButton handleWindow={() => handleWindow("build")} />
-              <DestroyButton handleWindow={() => handleWindow("destroy")} />
-              <CropCareButton fieldId={ fieldId } careType="water" />
-              <CropCareButton fieldId={ fieldId } careType="fertilizer" />
-              <BuySellFieldButton isBuyButton={ true } handleWindow={() => handleWindow("buy")} /> 
-              <BuySellFieldButton isBuyButton={ false } handleWindow={() => handleWindow("sell")} /> 
-            </>
-            }
+            { selectButtons() }
           </Main>
         </TopSection>
 

@@ -17,7 +17,6 @@ import { setBuildingIcon, setBuildingType, setFieldName } from '../../redux/acti
 import { addToUserStorage } from '../../redux/actions/storageActions';
 import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
-import { StorageItem } from '../../redux/reducers/storageReducer';
 import { UserInterface } from '../../redux/reducers/userReducer';
 import ConfirmWindow from './ConfirmWindow';
 
@@ -34,7 +33,6 @@ const DestroyWindow: React.FC<DestroyWindowPropsInterface> = ({ fieldId, closeWi
   const state: StateInterface = useSelector((state: StateInterface): StateInterface => state);
   const field: FieldInterface = state.fields[fieldId];
   const userData: UserInterface = state.userData;
-  const storage: StorageItem[] = state.storage;
   const [isConfirmWindowOpened, setIsConfirmWindowOpened] = useState(false);
   const setState = useDispatch();
 
@@ -100,7 +98,7 @@ const DestroyWindow: React.FC<DestroyWindowPropsInterface> = ({ fieldId, closeWi
               <WindowColumnContainer>
                 <WindowText>Destroy</WindowText>
                 <WindowBigHeading long>{ field.buildingProps.buildingType }</WindowBigHeading>
-                <WindowText>{`lvl 1`}</WindowText>
+                <WindowText>{`lvl ${userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingLevel}`}</WindowText>
               </WindowColumnContainer>
             </WindowRowContainer>
 

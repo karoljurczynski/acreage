@@ -13,6 +13,8 @@ import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
 
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
+import crops from '../../config/crops';
+import buildings from '../../config/buildings';
 
 
 // COMPONENT
@@ -78,7 +80,7 @@ const Field: React.FC<FieldPropsInterface> = ({ fieldId }): JSX.Element => {
         title={ field.cropProps.cropType.length ? field.cropProps.cropType : field.buildingProps.buildingType }>
 
         { (field.cropProps.cropType || field.buildingProps.buildingType) &&
-          <FieldIcon src={ field.cropProps.cropType ? field.cropProps.cropIcon : field.buildingProps.buildingIcon } />
+          <FieldIcon src={ field.cropProps.cropType ? crops[field.cropProps.cropType].cropIcon : buildings[field.buildingProps.buildingType].buildingIcon } />
         }
       
       </FieldSegment>

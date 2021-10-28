@@ -10,6 +10,9 @@ import { FieldPropertiesInterface } from '../interfaces';
 import { useSelector } from 'react-redux';
 import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
+import logo from '../../images/logo.png';
+import crops from '../../config/crops';
+import buildings from '../../config/buildings';
 
 
 // COMPONENT
@@ -33,7 +36,10 @@ const FieldProperties: React.FC<FieldPropertiesInterface> = ({ fieldId, closeWin
       <TopSection>
         <HeadingContainer>
           <CropImageContainer>
-            <CropImage src={ field.cropProps.cropType ? field.cropProps.cropIcon : field.buildingProps.buildingIcon } />
+          { (field.cropProps.cropType || field.buildingProps.buildingType)
+            ? <CropImage src={ field.cropProps.cropType ? crops[field.cropProps.cropType].cropIcon : buildings[field.buildingProps.buildingType].buildingIcon } />
+            : <CropImage src={ logo } />
+          }
           </CropImageContainer>
           <Name>{ `Field #${ field.fieldId + 1 }` }</Name>
           <FieldNumber>Properties</FieldNumber>
@@ -41,7 +47,7 @@ const FieldProperties: React.FC<FieldPropertiesInterface> = ({ fieldId, closeWin
         <Main>
           <FieldMenuInfoBox rateInfoBox title="Ground rate" content={field.fieldProps.groundRate} />
           <FieldMenuInfoBox rateInfoBox title="Water rate" content={field.fieldProps.waterRate} />
-          <FieldMenuInfoBox title="Price" content={`${field.fieldProps.fieldPrice} $`} />
+          <FieldMenuInfoBox title="Value" content={`${field.fieldProps.fieldPrice} $`} />
         </Main>
       </TopSection> 
 

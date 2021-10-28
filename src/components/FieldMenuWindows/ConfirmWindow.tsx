@@ -3,7 +3,7 @@
 
 import { ConfirmWindowPropsInterface } from '../interfaces';
 
-import danger from '../../images/icons/danger.png';
+import confirm from '../../images/icons/confirm.png';
 import { WindowBottomSection, WindowTopSection, WindowWrapper, WindowButton, WarningContainer, WarningImage, WarningTextWrapper, WarningTitle, WarningText } from './WindowStyles';
 
 
@@ -22,9 +22,9 @@ const ConfirmWindow: React.FC<ConfirmWindowPropsInterface> = ({ confirmHeading, 
 
       <WindowTopSection>
         <WarningContainer>
-          <WarningImage src={danger} />
+          <WarningImage src={confirm} />
           <WarningTextWrapper>
-            <WarningTitle>{confirmHeading}</WarningTitle>
+            <WarningTitle confirm>{confirmHeading}</WarningTitle>
             <WarningText>{confirmText}</WarningText>
           </WarningTextWrapper>
         </WarningContainer>

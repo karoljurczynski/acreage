@@ -27,6 +27,9 @@ interface WindowTilePropsInterface {
 interface WindowTileTextsPropsInterface {
   textColor?: "gold" | "darkBrown" | "ground" | "lightBrown" | "blue" | "black" | "white" | "mainOrange";
 }
+interface WarningTitlePropsInterface {
+  confirm?: boolean;
+}
 
 export const WindowWrapper = styled.div<WindowWrapperPropsInterface>`
   width: 426px;
@@ -299,10 +302,15 @@ export const WarningTextWrapper = styled.div`
   justify-content: flex-start;
   margin-left: 20px;
 `;
-export const WarningTitle = styled.h2`
+export const WarningTitle = styled.h2<WarningTitlePropsInterface>`
   color: ${colorList.warningRed};
   margin-bottom: 8px;
   font-size: 24px;
+
+  ${({ confirm }) => confirm && `
+    color: ${colorList.white};
+    text-shadow: 0px 1px 1px black;
+  `}
 `;
 export const WarningText = styled.h5`
   color: ${colorList.black};
