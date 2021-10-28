@@ -5,17 +5,17 @@ import { WindowBarContainer, WindowBarFull, WindowTileText, WindowBigHeading, Wi
 import ground from '../../images/stats/ground.png';
 import water from '../../images/parts/water.png';
 import fertilizer from '../../images/parts/fertilizer.png';
-import logo from '../../images/logo.png';
 import { HarvestWindowPropsInterface } from '../interfaces';
 import crops from '../../config/crops';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setCropType, setCropIcon, setFieldName, setIsCropFertilized, setIsCropWatered, setIsCropReadyToHarvest } from '../../redux/actions/fieldActions';
-import { setUserExperience } from '../../redux/actions/userActions';
+import { setCropType, setFieldName, setIsCropFertilized, setIsCropWatered, setIsCropReadyToHarvest } from '../../redux/actions/fieldActions';
+import { setCurrentCropXp, setUserExperience } from '../../redux/actions/userActions';
 import { addToUserStorage } from '../../redux/actions/storageActions';
 import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
 import { UserInterface } from '../../redux/reducers/userReducer';
+import { cropLevels, Level } from '../../config/levels';
 
 
 // COMPONENT
@@ -39,12 +39,21 @@ const HarvestWindow: React.FC<HarvestWindowPropsInterface> = ({ fieldId, closeWi
   const countTotalYield = () => {
     let totalYield: number = 0;
     totalYield += crops[field.cropProps.cropType].defaultYield;
-    totalYield += crops[field.cropProps.cropType].cropLevel;
+    totalYield += userData.gameplay.cropsLevels[field.cropProps.cropType].cropLevel;
     field.cropProps.isWatered ? totalYield += 1 : totalYield += 0;
     field.cropProps.isFertilized ? totalYield += 1 : totalYield += 0;
     totalYield += field.fieldProps.groundRate - crops[field.cropProps.cropType].groundRateNeeded;
     return totalYield;
   }
+  const countCropLevelProgress = (): number => {
+    const filterLevels = (item: Level) => {
+      if (item.level === userData.gameplay.cropsLevels[field.cropProps.cropType].cropLevel + 1)
+        return item;
+    }
+    const xpToNextCropLevel: number = cropLevels.filter(filterLevels)[0].xp;
+    return (userData.gameplay.cropsLevels[field.cropProps.cropType].currentCropXp / xpToNextCropLevel * 100);
+  }
+
 
 
   // HANDLERS
@@ -53,11 +62,11 @@ const HarvestWindow: React.FC<HarvestWindowPropsInterface> = ({ fieldId, closeWi
   const handleCollectButton = () => {
     setState(addToUserStorage(field.cropProps.cropType, countTotalYield(), "Crop"));
     setState(setUserExperience(userData.gameplay.userExperience += crops[field.cropProps.cropType].xpPerUnit * countTotalYield()));
+    setState(setCurrentCropXp(field.cropProps.cropType, userData.gameplay.cropsLevels[field.cropProps.cropType].currentCropXp += crops[field.cropProps.cropType].cropXpPerHarvest));
     setState(setIsCropWatered(fieldId, false));
     setState(setIsCropFertilized(fieldId, false));
     setState(setIsCropReadyToHarvest(fieldId, false));
     setState(setCropType(fieldId, ""));
-    setState(setCropIcon(fieldId, logo));
     setState(setFieldName(fieldId, "Empty"));
     closeWindow();
   }
@@ -78,10 +87,10 @@ const HarvestWindow: React.FC<HarvestWindowPropsInterface> = ({ fieldId, closeWi
             <WindowColumnContainer>
               <WindowText>Harvest</WindowText>
               <WindowBigHeading>{field.cropProps.cropType}</WindowBigHeading>
-              <WindowText>Lvl 1</WindowText>
+              <WindowText>{`Lvl ${userData.gameplay.cropsLevels[field.cropProps.cropType].cropLevel}`}</WindowText>
               <WindowBarContainer>
-                <WindowBarFull percent={45} />
-                <WindowBarText>15 xp</WindowBarText>
+                <WindowBarFull percent={ countCropLevelProgress() } />
+                <WindowBarText>{`${userData.gameplay.cropsLevels[field.cropProps.cropType].currentCropXp} xp`}</WindowBarText>
               </WindowBarContainer>
             </WindowColumnContainer>
           </WindowRowContainer>
@@ -90,7 +99,7 @@ const HarvestWindow: React.FC<HarvestWindowPropsInterface> = ({ fieldId, closeWi
             <WindowSmallHeading>Bonuses</WindowSmallHeading>
             <WindowRowContainer>
               <WindowTile title="Experience bonus">
-                <WindowTileHeading>{`+${crops[field.cropProps.cropType].cropLevel}`}</WindowTileHeading>
+                <WindowTileHeading>{`+${userData.gameplay.cropsLevels[field.cropProps.cropType].cropLevel}`}</WindowTileHeading>
                 <WindowTileText textColor="gold">Crop lvl</WindowTileText>
               </WindowTile>
               <WindowTile title="Ground bonus" disabled={field.fieldProps.groundRate - crops[field.cropProps.cropType].groundRateNeeded === 0 ? true : false}>

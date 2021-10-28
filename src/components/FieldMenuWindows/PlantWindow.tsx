@@ -14,7 +14,7 @@ import hydration from '../../images/stats/hydration.png';
 import time from '../../images/stats/time.png';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setCropIcon, setCropType, setFieldName } from '../../redux/actions/fieldActions';
+import { setCropType, setFieldName } from '../../redux/actions/fieldActions';
 import { removeFromUserStorage } from '../../redux/actions/storageActions';
 import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
@@ -37,11 +37,11 @@ const PlantWindow: React.FC<PlantWindowPropsInterface> = ({ fieldId, closeWindow
   }
   const countCropLevelProgress = (): number => {
     const filterLevels = (item: Level) => {
-      if (item.level === crops[selectedItem.name].cropLevel + 1)
+      if (item.level === userData.gameplay.cropsLevels[selectedItem.name].cropLevel + 1)
         return item;
     }
     const xpToNextCropLevel: number = cropLevels.filter(filterLevels)[0].xp;
-    return (crops[selectedItem.name].currentCropXp / xpToNextCropLevel * 100);
+    return (userData.gameplay.cropsLevels[selectedItem.name].currentCropXp / xpToNextCropLevel * 100);
   }
   const lockPlantButton = () => {
     if (selectedItem.name) {
@@ -88,7 +88,6 @@ const PlantWindow: React.FC<PlantWindowPropsInterface> = ({ fieldId, closeWindow
   const handlePlantSelectedSeed = () => {
     setState(setCropType(fieldId, selectedItem.name));
     setState(setFieldName(fieldId, selectedItem.name));
-    setState(setCropIcon(fieldId, crops[selectedItem.name].cropIcon));
     setState(removeFromUserStorage(selectedItem.name, 1, "Seed"));
     closeWindow();
   }
@@ -108,11 +107,11 @@ const PlantWindow: React.FC<PlantWindowPropsInterface> = ({ fieldId, closeWindow
           <WindowColumnContainer>
             <WindowText>Plant</WindowText>
             <WindowBigHeading>{selectedItem.name ? selectedItem.name : "Select a seed"}</WindowBigHeading>
-            <WindowText>{selectedItem.name ? `lvl ${crops[selectedItem.name].cropLevel}` :" To show requirements"}</WindowText>
+            <WindowText>{selectedItem.name ? `lvl ${userData.gameplay.cropsLevels[selectedItem.name].cropLevel}` :" To show requirements"}</WindowText>
             {selectedItem.name &&
               <WindowBarContainer>
                 <WindowBarFull percent={ countCropLevelProgress() } />
-                <WindowBarText>{`${crops[selectedItem.name].currentCropXp} xp`}</WindowBarText>
+                <WindowBarText>{`${userData.gameplay.cropsLevels[selectedItem.name].currentCropXp} xp`}</WindowBarText>
               </WindowBarContainer>
             }
           </WindowColumnContainer>

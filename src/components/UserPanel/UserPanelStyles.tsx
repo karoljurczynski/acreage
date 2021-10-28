@@ -31,6 +31,8 @@ export const UserName = styled.h3`
   font-size: 16px;
   font-weight: bold;
   margin: 5px 0;
+  letter-spacing: 0.3px;
+  text-shadow: 1px 1px 1px black;
 `;
 
 export const UserLevel = styled.h4`

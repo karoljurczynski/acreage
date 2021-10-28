@@ -208,7 +208,7 @@ export const userReducer = (state = initialState, action: any) => {
       newState.gameplay.cropsLevels[action.cropName].cropLevel = action.newCropLevel;
       return newState;
     }
-    case "SET_CROP_CURRENT_XP": {
+    case "SET_CURRENT_CROP_XP": {
       const newState = {...state};
       newState.gameplay.cropsLevels[action.cropName].currentCropXp = action.newCurrentCropXp;
       return newState;

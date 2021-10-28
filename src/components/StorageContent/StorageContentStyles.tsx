@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import crate from '../../images/crate.png';
 import colorList from '../../config/colorList';
 
 interface BlockProps {
@@ -9,10 +8,10 @@ interface BlockProps {
 export const Wrapper = styled.div`
   width: 100%;
   display: flex;
+  background: transparent;
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
-  background: ${crate};
   flex-wrap: wrap;
 `;
 
@@ -20,14 +19,13 @@ export const Block = styled.div<BlockProps>`
   width: 80px;
   height: 80px;
   position: relative;
-  background: ${colorList.white};
+  background: transparent;
   border-radius: 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   margin-right: 12px;
-  cursor: pointer;
   opacity: 1;
 
   ${({ itemType }) => itemType === "Crop" && `
@@ -53,10 +51,6 @@ export const Block = styled.div<BlockProps>`
   :last-of-type {
     margin-bottom: 0;
   }
-
-  :hover {
-    opacity: 0.85;
-  }
 `;
 
 export const CropIcon = styled.img`
@@ -67,5 +61,6 @@ export const CropIcon = styled.img`
 export const CropAmount = styled.h4`
   font-size: 16px;
   margin: 5px 0 12px;
+  text-shadow: 1px 1px 1px black;
   color: ${colorList.white};
 `;

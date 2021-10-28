@@ -15,6 +15,7 @@ export const Heading = styled.h2`
 `;
 
 export const Subheading = styled.h4`
-  font-size: 16px;
+  font-size: 17px;
   color: ${ colorList.white };
+  text-shadow: 0px 1px 1px black;
 `;

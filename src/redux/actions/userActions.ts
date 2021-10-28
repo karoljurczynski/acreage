@@ -73,10 +73,10 @@ export const setCropLevel = (cropName: string, newCropLevel: number) => {
     newCropLevel: newCropLevel
   }
 }
-export const setCropCurrentXp = (cropName: string, newCropCurrentXp: number) => {
+export const setCurrentCropXp = (cropName: string, newCurrentCropXp: number) => {
   return {
-    type: "SET_CROP_CURRENT_XP",
+    type: "SET_CURRENT_CROP_XP",
     cropName: cropName,
-    newCropCurrentXp: newCropCurrentXp
+    newCurrentCropXp: newCurrentCropXp
   }
 }
