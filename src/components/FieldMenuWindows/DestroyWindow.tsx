@@ -10,10 +10,9 @@ import buildings from '../../config/buildings';
 import parts from '../../config/parts';
 
 import destroy from '../../images/icons/destroy.png';
-import logo from '../../images/logo.png';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setBuildingIcon, setBuildingType, setFieldName } from '../../redux/actions/fieldActions';
+import { setBuildingType, setFieldName } from '../../redux/actions/fieldActions';
 import { addToUserStorage } from '../../redux/actions/storageActions';
 import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
@@ -46,7 +45,6 @@ const DestroyWindow: React.FC<DestroyWindowPropsInterface> = ({ fieldId, closeWi
       setState(addToUserStorage(usedPart.name, countHalfOfPartsUsed(usedPart.amount), "Part"));
     });
     setState(addToUserStorage(field.buildingProps.buildingType, 1, "Blueprint"));
-    setState(setBuildingIcon(fieldId, logo));
     setState(setBuildingType(fieldId, ""));
     setState(setFieldName(fieldId, "Empty"));
     closeWindow();

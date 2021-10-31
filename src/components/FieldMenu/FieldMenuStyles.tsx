@@ -89,6 +89,7 @@ export const BottomSection = styled.section<BottomSectionPropsInterface>`
 
 export const HeadingContainer = styled.section`
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
@@ -114,6 +115,9 @@ export const CropImage = styled.img`
 export const Name = styled.h3`
   margin-top: 8px;
   color: ${ colorList.white };
+  display: block;
+  width: 100%;
+  text-align: center;
   font-size: 24px;
   text-shadow: 1px 1px 1px black;
 `;

@@ -16,7 +16,7 @@ import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
 import { StorageItem } from '../../redux/reducers/storageReducer';
 import { UserInterface } from '../../redux/reducers/userReducer';
-import { setBuildingLevel, setUserExperience } from '../../redux/actions/userActions';
+import { setBuildingLevel, setBuildingSize, setBuildingSpeed, setUserExperience } from '../../redux/actions/userActions';
 
 
 // COMPONENT
@@ -81,6 +81,10 @@ const UpgradeWindow: React.FC<UpgradeWindowPropsInterface> = ({ fieldId, closeWi
     });
     setState(setUserExperience(userData.gameplay.userExperience += (buildings[field.buildingProps.buildingType].xpPerUpgrade * userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingLevel)));
     setState(setBuildingLevel(field.buildingProps.buildingType, userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingLevel += 1));
+    if (userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSize > 0)
+      setState(setBuildingSize(field.buildingProps.buildingType, Math.floor(userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSize += userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSize / 2)));
+    if (userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSpeed > 0)
+      setState(setBuildingSpeed(field.buildingProps.buildingType, Math.floor(userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSpeed -= userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSpeed / 5)));
     closeWindow();
   }
 
@@ -136,20 +140,20 @@ const UpgradeWindow: React.FC<UpgradeWindowPropsInterface> = ({ fieldId, closeWi
               <WindowTileText textColor="black">{`lvl ${userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingLevel + 1}`}</WindowTileText>
             </WindowTile>
             <WindowTile title="User XP to obtain">
-              <WindowTileHeading>{buildings[field.buildingProps.buildingType].xpPerUpgrade * userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingLevel + 1}</WindowTileHeading>
+              <WindowTileHeading>{buildings[field.buildingProps.buildingType].xpPerUpgrade * userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingLevel}</WindowTileHeading>
               <WindowTileText textColor="gold">XP</WindowTileText>
             </WindowTile>
 
             { userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSize > 0 &&
               <WindowTile title="New building's capacity">
                 <WindowTileIcon src={ capacity } />
-                <WindowTileText textColor="black">{ userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSize + (userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSize / 2) }</WindowTileText>
+                <WindowTileText textColor="black">{ userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSize + Math.floor(userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSize / 2) }</WindowTileText>
               </WindowTile>
             }
             { userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSpeed > 0 &&
               <WindowTile title="New building's production speed">
                 <WindowTileIcon src={ time } />
-                <WindowTileText textColor="black">{`${userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSpeed - (userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSpeed / 2)} h`}</WindowTileText>
+                <WindowTileText textColor="black">{`${userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSpeed - Math.floor(userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSpeed / 5) } h`}</WindowTileText>
               </WindowTile>
             }
         

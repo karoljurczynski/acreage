@@ -137,6 +137,13 @@ const initialState: UserInterface = {
         timeToUpgradeInSeconds: 120,
         buildingSize: 5,
         buildingSpeed: 60
+      },
+
+      Pigs: {
+        buildingLevel: 1,
+        timeToUpgradeInSeconds: 120,
+        buildingSize: 5,
+        buildingSpeed: 60
       }
     }
   }

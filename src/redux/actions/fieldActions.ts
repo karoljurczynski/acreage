@@ -11,6 +11,8 @@ export const setFieldName = (fieldId: number, newFieldName: string) => {
     newFieldName: newFieldName
   }
 }
+
+
 export const setCropType = (fieldId: number, newCropType: string) => {
   return {
     type: "SET_CROP_TYPE",
@@ -18,11 +20,11 @@ export const setCropType = (fieldId: number, newCropType: string) => {
     newCropType: newCropType
   }
 }
-export const setCropIcon = (fieldId: number, newIcon: string) => {
+export const updateTimeToGrow = (fieldId: number, newTimeInSeconds: number) => {
   return {
-    type: "SET_CROP_ICON",
+    type: "UPDATE_TIME_TO_GROW",
     fieldId: fieldId,
-    newIcon: newIcon
+    newTimeInSeconds: newTimeInSeconds
   }
 }
 export const setIsCropReadyToHarvest = (fieldId: number, isReadyToHarvest: boolean) => {
@@ -30,13 +32,6 @@ export const setIsCropReadyToHarvest = (fieldId: number, isReadyToHarvest: boole
     type: "SET_IS_CROP_READY_TO_HARVEST",
     fieldId: fieldId,
     isReadyToHarvest: isReadyToHarvest
-  }
-}
-export const updateTimeToGrow = (fieldId: number, newTimeInSeconds: number) => {
-  return {
-    type: "UPDATE_TIME_TO_GROW",
-    fieldId: fieldId,
-    newTimeInSeconds: newTimeInSeconds
   }
 }
 export const setIsCropWatered = (fieldId: number, isWatered: boolean) => {
@@ -53,6 +48,45 @@ export const setIsCropFertilized = (fieldId: number, isFertilized: boolean) => {
     isFertilized: isFertilized
   }
 }
+
+
+export const setAnimalType = (fieldId: number, newAnimalType: string) => {
+  return {
+    type: "SET_ANIMAL_TYPE",
+    fieldId: fieldId,
+    newAnimalType: newAnimalType
+  }
+}
+export const updateTimeToCollect = (fieldId: number, newTimeInSeconds: number) => {
+  return {
+    type: "UPDATE_TIME_TO_COLLECT",
+    fieldId: fieldId,
+    newTimeInSeconds: newTimeInSeconds
+  }
+}
+export const setIsAnimalReadyToCollect = (fieldId: number, isReadyToCollect: boolean) => {
+  return {
+    type: "SET_IS_ANIMAL_READY_TO_COLLECT",
+    fieldId: fieldId,
+    isReadyToCollect: isReadyToCollect
+  }
+}
+export const setIsAnimalFed = (fieldId: number, isFed: boolean) => {
+  return {
+    type: "SET_IS_ANIMAL_FED",
+    fieldId: fieldId,
+    isFed: isFed
+  }
+}
+export const setIsAnimalCleaned = (fieldId: number, isCleaned: boolean) => {
+  return {
+    type: "SET_IS_ANIMAL_CLEANED",
+    fieldId: fieldId,
+    isCleaned: isCleaned
+  }
+}
+
+
 export const setBuildingType = (fieldId: number, newBuildingType: string) => {
   return {
     type: "SET_BUILDING_TYPE",
@@ -60,30 +94,17 @@ export const setBuildingType = (fieldId: number, newBuildingType: string) => {
     newBuildingType: newBuildingType
   }
 }
-export const setBuildingIcon = (fieldId: number, newIcon: string) => {
+export const updateTimeToBuild = (fieldId: number, newTimeInSeconds: number) => {
   return {
-    type: "SET_BUILDING_ICON",
+    type: "UPDATE_TIME_TO_BUILD",
     fieldId: fieldId,
-    newIcon: newIcon
+    newTimeInSeconds: newTimeInSeconds
   }
 }
-export const setBuildingLevel = (fieldId: number, newLevel: number) => {
+export const setIsBuildReady = (fieldId: number, isBuildReady: boolean) => {
   return {
-    type: "SET_BUILDING_LEVEL",
+    type: "SET_IS_BUILD_READY",
     fieldId: fieldId,
-    newLevel: newLevel
-  }
-}
-export const setIsUpgradeReady = (fieldId: number) => {
-  return {
-    type: "SET_IS_UPGRADE_READY",
-    fieldId: fieldId,
-  }
-}
-export const setBuildingCapacity = (fieldId: number, newCapacity: number) => {
-  return {
-    type: "SET_BUILDING_CAPACITY",
-    fieldId: fieldId,
-    newCapacity: newCapacity
+    isBuildReady: isBuildReady
   }
 }

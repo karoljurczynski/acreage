@@ -15,7 +15,7 @@ import ground from '../../images/stats/ground.png';
 import hydration from '../../images/stats/hydration.png';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setBuildingIcon, setBuildingType, setFieldName } from '../../redux/actions/fieldActions';
+import { setBuildingType, setFieldName } from '../../redux/actions/fieldActions';
 import { removeFromUserStorage } from '../../redux/actions/storageActions';
 import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
@@ -110,7 +110,6 @@ const BuildWindow: React.FC<BuildWindowPropsInterface> = ({ fieldId, closeWindow
     });
     setState(setUserExperience(userData.gameplay.userExperience += buildings[selectedItem.name].xpPerUpgrade * buildings[selectedItem.name].buildingLevel));
     setState(setFieldName(fieldId, selectedItem.name));
-    setState(setBuildingIcon(fieldId, buildings[selectedItem.name].buildingIcon));
     setState(setBuildingType(fieldId, selectedItem.name));
     setState(removeFromUserStorage(selectedItem.name, 1, "Blueprint"));
     closeWindow();

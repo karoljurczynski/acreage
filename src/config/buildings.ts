@@ -8,6 +8,7 @@ import barn from '../images/buildings/barn.png';
 import well from '../images/buildings/well.png';
 import chicken from '../images/buildings/chicken.png';
 import cow from '../images/buildings/cow.png';
+import pig from '../images/buildings/pig.png';
 
 
 // DATA
@@ -61,6 +62,17 @@ const buildings: BuildingInterface = {
   Cows: {
     buildingLevel: 1,
     buildingIcon: cow,
+    levelNeeded: 3,
+    timeToBuildInSeconds: 60,
+    groundRateNeeded: 0,
+    waterRateNeeded: 0,
+    xpPerUpgrade: 2,
+    partsNeeded: [{name: "Brick", amount: 3}, {name: "Plank", amount: 2}, {name: "Bolt", amount: 2}]
+  },
+
+  Pigs: {
+    buildingLevel: 1,
+    buildingIcon: pig,
     levelNeeded: 3,
     timeToBuildInSeconds: 60,
     groundRateNeeded: 0,

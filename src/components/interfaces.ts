@@ -50,6 +50,13 @@ export interface CropCareButtonProps {
   fieldId: number;
   careType: "water" | "fertilizer";
 }
+export interface AnimalCareButtonProps {
+  fieldId: number;
+  careType: "clean" | "feed";
+}
+export interface CollectButtonProps {
+  handleWindow: () => void;
+}
 
 export interface PlantWindowPropsInterface {
   fieldId: number;
@@ -68,6 +75,10 @@ export interface UpgradeWindowPropsInterface {
   closeWindow: () => void;
 }
 export interface DestroyWindowPropsInterface {
+  fieldId: number;
+  closeWindow: () => void;
+}
+export interface CollectWindowPropsInterface {
   fieldId: number;
   closeWindow: () => void;
 }

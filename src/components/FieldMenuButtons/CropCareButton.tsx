@@ -74,6 +74,19 @@ const CropCareButton: React.FC<CropCareButtonProps> = ({ fieldId, careType }) =>
     }
     return isCareItemInStorage;
   }
+  const lockButton = (): boolean => {
+    if (checkStorageForCareItems()) {
+      if ((careType === "water" && field.cropProps.isWatered))
+        return true;
+      if ((careType === "fertilizer" && field.cropProps.isFertilized))
+        return true;
+      else
+        return false;
+    }
+    else {
+      return true;
+    }
+  }
 
 
   // HANDLERS
@@ -102,7 +115,7 @@ const CropCareButton: React.FC<CropCareButtonProps> = ({ fieldId, careType }) =>
   return (
     <Button
       isLarge={ false }
-      disabled={ field.cropProps.isReadyToHarvest ? true : !checkStorageForCareItems() }
+      disabled={ field.cropProps.isReadyToHarvest ? true : lockButton() }
       onClick={ handleCropCareButton }>
       <ButtonIcon src={ getIcon() }></ButtonIcon>
       <ButtonText primary>{ getText() }</ButtonText>

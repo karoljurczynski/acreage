@@ -234,9 +234,12 @@ export const WindowTileText = styled.p<WindowTileTextsPropsInterface>`
   font-size: 16px;
   margin: 5px 0 12px;
   color: ${colorList.black};
-
+ 
   ${({textColor}) => textColor && `
     color: ${colorList[textColor]};
+  `};
+  ${({textColor}) => textColor === "white" && `
+    text-shadow: 1px 1px 1px black;
   `};
 `;
 

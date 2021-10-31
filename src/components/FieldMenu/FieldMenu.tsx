@@ -37,6 +37,8 @@ import { UserInterface } from '../../redux/reducers/userReducer';
 import { StorageItem } from '../../redux/reducers/storageReducer';
 
 import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
+import AnimalCareButton from '../FieldMenuButtons/AnimalCareButton';
+import CollectButton from '../FieldMenuButtons/CollectButton';
 
 
 
@@ -178,10 +180,17 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
         let returnedButtons: JSX.Element[] = [];
         if (userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSpeed > 0) returnedButtons.push(<FieldMenuInfoBox title="Production speed" content={`${userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSpeed / 60} min`} />);
         if (userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSize > 0) returnedButtons.push(<FieldMenuInfoBox title="Building capacity" content={`${userData.gameplay.buildingsLevels[field.buildingProps.buildingType].buildingSize} units`} />);
-        if (field.buildingProps.buildingType === "Chicken" || field.buildingProps.buildingType === "Cow") {
-          // feedbutton
-          // collectbutton
-          // clearbutton
+        if (field.animalProps.animalType) {
+          if (field.animalProps.isReadyToCollect) {
+            returnedButtons.push(<CollectButton handleWindow={() => handleWindow("collect")} />);
+            returnedButtons.push(<AnimalCareButton careType="clean" fieldId={ fieldId } />);
+            returnedButtons.push(<AnimalCareButton careType="feed" fieldId={ fieldId } />);
+          }
+          else {
+            returnedButtons.push(<FieldMenuInfoBox title="Time to collect" content={`21:37 min`} />);
+            returnedButtons.push(<AnimalCareButton careType="clean" fieldId={ fieldId } />);
+            returnedButtons.push(<AnimalCareButton careType="feed" fieldId={ fieldId } />);
+          }
         }
         returnedButtons.push(<UpgradeButton handleWindow={() => handleWindow("upgrade")} />);
         returnedButtons.push(<DestroyButton handleWindow={() => handleWindow("destroy")} />);
