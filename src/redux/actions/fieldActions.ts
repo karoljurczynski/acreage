@@ -20,9 +20,9 @@ export const setCropType = (fieldId: number, newCropType: string) => {
     newCropType: newCropType
   }
 }
-export const updateTimeToGrow = (fieldId: number, newTimeInSeconds: number) => {
+export const setPlantedTime = (fieldId: number, newTimeInSeconds: number) => {
   return {
-    type: "UPDATE_TIME_TO_GROW",
+    type: "SET_PLANTED_TIME",
     fieldId: fieldId,
     newTimeInSeconds: newTimeInSeconds
   }
@@ -57,9 +57,16 @@ export const setAnimalType = (fieldId: number, newAnimalType: string) => {
     newAnimalType: newAnimalType
   }
 }
-export const updateTimeToCollect = (fieldId: number, newTimeInSeconds: number) => {
+export const setAnimalAmount = (fieldId: number, newAnimalAmount: number) => {
   return {
-    type: "UPDATE_TIME_TO_COLLECT",
+    type: "SET_ANIMAL_AMOUNT",
+    fieldId: fieldId,
+    newAnimalAmount: newAnimalAmount
+  }
+}
+export const setProductionStartedTime = (fieldId: number, newTimeInSeconds: number) => {
+  return {
+    type: "SET_PRODUCTION_STARTED_TIME",
     fieldId: fieldId,
     newTimeInSeconds: newTimeInSeconds
   }
@@ -94,9 +101,9 @@ export const setBuildingType = (fieldId: number, newBuildingType: string) => {
     newBuildingType: newBuildingType
   }
 }
-export const updateTimeToBuild = (fieldId: number, newTimeInSeconds: number) => {
+export const setBuildStartedTime = (fieldId: number, newTimeInSeconds: number) => {
   return {
-    type: "UPDATE_TIME_TO_BUILD",
+    type: "SET_BUILD_STARTED_TIME",
     fieldId: fieldId,
     newTimeInSeconds: newTimeInSeconds
   }

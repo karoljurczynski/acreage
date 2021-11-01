@@ -15,7 +15,7 @@ import ground from '../../images/stats/ground.png';
 import hydration from '../../images/stats/hydration.png';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setBuildingType, setFieldName } from '../../redux/actions/fieldActions';
+import { setAnimalType, setBuildingType, setFieldName } from '../../redux/actions/fieldActions';
 import { removeFromUserStorage } from '../../redux/actions/storageActions';
 import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
@@ -104,6 +104,12 @@ const BuildWindow: React.FC<BuildWindowPropsInterface> = ({ fieldId, closeWindow
         return {...blueprint, selected: false};
     }));
   }
+  const isAnimalBuilding = (buildingName: string): boolean => {
+    if (buildingName === "Chickens" || buildingName === "Cows" || buildingName === "Pigs")
+      return true;
+    else
+      return false;
+  }
   const handleBuildSelectedBlueprint = () => {
     buildings[selectedItem.name].partsNeeded.forEach(part => {
       setState(removeFromUserStorage(part.name, part.amount, "Part"));
@@ -111,6 +117,9 @@ const BuildWindow: React.FC<BuildWindowPropsInterface> = ({ fieldId, closeWindow
     setState(setUserExperience(userData.gameplay.userExperience += buildings[selectedItem.name].xpPerUpgrade * buildings[selectedItem.name].buildingLevel));
     setState(setFieldName(fieldId, selectedItem.name));
     setState(setBuildingType(fieldId, selectedItem.name));
+    if (isAnimalBuilding(field.buildingProps.buildingType)) {
+      setState(setAnimalType(fieldId, field.buildingProps.buildingType));
+    }
     setState(removeFromUserStorage(selectedItem.name, 1, "Blueprint"));
     closeWindow();
   }

@@ -17,21 +17,22 @@ export interface FieldProps {
 }
 export interface CropProps {
   cropType: string;
-  timeToGrowInSeconds: number;
+  plantedAtInSeconds: number;
   isReadyToHarvest: boolean;
   isWatered: boolean;
   isFertilized: boolean;
 }
 export interface AnimalProps {
   animalType: string;
-  timeToCollectInSeconds: number;
+  animalAmount: number;
+  productionStartedAtInSeconds: number;
   isReadyToCollect: boolean;
   isFed: boolean;
   isCleaned: boolean;
 }
 export interface BuildingProps {
   buildingType: string;
-  timeToBuildInSeconds: number;
+  buildStartedAtInSeconds: number;
   isBuildReady: boolean;
 }
 
@@ -61,21 +62,22 @@ const createFieldsArray = (): FieldInterface[] => {
         },
         cropProps: {
           cropType: "",
-          timeToGrowInSeconds: 0,
+          plantedAtInSeconds: 0,
           isReadyToHarvest: false,
           isWatered: false,
           isFertilized: false
         },
         animalProps: {
           animalType: "",
-          timeToCollectInSeconds: 0,
+          animalAmount: 0,
+          productionStartedAtInSeconds: 0,
           isReadyToCollect: false,
           isFed: false,
           isCleaned: false
         },
         buildingProps: {
           buildingType: "",
-          timeToBuildInSeconds: 0,
+          buildStartedAtInSeconds: 0,
           isBuildReady: false
         }
       }
@@ -92,8 +94,7 @@ const createFieldsArray = (): FieldInterface[] => {
   fields[20].fieldProps.waterRate = 2;
 
   fields[27].fieldProps.isFieldBought = true;
-  fields[27].buildingProps.buildingType = "Chickens";
-  fields[27].animalProps.animalType = "Chickens";
+  fields[27].buildingProps.buildingType = "Farmhouse";
   fields[27].fieldProps.groundRate = 1;
   fields[27].fieldProps.waterRate = 1;
 
@@ -111,7 +112,7 @@ const createFieldsArray = (): FieldInterface[] => {
 
   fields[19].fieldProps.fieldName = "Empty";
   fields[20].fieldProps.fieldName = "Empty";
-  fields[27].fieldProps.fieldName = "Chickens";
+  fields[27].fieldProps.fieldName = "Farmhouse";
   fields[28].fieldProps.fieldName = "Barn";
 
   return fields;
@@ -142,9 +143,9 @@ export const fieldReducer = (state: FieldInterface[] = createFieldsArray(), acti
       newFields[action.fieldId].cropProps.cropType = action.newCropType;
       return newFields;
     }
-    case "UPDATE_TIME_TO_GROW": {
+    case "SET_PLANTED_TIME": {
       const newFields = [...state];
-      newFields[action.fieldId].cropProps.timeToGrowInSeconds = action.newTimeInSeconds;
+      newFields[action.fieldId].cropProps.plantedAtInSeconds = action.newTimeInSeconds;
       return newFields;
     }
     case "SET_IS_CROP_READY_TO_HARVEST": {
@@ -169,9 +170,14 @@ export const fieldReducer = (state: FieldInterface[] = createFieldsArray(), acti
       newFields[action.fieldId].animalProps.animalType = action.newAnimalType;
       return newFields;
     }
-    case "UPDATE_TIME_TO_COLLECT": {
+    case "SET_ANIMAL_AMOUNT": {
       const newFields = [...state];
-      newFields[action.fieldId].animalProps.timeToCollectInSeconds = action.newTimeInSeconds;
+      newFields[action.fieldId].animalProps.animalAmount = action.newAnimalAmount;
+      return newFields;
+    }
+    case "SET_PRODUCTION_STARTED_TIME": {
+      const newFields = [...state];
+      newFields[action.fieldId].animalProps.productionStartedAtInSeconds = action.newTimeInSeconds;
       return newFields;
     }
     case "SET_IS_ANIMAL_READY_TO_COLLECT": {
@@ -196,9 +202,9 @@ export const fieldReducer = (state: FieldInterface[] = createFieldsArray(), acti
       newFields[action.fieldId].buildingProps.buildingType = action.newBuildingType;
       return newFields;
     }
-    case "UPDATE_TIME_TO_BUILD": {
+    case "SET_BUILD_STARTED_TIME": {
       const newFields = [...state];
-      newFields[action.fieldId].buildingProps.timeToBuildInSeconds = action.newTimeInSeconds;
+      newFields[action.fieldId].buildingProps.buildStartedAtInSeconds = action.newTimeInSeconds;
       return newFields;
     }
     case "SET_IS_BUILD_READY": {

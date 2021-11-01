@@ -34,7 +34,7 @@ const buildings: BuildingInterface = {
     groundRateNeeded: 0,
     waterRateNeeded: 0,
     xpPerUpgrade: 2,
-    partsNeeded: [{name: "Brick", amount: 3}, {name: "Plank", amount: 2}, {name: "Bolt", amount: 2}]
+    partsNeeded: [{name: "Brick", amount: 0}]
   },
 
   Well: {
@@ -45,40 +45,40 @@ const buildings: BuildingInterface = {
     groundRateNeeded: 0,
     waterRateNeeded: 1,
     xpPerUpgrade: 2,
-    partsNeeded: [{name: "Brick", amount: 3}, {name: "Plank", amount: 2}, {name: "Pipe", amount: 2}]
+    partsNeeded: [{name: "Brick", amount: 0}]
   },
 
   Chickens: {
     buildingLevel: 1,
     buildingIcon: chicken,
-    levelNeeded: 3,
+    levelNeeded: 1,
     timeToBuildInSeconds: 60,
     groundRateNeeded: 0,
     waterRateNeeded: 0,
     xpPerUpgrade: 2,
-    partsNeeded: [{name: "Brick", amount: 3}, {name: "Plank", amount: 2}, {name: "Bolt", amount: 2}]
+    partsNeeded: [{name: "Brick", amount: 0}]  
   },
 
   Cows: {
     buildingLevel: 1,
     buildingIcon: cow,
-    levelNeeded: 3,
+    levelNeeded: 1,
     timeToBuildInSeconds: 60,
     groundRateNeeded: 0,
     waterRateNeeded: 0,
     xpPerUpgrade: 2,
-    partsNeeded: [{name: "Brick", amount: 3}, {name: "Plank", amount: 2}, {name: "Bolt", amount: 2}]
+    partsNeeded: [{name: "Brick", amount: 0}]  
   },
 
   Pigs: {
     buildingLevel: 1,
     buildingIcon: pig,
-    levelNeeded: 3,
+    levelNeeded: 1,
     timeToBuildInSeconds: 60,
     groundRateNeeded: 0,
     waterRateNeeded: 0,
     xpPerUpgrade: 2,
-    partsNeeded: [{name: "Brick", amount: 3}, {name: "Plank", amount: 2}, {name: "Bolt", amount: 2}]
+    partsNeeded: [{name: "Brick", amount: 0}]  
   }
 };
   

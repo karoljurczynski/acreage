@@ -22,7 +22,7 @@ const crops: CropInterface = {
   Wheat: {
     cropLevel: 1,
     cropIcon: wheat,
-    timeToGrowInSeconds: 60,
+    timeToGrowInSeconds: 5,
     groundRateNeeded: 1,
     waterRateNeeded: 1,
     defaultYield: 1,

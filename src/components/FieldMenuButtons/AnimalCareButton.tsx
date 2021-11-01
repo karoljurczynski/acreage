@@ -73,19 +73,21 @@ const AnimalCareButton: React.FC<AnimalCareButtonProps> = ({ fieldId, careType }
     return isRightFoodInStorage;
   }
   const lockButton = (): boolean => {
-    return false;
-    // if (careType === "feed" && checkStorageForFood()) {
-    //   if (careType === "feed" && field.animalProps.isFed)
-    //     return true;
-    //   else
-    //     return false;
-    // }
-    // else {
-    //   if (careType === "clean" && field.animalProps.isCleaned)
-    //     return true;
-    //   else
-    //     return false;
-    // }
+    if (careType === "feed" && checkStorageForFood()) {
+      if (field.animalProps.isFed)
+        return true;
+      else
+        return false;
+    }
+    else if (careType === "clean") {
+      if (field.animalProps.isCleaned)
+        return true;
+      else
+        return false;
+    }
+    else {
+      return true;
+    }
   }
 
 

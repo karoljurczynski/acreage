@@ -29,7 +29,6 @@ const Field: React.FC<FieldPropsInterface> = ({ fieldId }): JSX.Element => {
   const field: FieldInterface = useSelector((state: StateInterface): FieldInterface => state.fields[fieldId]);  
   const [redirectPath, setRedirectPath]: [string, Dispatch<React.SetStateAction<string>>] = useState<string>(`/farm`);
 
-
   // EFFECTS
 
   // Closes field menu after pressing back button on browser

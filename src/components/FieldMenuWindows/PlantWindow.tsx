@@ -14,7 +14,7 @@ import hydration from '../../images/stats/hydration.png';
 import time from '../../images/stats/time.png';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setCropType, setFieldName } from '../../redux/actions/fieldActions';
+import { setCropType, setFieldName, setPlantedTime } from '../../redux/actions/fieldActions';
 import { removeFromUserStorage } from '../../redux/actions/storageActions';
 import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
@@ -87,6 +87,7 @@ const PlantWindow: React.FC<PlantWindowPropsInterface> = ({ fieldId, closeWindow
   }
   const handlePlantSelectedSeed = () => {
     setState(setCropType(fieldId, selectedItem.name));
+    setState(setPlantedTime(fieldId, (Date.now() / 1000)));
     setState(setFieldName(fieldId, selectedItem.name));
     setState(removeFromUserStorage(selectedItem.name, 1, "Seed"));
     closeWindow();

@@ -30,7 +30,7 @@ import logo from '../../images/logo.png';
 import buildings from '../../config/buildings';
 import crops from '../../config/crops';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
 import { StateInterface } from '../../redux/reduxStore';
 import { UserInterface } from '../../redux/reducers/userReducer';
@@ -39,7 +39,7 @@ import { StorageItem } from '../../redux/reducers/storageReducer';
 import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import AnimalCareButton from '../FieldMenuButtons/AnimalCareButton';
 import CollectButton from '../FieldMenuButtons/CollectButton';
-
+import { setIsCropReadyToHarvest } from '../../redux/actions/fieldActions';
 
 
 // COMPONENT
@@ -88,7 +88,6 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
     return sum;
   }
 
-
   // STATE
 
   const state: StateInterface = useSelector((state: StateInterface): StateInterface => state);
@@ -97,6 +96,7 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
   const storage: StorageItem[] = state.storage;
   const seeds: StorageItem[] = storage.filter(filterForSeeds);
   const blueprints: StorageItem[] = storage.filter(filterForBlueprints);
+  const setState = useDispatch();
 
   const [redirectPath, setRedirectPath]: [string, React.Dispatch<React.SetStateAction<string>>] = useState<string>(`/farm/field${fieldId + 1}`);
   const [isPlantWarningActive, setIsPlantWarningActive]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(false);
@@ -130,6 +130,10 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
     console.log((countStorageItems() + countItemsToClaim()) > userData.gameplay.buildingsLevels["Barn"].buildingSize);
   }, [ storage ]);
 
+  useEffect(() => {
+
+  }, [field.cropProps.cropType]);
+
   
   // HANDLERS
 
@@ -141,6 +145,15 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
     else {
       setRedirectPath(`/farm/field${fieldId + 1}`);
     }
+  }
+  const countTimeToGrow = () => {
+    const plantedAt = field.cropProps.plantedAtInSeconds;
+    const currentTime = Date.now() / 1000;
+    const harvestTime = crops[field.cropProps.cropType].timeToGrowInSeconds;
+    const timeToGrow = harvestTime - Number((currentTime - plantedAt).toFixed());
+    if (timeToGrow <= 0)
+      setState(setIsCropReadyToHarvest(fieldId, true));
+    return timeToGrow;
   }
 
 
@@ -169,7 +182,7 @@ const FieldMenu: React.FC<FieldMenuPropsInterface> = ({ fieldId, closeFieldMenu 
 
         else {
           return [
-            <FieldMenuInfoBox title="Time to harvest" content={`04:20 min`} />,
+            <FieldMenuInfoBox title="Time to harvest" content={ `${countTimeToGrow()} s` } />,
             <CropCareButton fieldId={ fieldId } careType="water" />,
             <CropCareButton fieldId={ fieldId } careType="fertilizer" />
           ];

@@ -8,7 +8,7 @@ import water from '../../images/parts/water.png';
 import fertilizer from '../../images/parts/fertilizer.png';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsCropFertilized, setIsCropReadyToHarvest, setIsCropWatered } from '../../redux/actions/fieldActions';
+import { setIsCropFertilized, setIsCropWatered } from '../../redux/actions/fieldActions';
 import { removeFromUserStorage } from '../../redux/actions/storageActions';
 import { StateInterface } from '../../redux/reduxStore';
 import { FieldInterface } from '../../redux/reducers/fieldReducer';
@@ -100,7 +100,6 @@ const CropCareButton: React.FC<CropCareButtonProps> = ({ fieldId, careType }) =>
   }
   const waterCrop = (): void => {
     setState(setIsCropWatered(fieldId, true));
-    setState(setIsCropReadyToHarvest(fieldId, true));
     setState(removeFromUserStorage("Water", 1, "Part"));
   }
   const fertilizeCrop = (): void => {
